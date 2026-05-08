@@ -18,11 +18,11 @@ Cette version apporte plusieurs améliorations significatives :
 
 ## Sommaire
 
-### [Guide de migration (Upgrade)](upgrade/index.md)
+### [Guide de migration](upgrade/index.md)
 
 Informations pour mettre à jour depuis une version antérieure.
 
-### [Nouvelles fonctionnalités (Features)](features/index.md)
+### [Nouvelles fonctionnalités](features/index.md)
 
 Découvrez les nouveautés de SPIP 4.4.
 

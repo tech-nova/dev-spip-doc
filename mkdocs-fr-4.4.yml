@@ -15,9 +15,9 @@ extra:
 
 nav:
   - Accueil: index.md
-  - Upgrade:
+  - Migration:
       - Guide de migration: upgrade/index.md
-  - Features:
+  - Fonctionnalités:
       - Nouvelles fonctionnalités: features/index.md
-  - Reference:
+  - Référence:
       - Référence technique: reference/index.md

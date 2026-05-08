@@ -4,7 +4,7 @@ Welcome to the SPIP 5.0 documentation. This version marks a major step in SPIP's
 
 ## Table of Contents
 
-### [Migration Guide (Upgrade)](upgrade/index.md)
+### [Migration Guide](upgrade/index.md)
 Everything you need to know to update a site or a plugin from SPIP 4.x to SPIP 5.0.
 
 ### [New Features](features/index.md)

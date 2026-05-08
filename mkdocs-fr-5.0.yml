@@ -15,7 +15,7 @@ extra:
 
 nav:
   - Accueil: index.md
-  - Upgrade:
+  - Migration:
       - Sommaire migration: upgrade/index.md
       - Prerequis: upgrade/prerequis.md
       - Environnement et kernel: upgrade/environnement-kernel.md
@@ -24,7 +24,7 @@ nav:
       - Javascript et assets: upgrade/javascript.md
       - Espace prive et menus: upgrade/espace-prive-et-menus.md
       - Depreciations et suppressions: upgrade/deprecations-et-suppressions.md
-  - Features:
+  - Fonctionnalités:
       - Sommaire features: features/index.md
       - Event dispatcher et pipelines: features/event-dispatcher-et-pipelines.md
       - Cron et attributs: features/cron-taches-attributs.md
@@ -32,7 +32,7 @@ nav:
       - Services Symfony: features/services-symfony.md
       - HTTP request response: features/http-request-response.md
       - Logger: features/logger.md
-  - Reference:
+  - Référence:
       - Sommaire reference: reference/index.md
       - Parametres SPIP: reference/parametres-spip.md
       - SPIP version et symboles: reference/spipversion-et-symboles.md

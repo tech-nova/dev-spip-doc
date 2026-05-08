@@ -4,13 +4,13 @@ Bienvenue dans la documentation de SPIP 5.0. Cette version marque une étape imp
 
 ## Sommaire
 
-### [Guide de migration (Upgrade)](upgrade/index.md)
+### [Guide de migration](upgrade/index.md)
 Tout ce qu'il faut savoir pour mettre à jour un site ou un plugin de SPIP 4.x vers SPIP 5.0.
 - Prérequis techniques
 - Changements de rupture (Breaking changes)
 - Dépréciations et suppressions
 
-### [Nouvelles fonctionnalités (Features)](features/index.md)
+### [Nouvelles fonctionnalités](features/index.md)
 Découvrez les briques modernes de SPIP 5.0 et comment les utiliser dans vos développements.
 - Système de Pipelines (Event Dispatcher)
 - Tâches Cron (Attributs)

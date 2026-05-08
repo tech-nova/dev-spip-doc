@@ -9,13 +9,19 @@
   --md-typeset-color: #222;
 
   /* Reduce base font size and line height */
-  --md-text-font-size: 0.75rem; /* 15px instead of 16px */
+  --md-text-font-size: 0.65rem;
   --md-typeset-line-height: 1.5;
+
+  --md-default-fg-color--light: #000000b4;
+  --md-default-fg-color--lighter: #00000069;
+  --md-default-fg-color--lightest: #00000012;
 }
 
 /* Adjust for SPIP top navigation bar */
 body {
   padding-top: 40px;
+  font-size: var(--md-text-font-size);
+  font-weight: 400;
 }
 
 [data-md-color-scheme="default"] {
@@ -31,11 +37,23 @@ body {
   --md-primary-fg-color--dark: var(--spip-purple-strong);
   --md-accent-fg-color: #6ca8ff;
   --md-typeset-a-color: #8ab8ff;
-  
+
   /* Reset grays for dark mode */
   --md-default-fg-color--light: rgba(255, 255, 255, 0.7);
   --md-nav-link-color: rgba(255, 255, 255, 0.85);
   --md-typeset-color: rgba(255, 255, 255, 0.9);
+}
+
+.md-typeset, .md-nav {
+    font-size: var(--md-text-font-size);
+    line-height: var(--md-typeset-line-height);
+}
+
+.md-nav > .md-nav__list {
+  margin-top: .5em;
+}
+.md-nav__link {
+  margin-top: .25em;
 }
 
 /* Darken titles in left and right navigation */
@@ -43,34 +61,31 @@ body {
 .md-nav__link--active,
 .md-nav__link:focus, 
 .md-nav__link:hover {
-  color: #222 !important;
-  font-weight: 700;
+  color: #444 !important;
+  /*font-weight: 700;*/
+}
+[data-md-color-scheme="slate"] :is(.md-nav__title, .md-nav__link--active,.md-nav__link:focus, .md-nav__link:hover) {
+  color: #fff !important;
 }
 
 /* Darken "Table of contents" title */
 .md-sidebar--secondary .md-nav__title {
-  color: #333 !important;
-  font-weight: 700;
+  color: #444 !important;
+  /*font-weight: 700;*/
+}
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__title {
+  color: #fff !important;
+  /*font-weight: 700;*/
 }
 
 /* Darken and bold all headings in the content area */
-.md-typeset h1, 
-.md-typeset h2, 
-.md-typeset h3, 
-.md-typeset h4, 
-.md-typeset h5, 
-.md-typeset h6 {
+.md-content .md-typeset :is(h1, h2, h3, h4, h5, h6) {
   color: #111;
   font-weight: 700;
 }
 
 /* Restore headings color for dark mode */
-[data-md-color-scheme="slate"] .md-typeset h1,
-[data-md-color-scheme="slate"] .md-typeset h2,
-[data-md-color-scheme="slate"] .md-typeset h3,
-[data-md-color-scheme="slate"] .md-typeset h4,
-[data-md-color-scheme="slate"] .md-typeset h5,
-[data-md-color-scheme="slate"] .md-typeset h6 {
+[data-md-color-scheme="slate"] .md-typeset :is(h1, h2, h3, h4, h5, h6) {
   color: #fff;
 }
 
