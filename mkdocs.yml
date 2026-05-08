@@ -1,5 +1,5 @@
-site_name: Documentation SPIP
-site_description: Documentation technique multilingue pour SPIP 5
+site_name: Évolutions techniques de SPIP
+site_description: Documentation des évolutions techniques et guides de migration pour SPIP
 site_url: https://git.spip.net/spip/docs
 repo_url: https://git.spip.net/spip/docs
 repo_name: spip/docs
@@ -11,6 +11,19 @@ site_dir: site
 theme:
   name: material
   language: fr
+  palette:
+    - scheme: default
+      primary: custom
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Basculer en mode sombre
+    - scheme: slate
+      primary: custom
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Basculer en mode clair
   features:
     - navigation.sections
     - navigation.indexes
@@ -18,6 +31,15 @@ theme:
     - content.code.copy
     - search.suggest
     - search.highlight
+  font:
+    text: Montserrat
+    code: Roboto Mono
+
+extra_css:
+  - assets/stylesheets/spip-theme.css
+
+extra_javascript:
+  - assets/javascripts/spip-nav.js
 
 markdown_extensions:
   - admonition

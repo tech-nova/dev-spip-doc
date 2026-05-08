@@ -6,6 +6,13 @@
 - Fichiers en kebab-case.
 - Liens relatifs entre pages Markdown.
 - Pas d'accents dans les noms de fichiers.
+- Utiliser `php-inline` pour les extraits de code PHP sans `<?php`.
+
+## Charte visuelle
+
+- Couleur principale: `#69559f` (violet SPIP).
+- Logo: `docs/assets/images/spip-mark.svg` (blanc et transparent).
+- Navigation externe: Chargee via `docs/assets/javascripts/spip-nav.js`.
 
 ## Checklist de revue
 

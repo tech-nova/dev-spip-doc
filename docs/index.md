@@ -1,6 +1,6 @@
-# Documentation SPIP
+# Évolutions techniques de SPIP
 
-Ce site regroupe la documentation technique de SPIP, organisee par langue et par version.
+Ce site regroupe une documentation technique des évolutions de SPIP, organisee par langue et par version.
 
 ## Choisir une langue
 

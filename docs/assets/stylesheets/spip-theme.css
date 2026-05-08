@@ -1,0 +1,112 @@
+:root {
+  --spip-purple: #69559f;
+  --spip-purple-strong: #4e3a85;
+  --spip-blue: #2f6db5;
+  
+  /* Darken pale grays for titles and nav */
+  --md-default-fg-color--light: #444;
+  --md-nav-link-color: #333;
+  --md-typeset-color: #222;
+
+  /* Reduce base font size and line height */
+  --md-text-font-size: 0.75rem; /* 15px instead of 16px */
+  --md-typeset-line-height: 1.5;
+}
+
+/* Adjust for SPIP top navigation bar */
+body {
+  padding-top: 40px;
+}
+
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: var(--spip-purple);
+  --md-primary-fg-color--light: #8e7cc3;
+  --md-primary-fg-color--dark: var(--spip-purple-strong);
+  --md-accent-fg-color: var(--spip-blue);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: var(--spip-purple);
+  --md-primary-fg-color--light: #8e7cc3;
+  --md-primary-fg-color--dark: var(--spip-purple-strong);
+  --md-accent-fg-color: #6ca8ff;
+  --md-typeset-a-color: #8ab8ff;
+  
+  /* Reset grays for dark mode */
+  --md-default-fg-color--light: rgba(255, 255, 255, 0.7);
+  --md-nav-link-color: rgba(255, 255, 255, 0.85);
+  --md-typeset-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Darken titles in left and right navigation */
+.md-nav__title, 
+.md-nav__link--active,
+.md-nav__link:focus, 
+.md-nav__link:hover {
+  color: #222 !important;
+  font-weight: 700;
+}
+
+/* Darken "Table of contents" title */
+.md-sidebar--secondary .md-nav__title {
+  color: #333 !important;
+  font-weight: 700;
+}
+
+/* Darken and bold all headings in the content area */
+.md-typeset h1, 
+.md-typeset h2, 
+.md-typeset h3, 
+.md-typeset h4, 
+.md-typeset h5, 
+.md-typeset h6 {
+  color: #111;
+  font-weight: 700;
+}
+
+/* Restore headings color for dark mode */
+[data-md-color-scheme="slate"] .md-typeset h1,
+[data-md-color-scheme="slate"] .md-typeset h2,
+[data-md-color-scheme="slate"] .md-typeset h3,
+[data-md-color-scheme="slate"] .md-typeset h4,
+[data-md-color-scheme="slate"] .md-typeset h5,
+[data-md-color-scheme="slate"] .md-typeset h6 {
+  color: #fff;
+}
+
+/* Reduce headings size and spacing */
+.md-typeset h1 { font-size: 1.6em; margin-bottom: 0.5em; }
+.md-typeset h2 { font-size: 1.3em; margin-top: 1.2em; }
+.md-typeset h3 { font-size: 1.1em; }
+
+.md-typeset a {
+  text-decoration-thickness: 0.09em;
+}
+
+/* Hide redundant logo in header */
+.md-header__button.md-logo {
+  display: none;
+}
+
+/* SPIP top navigation bar alignment */
+#boussole_spip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+/* Center the content of the topnav to match Material's content width */
+#boussole_spip > ul {
+  max-width: 61rem; /* Material default max-width */
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 0.8rem !important;
+  padding-right: 0.8rem !important;
+}
+
+/* Ensure the topnav items use the same font */
+.menu_container.spip-theme > ul > li a {
+  font-family: 'Montserrat', sans-serif !important;
+}

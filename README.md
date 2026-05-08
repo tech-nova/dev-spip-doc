@@ -1,6 +1,6 @@
-# Documentation SPIP
+# Évolutions techniques de SPIP
 
-Ce répertoire contient la documentation technique de SPIP, organisée par version et par langue.
+Ce répertoire contient une documentation technique des évolutions de SPIP, organisée par version et par langue.
 
 ## Structure
 
@@ -80,3 +80,11 @@ namespace SpipContrib\Plugin\MonPlugin\Cron\Task;
 ````
 
 Utilisez `php` pour les fichiers PHP complets avec balise d'ouverture présente `<?php`.
+
+## Charte visuelle Material
+
+La configuration Material est personnalisee pour une palette inspiree de l'identite du site Programmer SPIP, avec mode clair/sombre.
+
+- configuration theme: `mkdocs.yml`
+- surcharge CSS: `docs/assets/stylesheets/spip-theme.css`
+- logo docs: `docs/assets/images/spip-mark.svg`
