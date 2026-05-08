@@ -11,9 +11,7 @@ theme:
     - content.code.copy
     - search.suggest
     - search.highlight
-  font:
-    text: Montserrat
-    code: Roboto Mono
+  font: false
 
 extra_css:
   - assets/stylesheets/spip-theme.css

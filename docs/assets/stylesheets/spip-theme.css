@@ -1,7 +1,41 @@
+@font-face {
+  font-family: "Montserrat";
+  src:
+    url("../webfonts/montserrat/montserrat-light-webfont.woff2") format("woff2"),
+    url("../webfonts/montserrat/montserrat-light-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src:
+    url("../webfonts/montserrat/montserrat-medium-webfont.woff2") format("woff2"),
+    url("../webfonts/montserrat/montserrat-medium-webfont.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src:
+    url("../webfonts/montserrat/montserrat-semibold-webfont.woff2") format("woff2"),
+    url("../webfonts/montserrat/montserrat-semibold-webfont.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --spip-purple: #69559f;
   --spip-purple-strong: #4e3a85;
   --spip-blue: #2f6db5;
+  --spip-font-weight-light: 400;
+  --spip-font-weight-regular: 500;
+  --md-text-font: "Montserrat";
+  --md-code-font: ui-monospace, sfmono-regular, consolas, "Liberation Mono", monospace;
   
   /* Darken pale grays for titles and nav */
   --md-default-fg-color--light: #444;
@@ -9,7 +43,7 @@
   --md-typeset-color: #222;
 
   /* Reduce base font size and line height */
-  --md-text-font-size: 0.65rem;
+  --md-text-font-size: 0.67rem;
   --md-typeset-line-height: 1.5;
 
   --md-default-fg-color--light: #000000b4;
@@ -21,7 +55,7 @@
 body {
   padding-top: 40px;
   font-size: var(--md-text-font-size);
-  font-weight: 400;
+  font-weight: var(--spip-font-weight-light);
 }
 
 [data-md-color-scheme="default"] {
@@ -47,6 +81,7 @@ body {
 .md-typeset, .md-nav {
     font-size: var(--md-text-font-size);
     line-height: var(--md-typeset-line-height);
+    font-weight: var(--spip-font-weight-light);
 }
 
 .md-nav > .md-nav__list {
@@ -62,7 +97,7 @@ body {
 .md-nav__link:focus, 
 .md-nav__link:hover {
   color: #444 !important;
-  /*font-weight: 700;*/
+  font-weight: var(--spip-font-weight-regular);
 }
 [data-md-color-scheme="slate"] :is(.md-nav__title, .md-nav__link--active,.md-nav__link:focus, .md-nav__link:hover) {
   color: #fff !important;
@@ -71,11 +106,11 @@ body {
 /* Darken "Table of contents" title */
 .md-sidebar--secondary .md-nav__title {
   color: #444 !important;
-  /*font-weight: 700;*/
+  font-weight: var(--spip-font-weight-regular);
 }
 [data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__title {
   color: #fff !important;
-  /*font-weight: 700;*/
+  font-weight: var(--spip-font-weight-regular);
 }
 
 /* Darken and bold all headings in the content area */
