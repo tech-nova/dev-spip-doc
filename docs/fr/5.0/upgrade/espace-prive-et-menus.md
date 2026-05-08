@@ -57,7 +57,7 @@ Les nombreuses fonctions de mise en page de l'espace privé (`debut_cadre_xx`, `
 - `cadre_depliable()`, `bloc_des_raccourcis()`.
 
 **Exemple de migration :**
-```php
+```php-inline
 // Avant
 echo debut_boite_info();
 echo "Mon contenu";

@@ -2,4 +2,4 @@
 
 *(English translation in progress)*
 
-Please refer to the [French version](../../fr/5.0/upgrade/index.md) for the complete guide.
+Please refer to the [French version](../../../fr/5.0/upgrade/index.md) for the complete guide.

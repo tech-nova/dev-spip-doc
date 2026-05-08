@@ -18,14 +18,14 @@ Le système moderne remplace les déclarations `<pipeline>` dans `paquet.xml` et
 ```xml
 <pipeline nom="affichage_final" inclure="monplugin_pipelines.php" />
 ```
-```php
+```php-inline
 function monplugin_affichage_final($texte) {
     return $texte . "<!-- mon pied de page -->";
 }
 ```
 
 **Après (Listener moderne) :**
-```php
+```php-inline
 namespace SpipContrib\Plugin\MonPlugin\Pipeline\Listener;
 
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
@@ -51,7 +51,7 @@ Les balises `<style>` et `<script>` de `paquet.xml` doivent également être mig
 | JS Public | `insert_head` | `InsertHeadEvent` |
 
 ### Exemple d'injection CSS
-```php
+```php-inline
 #[AsPipelineListener('insert_head_css')]
 public function onInsertHeadCss(InsertHeadCssEvent $event): void
 {

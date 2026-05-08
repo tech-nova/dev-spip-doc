@@ -8,7 +8,7 @@ Cet attribut peut être placé soit sur une **classe** (utilisant alors la méth
 
 ### Exemple 1 : Sur une classe (méthode `__invoke`)
 
-```php
+```php-inline
 namespace SpipContrib\Plugin\MonPlugin\Cron\Task;
 
 use SpipLeague\Component\Kernel\Attribute\AsCronTask;
@@ -28,7 +28,7 @@ final class NettoyageTask
 
 C'est utile si vous souhaitez regrouper plusieurs tâches au sein d'un même service.
 
-```php
+```php-inline
 namespace SpipContrib\Plugin\MonPlugin\Service;
 
 use SpipLeague\Component\Kernel\Attribute\AsCronTask;

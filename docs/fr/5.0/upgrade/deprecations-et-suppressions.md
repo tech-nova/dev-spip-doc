@@ -18,13 +18,13 @@ Le second argument de `spip_sanitize_from_request()` ne supporte plus les tablea
 - Pour sanitizer tout l'environnement ou un tableau de valeurs, utilisez la nouvelle fonction **`spip_sanitize_env_from_request()`**.
 
 #### Avant
-```php
+```php-inline
 $env = spip_sanitize_from_request($env, ['key1', 'key2']); // Sanitization partielle
 $env = spip_sanitize_from_request($env, '*');             // Sanitization de tout l'environnement
 ```
 
 #### Après
-```php
+```php-inline
 $env = spip_sanitize_env_from_request($env, ['key1', 'key2']); // Sanitization partielle
 $env = spip_sanitize_env_from_request($env);                  // Sanitization complète
 ```

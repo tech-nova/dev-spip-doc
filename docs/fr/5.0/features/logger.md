@@ -8,14 +8,14 @@ SPIP 5.0 modernise son système de journalisation en adoptant le standard **PSR-
 La fonction `spip_log()` est dépréciée au profit de `spip_logger()`. Cette nouvelle fonction retourne une instance compatible avec `Psr\Log\LoggerInterface`.
 
 **Avant :**
-```php
+```php-inline
 spip_log('Message d’info');
 spip_log('Message d’erreur', _LOG_ERREUR);
 spip_log('Message spécifique', 'mon_plugin');
 ```
 
 **Après :**
-```php
+```php-inline
 spip_logger()->info('Message d’info');
 spip_logger()->error('Message d’erreur');
 spip_logger('mon_plugin')->info('Message spécifique');
@@ -42,7 +42,7 @@ La configuration du logger se fait désormais via les paramètres du conteneur d
 | `spip.logger.log_path` | Chemin des fichiers de log | `_FILE_LOG` / `_FILE_LOG_SUFFIX` |
 
 ### Exemple de surcharge
-```php
+```php-inline
 // config/custom.php
 return static function (ContainerConfigurator $container): void {
     $container->parameters()
@@ -58,7 +58,7 @@ Dans vos classes (services, listeners, tâches cron), privilégiez l'injection d
 ### Utiliser le logger par défaut
 Le service `logger` (alias de `Psr\Log\LoggerInterface`) injecte le logger principal de SPIP.
 
-```php
+```php-inline
 use Psr\Log\LoggerInterface;
 
 final class MonService {
@@ -75,7 +75,7 @@ final class MonService {
 ### Utiliser un logger spécifique (Factory)
 Si vous voulez un fichier de log dédié pour votre plugin (ex: `tmp/log/mon_plugin.log`), vous devez déclarer un service spécifique dans votre `config/services.php` en utilisant la factory `spip.logger_registry`.
 
-```php
+```php-inline
 // config/services.php
 $services->set('spip.mon_plugin.logger', LoggerInterface::class)
     ->factory([service('spip.logger_registry'), 'get'])
@@ -85,7 +85,7 @@ $services->set('spip.mon_plugin.logger', LoggerInterface::class)
 ### Injecter un logger spécifique avec `#[Autowire]`
 Pour injecter ce logger spécifique dans l'une de vos classes, utilisez l'attribut `#[Autowire]` de Symfony.
 
-```php
+```php-inline
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 

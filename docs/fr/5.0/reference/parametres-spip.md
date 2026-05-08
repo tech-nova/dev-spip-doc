@@ -23,7 +23,7 @@ Les paramètres `spip.dirs.*` définissent les chemins relatifs des répertoires
 
 Dans votre code PHP, privilégiez l'utilisation des méthodes du Kernel pour obtenir des chemins fiables (absolus ou relatifs au contexte) :
 
-```php
+```php-inline
 use function SpipLeague\Component\Kernel\app;
 
 $rootDir = app()->getRootDir();      // Racine du projet
@@ -34,7 +34,7 @@ $logDir  = app()->getLogDir();       // tmp/log/
 ```
 
 Vous pouvez aussi demander un chemin relatif au répertoire courant :
-```php
+```php-inline
 $relativeTmp = app()->relative()->getTmpDir();
 ```
 
@@ -89,7 +89,7 @@ Vous pouvez activer/désactiver ou changer la période de n'importe quelle tâch
 ## Surcharge des paramètres
 Pour surcharger ces paramètres, créez ou modifiez le fichier **`config/custom.php`** :
 
-```php
+```php-inline
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $container): void {

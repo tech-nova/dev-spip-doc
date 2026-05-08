@@ -12,7 +12,7 @@ Pour que SPIP reconnaisse vos classes comme des services, vous devez créer un f
 
 ### Exemple de `config/services.php`
 
-```php
+```php-inline
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $container): void {
@@ -35,7 +35,7 @@ return static function (ContainerConfigurator $container): void {
 
 Vous pouvez accéder aux paramètres de configuration de SPIP (préfixés par `spip.`) directement dans vos configurations de services.
 
-```php
+```php-inline
 $services->set(MonService::class)
     ->arg('$cacheDir', '%spip.dirs.tmp%cache/');
 ```
@@ -44,7 +44,7 @@ $services->set(MonService::class)
 
 Si vous devez accéder à un service depuis un code legacy (squelette ou fonction PHP classique), vous pouvez utiliser la fonction `app()` :
 
-```php
+```php-inline
 use function SpipLeague\Component\Kernel\app;
 
 $monService = app()->getContainer()->get(MonService::class);
