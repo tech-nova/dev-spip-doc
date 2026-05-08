@@ -3,7 +3,7 @@
 # Structure: un mkdocs-LANG-X.Y.yml par couple langue/version.
 #
 # Activation recommandee:
-# 1) Remplacer `when: never` par des regles de branche/tag.
+# 1) Remplacer `when: never` par des regles de branche/MR.
 # 2) Configurer GitLab Pages sur l'instance.
 # 3) Verifier `site_url` dans les fichiers mkdocs-*.yml.
 
@@ -50,8 +50,8 @@ build:
 # Deploiement avec Mike (versioning)
 # ==============================================================================
 
-# Deploiement de la version dev (branche main)
-deploy-dev:
+# Deploiement complet (branche main)
+deploy-all:
   stage: deploy
   image: python:3.12
   rules:
@@ -62,34 +62,16 @@ deploy-dev:
     - git config user.name "CI Bot"
     - git config user.email "ci@spip.net"
     - git fetch origin gh-pages:gh-pages || true
+    - mike deploy --push -F mkdocs-fr-4.4.yml --deploy-prefix fr 4.4 latest --update-aliases
     - mike deploy --push -F mkdocs-fr-5.0.yml --deploy-prefix fr 5.0 dev --update-aliases
+    - mike set-default --push -F mkdocs-fr-4.4.yml --deploy-prefix fr latest
+    - mike deploy --push -F mkdocs-en-4.4.yml --deploy-prefix en 4.4 latest --update-aliases
     - mike deploy --push -F mkdocs-en-5.0.yml --deploy-prefix en 5.0 dev --update-aliases
-  environment:
-    name: documentation-dev
-    url: https://docs.spip.net/fr/dev/
-
-# Deploiement d'une release stable (tag vX.Y.Z)
-deploy-release:
-  stage: deploy
-  image: python:3.12
-  rules:
-    - when: never # Activer: if: $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+/
-  script:
-    - python -m pip install --upgrade pip
-    - pip install -r requirements.txt
-    - git config user.name "CI Bot"
-    - git config user.email "ci@spip.net"
-    - git fetch origin gh-pages:gh-pages || true
-    # Extraire la version majeure.mineure du tag (ex: v4.4.0 -> 4.4)
-    - VERSION=$(echo $CI_COMMIT_TAG | sed 's/^v//' | cut -d. -f1,2)
-    - mike deploy --push -F mkdocs-fr-${VERSION}.yml --deploy-prefix fr $VERSION latest --update-aliases
-    - mike deploy --push -F mkdocs-en-${VERSION}.yml --deploy-prefix en $VERSION latest --update-aliases
-    - mike set-default --push -F mkdocs-fr-${VERSION}.yml --deploy-prefix fr latest
-    - mike set-default --push -F mkdocs-en-${VERSION}.yml --deploy-prefix en latest
-    - mike set-default --push -F mkdocs-fr-${VERSION}.yml --allow-undefined fr/latest
+    - mike set-default --push -F mkdocs-en-4.4.yml --deploy-prefix en latest
+    - mike set-default --push -F mkdocs-fr-4.4.yml --allow-undefined fr/latest
   environment:
     name: documentation
-    url: https://docs.spip.net/
+    url: https://docs.spip.net/fr/latest/
 
 # Deploiement manuel (interface web GitLab)
 deploy-manual:
