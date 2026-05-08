@@ -1,0 +1,57 @@
+# CI docs prete pour MkDocs Material.
+# A activer quand GitLab Pages sera disponible sur l'instance CE.
+#
+# Activation recommandee:
+# 1) Remplacer `when: never` par des regles de branche/MR.
+# 2) Activer le job `pages`.
+# 3) Ajouter l'URL definitive dans `mkdocs.yml` (site_url).
+
+stages:
+  - docs
+  - deploy
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  key: "docs-pip-cache"
+  paths:
+    - .cache/pip
+
+docs:lint:
+  stage: docs
+  image: python:3.12
+  rules:
+    - when: never # Desactive tant que Pages n'est pas configure
+  script:
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pymarkdown scan docs
+    - python scripts/check_markdown_links.py --docs-dir docs
+
+docs:build:
+  stage: docs
+  image: python:3.12
+  rules:
+    - when: never # Desactive tant que Pages n'est pas configure
+  script:
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+    - mkdocs build --strict --site-dir public
+  artifacts:
+    paths:
+      - public/
+    expire_in: 1 week
+
+pages:
+  stage: deploy
+  image: alpine:3.20
+  rules:
+    - when: never # Desactive tant que Pages n'est pas configure
+  dependencies:
+    - docs:build
+  script:
+    - echo "Publication GitLab Pages desactivee pour le moment."
+  artifacts:
+    paths:
+      - public/

@@ -1,0 +1,72 @@
+site_name: Documentation SPIP
+site_description: Documentation technique multilingue pour SPIP 5
+site_url: https://git.spip.net/spip/docs
+repo_url: https://git.spip.net/spip/docs
+repo_name: spip/docs
+edit_uri: -/edit/main/docs/
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  language: fr
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      extend_pygments_lang:
+        - name: php-inline
+          lang: php
+          options:
+            startinline: true
+
+plugins:
+  - search
+
+nav:
+  - Accueil: index.md
+  - Francais:
+      - Vue d'ensemble SPIP 5.0: fr/5.0/index.md
+      - Upgrade:
+          - Sommaire migration: fr/5.0/upgrade/index.md
+          - Prerequis: fr/5.0/upgrade/prerequis.md
+          - Environnement et kernel: fr/5.0/upgrade/environnement-kernel.md
+          - Squelettes et syntaxe: fr/5.0/upgrade/squelettes.md
+          - API PHP et fonctions: fr/5.0/upgrade/php-api.md
+          - Javascript et assets: fr/5.0/upgrade/javascript.md
+          - Espace prive et menus: fr/5.0/upgrade/espace-prive-et-menus.md
+          - Depreciations et suppressions: fr/5.0/upgrade/deprecations-et-suppressions.md
+      - Features:
+          - Sommaire features: fr/5.0/features/index.md
+          - Event dispatcher et pipelines: fr/5.0/features/event-dispatcher-et-pipelines.md
+          - Cron et attributs: fr/5.0/features/cron-taches-attributs.md
+          - Menus: fr/5.0/features/menus.md
+          - Services Symfony: fr/5.0/features/services-symfony.md
+          - HTTP request response: fr/5.0/features/http-request-response.md
+          - Logger: fr/5.0/features/logger.md
+      - Reference:
+          - Sommaire reference: fr/5.0/reference/index.md
+          - Parametres SPIP: fr/5.0/reference/parametres-spip.md
+          - SPIP version et symboles: fr/5.0/reference/spipversion-et-symboles.md
+          - Evenements de pipelines: fr/5.0/reference/evenements-pipelines.md
+  - English:
+      - SPIP 5.0 overview: en/5.0/index.md
+      - Upgrade: en/5.0/upgrade/index.md
+      - Features: en/5.0/features/index.md
+      - Reference: en/5.0/reference/index.md
