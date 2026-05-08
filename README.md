@@ -1,30 +1,40 @@
 # Évolutions techniques de SPIP
 
-Ce répertoire contient une documentation technique des évolutions de SPIP, organisée par version et par langue.
+Documentation technique des évolutions de SPIP, organisée par langue puis par version.
 
 ## Structure
 
-- `docs/fr/` : Documentation en français
-- `docs/en/` : Documentation en anglais (en cours de rédaction)
+```text
+docs/
+├── assets/             # Assets partagés (CSS, JS, images)
+├── fr/
+│   ├── 4.4/
+│   │   ├── assets -> ../../assets
+│   │   ├── upgrade/
+│   │   ├── features/
+│   │   └── reference/
+│   └── 5.0/
+└── en/
+    ├── 4.4/
+    └── 5.0/
+```
 
-Chaque langue est ensuite divisée par version majeure de SPIP (ex: `5.0/`).
+Chaque couple langue/version a sa propre configuration :
 
-## Contenu par version
+- `mkdocs-fr-4.4.yml`
+- `mkdocs-fr-5.0.yml`
+- `mkdocs-en-4.4.yml`
+- `mkdocs-en-5.0.yml`
 
-Pour SPIP 5.0 :
-- [Guide de migration (Upgrade)](docs/fr/5.0/upgrade/index.md)
-- [Nouvelles fonctionnalités (Features)](docs/fr/5.0/features/index.md)
-- [Référence technique](docs/fr/5.0/reference/index.md)
+La configuration partagée est factorisée dans :
 
-## Outillage MkDocs Material
+- `mkdocs-common.yml` : options communes à toutes les langues et versions
+- `mkdocs-common-fr.yml` : thème et libellés français
+- `mkdocs-common-en.yml` : thème et libellés anglais
 
-Configuration standard :
+`mkdocs.yml` est un lien symbolique vers `mkdocs-fr-4.4.yml`, ce qui permet de lancer `mike serve` directement.
 
-- `mkdocs.yml` : configuration du site
-- `docs/` : contenu Markdown
-- `requirements.txt` : dépendances Python de la toolchain docs
-
-### Installation locale
+## Installation locale
 
 ```bash
 python3 -m venv .venv
@@ -32,59 +42,59 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Preview local
+## Preview d'une seule documentation
 
 ```bash
-source .venv/bin/activate
-mkdocs serve
+mkdocs serve -f mkdocs-fr-4.4.yml
+mkdocs serve -f mkdocs-en-4.4.yml
 ```
 
-### Build statique
+## Preview multi-langues et multi-versions
 
 ```bash
-source .venv/bin/activate
-mkdocs build --strict
+mike deploy -F mkdocs-fr-4.4.yml --deploy-prefix fr 4.4 latest --update-aliases
+mike deploy -F mkdocs-fr-5.0.yml --deploy-prefix fr 5.0 dev --update-aliases
+mike set-default -F mkdocs-fr-4.4.yml --deploy-prefix fr latest
+
+mike deploy -F mkdocs-en-4.4.yml --deploy-prefix en 4.4 latest --update-aliases
+mike deploy -F mkdocs-en-5.0.yml --deploy-prefix en 5.0 dev --update-aliases
+mike set-default -F mkdocs-en-4.4.yml --deploy-prefix en latest
+
+# Racine globale: / -> /fr/latest/
+mike set-default -F mkdocs-fr-4.4.yml --allow-undefined fr/latest
+
+mike serve
 ```
 
-## Controles qualite
+URLs résultantes :
 
-Lint Markdown :
+- `/fr/latest/upgrade/` → SPIP 4.4 français
+- `/fr/dev/upgrade/` → SPIP 5.0 français
+- `/en/latest/upgrade/` → SPIP 4.4 anglais
+- `/en/dev/upgrade/` → SPIP 5.0 anglais
+
+## Ajouter une version
+
+Pour ajouter SPIP 5.1 :
 
 ```bash
-source .venv/bin/activate
-pymarkdown scan docs
+mkdir -p docs/fr/5.1 docs/en/5.1
+ln -s ../../assets docs/fr/5.1/assets
+ln -s ../../assets docs/en/5.1/assets
+
+cp mkdocs-fr-5.0.yml mkdocs-fr-5.1.yml
+cp mkdocs-en-5.0.yml mkdocs-en-5.1.yml
+# Éditer docs_dir, edit_uri, site_name et les liens alternate.
 ```
 
-Verification des liens internes et des assets images :
+## Contrôles qualité
 
 ```bash
-source .venv/bin/activate
-python scripts/check_markdown_links.py --docs-dir docs
+pymarkdown scan docs/fr docs/en
+mkdocs build --strict -f mkdocs-fr-4.4.yml
+mkdocs build --strict -f mkdocs-fr-5.0.yml
+mkdocs build --strict -f mkdocs-en-4.4.yml
+mkdocs build --strict -f mkdocs-en-5.0.yml
 ```
 
-Verification optionnelle des liens externes :
-
-```bash
-source .venv/bin/activate
-python scripts/check_markdown_links.py --docs-dir docs --check-external
-```
-
-## Convention blocs PHP
-
-Pour garantir la coloration syntaxique des extraits PHP qui ne contiennent pas `<?php`, la documentation utilise `php-inline` :
-
-````md
-```php-inline
-namespace SpipContrib\Plugin\MonPlugin\Cron\Task;
-```
-````
-
-Utilisez `php` pour les fichiers PHP complets avec balise d'ouverture présente `<?php`.
-
-## Charte visuelle Material
-
-La configuration Material est personnalisee pour une palette inspiree de l'identite du site Programmer SPIP, avec mode clair/sombre.
-
-- configuration theme: `mkdocs.yml`
-- surcharge CSS: `docs/assets/stylesheets/spip-theme.css`
-- logo docs: `docs/assets/images/spip-mark.svg`
+Pour un guide de déploiement complet, voir [DEPLOYMENT.md](DEPLOYMENT.md).

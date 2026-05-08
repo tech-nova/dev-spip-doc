@@ -1,0 +1,23 @@
+INHERIT: mkdocs-common-en.yml
+
+site_name: SPIP 4.4 - Technical Documentation
+site_description: Technical documentation for SPIP 4.4 LTS
+site_url: https://docs.spip.net/en/
+edit_uri: -/edit/main/docs/en/4.4/
+
+docs_dir: docs/en/4.4
+
+extra:
+  alternate:
+    - name: Français
+      link: /fr/4.4/
+      lang: fr
+
+nav:
+  - Home: index.md
+  - Upgrade:
+      - Upgrade Guide: upgrade/index.md
+  - Features:
+      - New Features: features/index.md
+  - Reference:
+      - Technical Reference: reference/index.md

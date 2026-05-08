@@ -1,13 +1,14 @@
-# CI docs prete pour MkDocs Material.
-# A activer quand GitLab Pages sera disponible sur l'instance CE.
+# CI docs avec MkDocs Material et Mike (versioning).
+#
+# Structure: un mkdocs-LANG-X.Y.yml par couple langue/version.
 #
 # Activation recommandee:
-# 1) Remplacer `when: never` par des regles de branche/MR.
-# 2) Activer le job `pages`.
-# 3) Ajouter l'URL definitive dans `mkdocs.yml` (site_url).
+# 1) Remplacer `when: never` par des regles de branche/tag.
+# 2) Configurer GitLab Pages sur l'instance.
+# 3) Verifier `site_url` dans les fichiers mkdocs-*.yml.
 
 stages:
-  - docs
+  - test
   - deploy
 
 variables:
@@ -18,40 +19,92 @@ cache:
   paths:
     - .cache/pip
 
-docs:lint:
-  stage: docs
+# ==============================================================================
+# Tests et validation
+# ==============================================================================
+
+lint:
+  stage: test
   image: python:3.12
   rules:
-    - when: never # Desactive tant que Pages n'est pas configure
+    - when: never # Activer: if: $CI_PIPELINE_SOURCE == "merge_request_event"
   script:
     - python -m pip install --upgrade pip
     - pip install -r requirements.txt
-    - pymarkdown scan docs
-    - python scripts/check_markdown_links.py --docs-dir docs
+    - pymarkdown scan docs/fr docs/en
 
-docs:build:
-  stage: docs
+build:
+  stage: test
   image: python:3.12
   rules:
-    - when: never # Desactive tant que Pages n'est pas configure
+    - when: never # Activer: if: $CI_PIPELINE_SOURCE == "merge_request_event"
   script:
     - python -m pip install --upgrade pip
     - pip install -r requirements.txt
-    - mkdocs build --strict --site-dir public
-  artifacts:
-    paths:
-      - public/
-    expire_in: 1 week
+    - mkdocs build --strict -f mkdocs-fr-4.4.yml
+    - mkdocs build --strict -f mkdocs-fr-5.0.yml
+    - mkdocs build --strict -f mkdocs-en-4.4.yml
+    - mkdocs build --strict -f mkdocs-en-5.0.yml
 
-pages:
+# ==============================================================================
+# Deploiement avec Mike (versioning)
+# ==============================================================================
+
+# Deploiement de la version dev (branche main)
+deploy-dev:
   stage: deploy
-  image: alpine:3.20
+  image: python:3.12
   rules:
-    - when: never # Desactive tant que Pages n'est pas configure
-  dependencies:
-    - docs:build
+    - when: never # Activer: if: $CI_COMMIT_BRANCH == "main"
   script:
-    - echo "Publication GitLab Pages desactivee pour le moment."
-  artifacts:
-    paths:
-      - public/
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+    - git config user.name "CI Bot"
+    - git config user.email "ci@spip.net"
+    - git fetch origin gh-pages:gh-pages || true
+    - mike deploy --push -F mkdocs-fr-5.0.yml --deploy-prefix fr 5.0 dev --update-aliases
+    - mike deploy --push -F mkdocs-en-5.0.yml --deploy-prefix en 5.0 dev --update-aliases
+  environment:
+    name: documentation-dev
+    url: https://docs.spip.net/fr/dev/
+
+# Deploiement d'une release stable (tag vX.Y.Z)
+deploy-release:
+  stage: deploy
+  image: python:3.12
+  rules:
+    - when: never # Activer: if: $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+/
+  script:
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+    - git config user.name "CI Bot"
+    - git config user.email "ci@spip.net"
+    - git fetch origin gh-pages:gh-pages || true
+    # Extraire la version majeure.mineure du tag (ex: v4.4.0 -> 4.4)
+    - VERSION=$(echo $CI_COMMIT_TAG | sed 's/^v//' | cut -d. -f1,2)
+    - mike deploy --push -F mkdocs-fr-${VERSION}.yml --deploy-prefix fr $VERSION latest --update-aliases
+    - mike deploy --push -F mkdocs-en-${VERSION}.yml --deploy-prefix en $VERSION latest --update-aliases
+    - mike set-default --push -F mkdocs-fr-${VERSION}.yml --deploy-prefix fr latest
+    - mike set-default --push -F mkdocs-en-${VERSION}.yml --deploy-prefix en latest
+    - mike set-default --push -F mkdocs-fr-${VERSION}.yml --allow-undefined fr/latest
+  environment:
+    name: documentation
+    url: https://docs.spip.net/
+
+# Deploiement manuel (interface web GitLab)
+deploy-manual:
+  stage: deploy
+  image: python:3.12
+  rules:
+    - when: never # Activer: if: $CI_PIPELINE_SOURCE == "web" / when: manual
+  variables:
+    DEPLOY_VERSION: "5.0"
+    DEPLOY_ALIAS: "dev"
+    DEPLOY_LANG: "fr"
+  script:
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+    - git config user.name "CI Bot"
+    - git config user.email "ci@spip.net"
+    - git fetch origin gh-pages:gh-pages || true
+    - mike deploy --push -F mkdocs-${DEPLOY_LANG}-${DEPLOY_VERSION}.yml --deploy-prefix $DEPLOY_LANG $DEPLOY_VERSION $DEPLOY_ALIAS --update-aliases
