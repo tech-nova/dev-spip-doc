@@ -29,6 +29,20 @@ mkdocs-en-5.0.yml
 
 Les fichiers `mkdocs-fr-*` et `mkdocs-en-*` héritent des fichiers communs via `INHERIT`, afin de ne garder localement que `site_name`, `docs_dir`, le sélecteur de langue et la navigation.
 
+## Couche d'abstraction Make
+
+Le projet expose des commandes stables via `Makefile` :
+
+```bash
+make install
+make lint
+make build
+make deploy-local
+make serve
+```
+
+Ces commandes restent inchangées même si le moteur interne évolue (MkDocs -> Zensical).
+
 ## Structure publiée
 
 ```text
@@ -61,16 +75,8 @@ URLs principales :
 ```bash
 source .venv/bin/activate
 
-mike deploy -F mkdocs-fr-4.4.yml --deploy-prefix fr 4.4 latest --update-aliases
-mike deploy -F mkdocs-fr-5.0.yml --deploy-prefix fr 5.0 dev --update-aliases
-mike set-default -F mkdocs-fr-4.4.yml --deploy-prefix fr latest
-
-mike deploy -F mkdocs-en-4.4.yml --deploy-prefix en 4.4 latest --update-aliases
-mike deploy -F mkdocs-en-5.0.yml --deploy-prefix en 5.0 dev --update-aliases
-mike set-default -F mkdocs-en-4.4.yml --deploy-prefix en latest
-
-mike set-default -F mkdocs-fr-4.4.yml --allow-undefined fr/latest
-mike serve
+make deploy-local
+make serve
 ```
 
 ## Déploiement production
@@ -117,9 +123,24 @@ mike deploy -F mkdocs-fr-5.1.yml --deploy-prefix fr 5.1 dev --update-aliases
 mike deploy -F mkdocs-en-5.1.yml --deploy-prefix en 5.1 dev --update-aliases
 ```
 
+## Zensical (migration progressive)
+
+Zensical est installé pour des essais de migration sans impact sur la prod :
+
+```bash
+make build-zensical
+```
+
+Le flux de publication reste basé sur MkDocs + Mike tant que le versioning natif Zensical n'est pas retenu.
+
 ## CI GitLab
 
-Les jobs doivent construire les quatre configurations et déployer avec `--deploy-prefix fr` ou `--deploy-prefix en`. Voir `.gitlab-ci.yml`.
+La CI s'appuie sur `make` :
+
+- `make lint` pour le lint Markdown
+- `make build` pour les 4 builds stricts
+- `make deploy-push-all` pour publier toutes les langues/versions
+- `make pages-artifact` pour produire `public/` dans le job `pages` (test GitLab.com)
 
 ## Dépannage
 

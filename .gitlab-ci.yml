@@ -29,9 +29,8 @@ lint:
   rules:
     - when: never # Activer: if: $CI_PIPELINE_SOURCE == "merge_request_event"
   script:
-    - python -m pip install --upgrade pip
-    - pip install -r requirements.txt
-    - pymarkdown scan docs/fr docs/en
+    - make install
+    - make lint
 
 build:
   stage: test
@@ -39,36 +38,28 @@ build:
   rules:
     - when: never # Activer: if: $CI_PIPELINE_SOURCE == "merge_request_event"
   script:
-    - python -m pip install --upgrade pip
-    - pip install -r requirements.txt
-    - mkdocs build --strict -f mkdocs-fr-4.4.yml
-    - mkdocs build --strict -f mkdocs-fr-5.0.yml
-    - mkdocs build --strict -f mkdocs-en-4.4.yml
-    - mkdocs build --strict -f mkdocs-en-5.0.yml
+    - make install
+    - make build
 
 # ==============================================================================
 # Deploiement avec Mike (versioning)
 # ==============================================================================
 
-# Deploiement complet (branche main)
-deploy-all:
+# Production GitLab Pages (sans push git distant : Mike écrit la branche locale gh-pages,
+# puis pages-artifact extrait vers public/). 
+pages:
   stage: deploy
   image: python:3.12
   rules:
     - when: never # Activer: if: $CI_COMMIT_BRANCH == "main"
   script:
-    - python -m pip install --upgrade pip
-    - pip install -r requirements.txt
+    - make install
     - git config user.name "CI Bot"
     - git config user.email "ci@spip.net"
-    - git fetch origin gh-pages:gh-pages || true
-    - mike deploy --push -F mkdocs-fr-4.4.yml --deploy-prefix fr 4.4 latest --update-aliases
-    - mike deploy --push -F mkdocs-fr-5.0.yml --deploy-prefix fr 5.0 dev --update-aliases
-    - mike set-default --push -F mkdocs-fr-4.4.yml --deploy-prefix fr latest
-    - mike deploy --push -F mkdocs-en-4.4.yml --deploy-prefix en 4.4 latest --update-aliases
-    - mike deploy --push -F mkdocs-en-5.0.yml --deploy-prefix en 5.0 dev --update-aliases
-    - mike set-default --push -F mkdocs-en-4.4.yml --deploy-prefix en latest
-    - mike set-default --push -F mkdocs-fr-4.4.yml --allow-undefined fr/latest
+    - make pages-artifact
+  artifacts:
+    paths:
+      - public
   environment:
     name: documentation
     url: https://docs.spip.net/fr/latest/
@@ -84,9 +75,8 @@ deploy-manual:
     DEPLOY_ALIAS: "dev"
     DEPLOY_LANG: "fr"
   script:
-    - python -m pip install --upgrade pip
-    - pip install -r requirements.txt
+    - make install
     - git config user.name "CI Bot"
     - git config user.email "ci@spip.net"
     - git fetch origin gh-pages:gh-pages || true
-    - mike deploy --push -F mkdocs-${DEPLOY_LANG}-${DEPLOY_VERSION}.yml --deploy-prefix $DEPLOY_LANG $DEPLOY_VERSION $DEPLOY_ALIAS --update-aliases
+    - make deploy-manual DEPLOY_LANG=$DEPLOY_LANG DEPLOY_VERSION=$DEPLOY_VERSION DEPLOY_ALIAS=$DEPLOY_ALIAS

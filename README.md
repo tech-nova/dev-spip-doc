@@ -42,6 +42,20 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## Commandes standard (Make)
+
+Les commandes de travail quotidiennes passent par `make`, pour rester agnostiques du moteur utilisé en interne.
+
+```bash
+make install       # installe/maj les dépendances Python
+make lint          # lint Markdown
+make lint-fix      # corrections auto (pymarkdown fix), puis relancer make lint
+make build         # build strict des 4 documentations
+make deploy-local  # met à jour gh-pages localement (sans push)
+make serve         # sert les versions via mike serve
+make clean         # nettoie site/ et public/
+```
+
 ## Preview d'une seule documentation
 
 ```bash
@@ -52,18 +66,8 @@ mkdocs serve -f mkdocs-en-4.4.yml
 ## Preview multi-langues et multi-versions
 
 ```bash
-mike deploy -F mkdocs-fr-4.4.yml --deploy-prefix fr 4.4 latest --update-aliases
-mike deploy -F mkdocs-fr-5.0.yml --deploy-prefix fr 5.0 dev --update-aliases
-mike set-default -F mkdocs-fr-4.4.yml --deploy-prefix fr latest
-
-mike deploy -F mkdocs-en-4.4.yml --deploy-prefix en 4.4 latest --update-aliases
-mike deploy -F mkdocs-en-5.0.yml --deploy-prefix en 5.0 dev --update-aliases
-mike set-default -F mkdocs-en-4.4.yml --deploy-prefix en latest
-
-# Racine globale: / -> /fr/latest/
-mike set-default -F mkdocs-fr-4.4.yml --allow-undefined fr/latest
-
-mike serve
+make deploy-local
+make serve
 ```
 
 URLs résultantes :
@@ -87,14 +91,21 @@ cp mkdocs-en-5.0.yml mkdocs-en-5.1.yml
 # Éditer docs_dir, edit_uri, site_name et les liens alternate.
 ```
 
+## Test Zensical (expérimental)
+
+Zensical est ajouté en dépendance pour des tests de migration progressive.
+
+```bash
+make build-zensical
+```
+
+Cette commande ne remplace pas encore le pipeline principal MkDocs/Mike.
+
 ## Contrôles qualité
 
 ```bash
-pymarkdown scan docs/fr docs/en
-mkdocs build --strict -f mkdocs-fr-4.4.yml
-mkdocs build --strict -f mkdocs-fr-5.0.yml
-mkdocs build --strict -f mkdocs-en-4.4.yml
-mkdocs build --strict -f mkdocs-en-5.0.yml
+make lint
+make build
 ```
 
 Pour un guide de déploiement complet, voir [DEPLOYMENT.md](DEPLOYMENT.md).
