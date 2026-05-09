@@ -1,11 +1,17 @@
 SHELL := /bin/bash
 
 VENV_BIN ?= .venv/bin
+# Python système pour créer .venv si absent (CI, clone neuf)
+PYTHON_BOOTSTRAP ?= python3
 PIP := $(VENV_BIN)/pip
 PYTHON := $(VENV_BIN)/python
 MKDOCS := $(VENV_BIN)/mkdocs
 MIKE := $(VENV_BIN)/mike
 ZENSICAL := $(VENV_BIN)/zensical
+
+# Mike lance `mkdocs` via PATH (pas le chemin du venv). Sans export, la CI échoue
+# si le venv n'est pas activé (`mkdocs`: aucun fichier ou dossier de ce type).
+export PATH := $(CURDIR)/$(VENV_BIN):$(PATH)
 
 FR44 := mkdocs-fr-4.4.yml
 FR50 := mkdocs-fr-5.0.yml
@@ -16,6 +22,7 @@ EN50 := mkdocs-en-5.0.yml
         deploy-push-all deploy-manual pages-artifact
 
 install:
+	@if [ ! -x "$(PYTHON)" ]; then $(PYTHON_BOOTSTRAP) -m venv .venv; fi
 	$(PYTHON) -m pip install --upgrade pip
 	$(PIP) install -r requirements.txt
 
