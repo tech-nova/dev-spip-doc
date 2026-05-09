@@ -14,11 +14,13 @@ Il est désormais possible d'utiliser des crochets `[` et `]` à l'intérieur de
 Certaines écritures, notamment en CSS, peuvent désormais être interprétées par erreur comme des parties optionnelles. Il convient de lever l'ambiguïté en échappant les parenthèses ou en utilisant des guillemets.
 
 **Avant :**
+
 ```css
 a[href] { background-image: url(#CHEMIN_IMAGE{img.svg}); }
 ```
 
 **Après :**
+
 ```css
 a[href] { background-image: url\(#CHEMIN_IMAGE{img.svg}); }
 /* ou */
@@ -46,30 +48,39 @@ Les critères de boucle suivants sont dépréciés.
 
 ### Critère `{collecte}` → `{collate}`
 **Avant :**
+
 ```spip
 <BOUCLE_a(ARTICLES) {par titre} {collecte utf8_spanish_ci}>
 ```
+
 **Après :**
+
 ```spip
 <BOUCLE_a(ARTICLES) {par titre} {collate utf8_spanish_ci}>
 ```
 
 ### Critère `{fusion}` → `{groupby}`
 **Avant :**
+
 ```spip
 <BOUCLE_extrait(ARTICLES){fusion id_rubrique}>
 ```
+
 **Après :**
+
 ```spip
 <BOUCLE_extrait(ARTICLES){groupby id_rubrique}>
 ```
 
 ### Critère `{fusion_supprimer}` → `{groupby_supprimer}`
 **Avant :**
+
 ```spip
 <BOUCLE_f(ARTICLES){fusion_supprimer}{fusion YEAR(date)}>
 ```
+
 **Après :**
+
 ```spip
 <BOUCLE_f(ARTICLES){groupby_supprimer}{groupby YEAR(date)}>
 ```
@@ -80,6 +91,7 @@ Les critères de boucle suivants sont dépréciés.
 Les faux filtres de positionnement et de lien sont supprimés.
 
 **Avant :**
+
 ```spip
 [(#LOGO_ARTICLE|left)]
 [(#LOGO_ARTICLE|#URL_ARTICLE)]
@@ -87,6 +99,7 @@ Les faux filtres de positionnement et de lien sont supprimés.
 ```
 
 **Après :**
+
 ```spip
 [(#LOGO_ARTICLE{left})]
 [(#LOGO_ARTICLE{#URL_ARTICLE})]
@@ -97,6 +110,7 @@ Les faux filtres de positionnement et de lien sont supprimés.
 Ils sont remplacés par la boucle `DATA`.
 
 **Avant (Boucle POUR) :**
+
 ```spip
 <BOUCLE_l(POUR){tableau #LISTE{a,b,c}}>
   #CLE : #VALEUR
@@ -104,6 +118,7 @@ Ils sont remplacés par la boucle `DATA`.
 ```
 
 **Après (Boucle DATA) :**
+
 ```spip
 <BOUCLE_l(DATA){source tableau, #LISTE{a,b,c}}>
   #CLE : #VALEUR

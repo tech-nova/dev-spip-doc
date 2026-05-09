@@ -29,6 +29,7 @@ Toute sortie de SPIP 5.0 devrait idéalement être encapsulée dans un objet `Re
 *Note : Actuellement, la génération des réponses s'appuie encore largement sur le code legacy via la mise en tampon de la sortie (`ob_start` / `ob_end_clean`). L'utilisation native et systématique des objets `Response` est un chantier en cours qui doit évoluer d'ici la sortie finale de SPIP 5.*
 
 ### Retourner une réponse
+
 ```php-inline
 use Symfony\Component\HttpFoundation\Response;
 

@@ -15,7 +15,6 @@ Cette nouvelle balise remplace `#LARGEUR_ECRAN` et permet de définir différent
 | `#LAYOUT_PRIVE{complements-bas}` | Compléments en bas de page |
 | `#LAYOUT_PRIVE{complements-bas-inverse}` | Compléments en bas, ordre inversé |
 
-
 ## Balise `#URL_DOCUMENT_FICHIER`
 
 Renvoie toujours le chemin vers le fichier d'un document, permettant d'utiliser `#URL_DOCUMENT` pour pointer vers une page web si souhaité.

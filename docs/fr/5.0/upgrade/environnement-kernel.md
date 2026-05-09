@@ -28,7 +28,7 @@ APP_ENV=dev
 
 ## Localisation des fichiers de configuration
 
-La recherche d'un fichier `mes_options.php` dans le répertoire `ecrire/` n'est plus supportée. 
+La recherche d'un fichier `mes_options.php` dans le répertoire `ecrire/` n'est plus supportée.
 Tous les fichiers de configuration personnalisés doivent impérativement se trouver dans le répertoire `config/` (ou le répertoire défini par `SPIP_ETC_DIR`).
 
 - `config/mes_options.php` : pour les options historiques.

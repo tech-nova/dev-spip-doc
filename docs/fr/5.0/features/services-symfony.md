@@ -49,6 +49,7 @@ use function SpipLeague\Component\Kernel\app;
 
 $monService = app()->getContainer()->get(MonService::class);
 ```
+
 *Note : Privilégiez toujours l'injection de dépendances dans vos nouvelles classes.*
 
 ## Limitations et dépendances externes

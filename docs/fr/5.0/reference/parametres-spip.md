@@ -34,6 +34,7 @@ $logDir  = app()->getLogDir();       // tmp/log/
 ```
 
 Vous pouvez aussi demander un chemin relatif au répertoire courant :
+
 ```php-inline
 $relativeTmp = app()->relative()->getTmpDir();
 ```

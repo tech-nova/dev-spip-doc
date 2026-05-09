@@ -8,6 +8,7 @@ SPIP 5.0 modernise son système de journalisation en adoptant le standard **PSR-
 La fonction `spip_log()` est dépréciée au profit de `spip_logger()`. Cette nouvelle fonction retourne une instance compatible avec `Psr\Log\LoggerInterface`.
 
 **Avant :**
+
 ```php-inline
 spip_log('Message d’info');
 spip_log('Message d’erreur', _LOG_ERREUR);
@@ -15,6 +16,7 @@ spip_log('Message spécifique', 'mon_plugin');
 ```
 
 **Après :**
+
 ```php-inline
 spip_logger()->info('Message d’info');
 spip_logger()->error('Message d’erreur');
@@ -42,6 +44,7 @@ La configuration du logger se fait désormais via les paramètres du conteneur d
 | `spip.logger.log_path` | Chemin des fichiers de log | `_FILE_LOG` / `_FILE_LOG_SUFFIX` |
 
 ### Exemple de surcharge
+
 ```php-inline
 // config/custom.php
 return static function (ContainerConfigurator $container): void {

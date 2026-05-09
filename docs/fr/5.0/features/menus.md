@@ -11,6 +11,7 @@ SPIP 5.0 utilise deux fichiers distincts selon le type d'entrée :
 Ces fichiers doivent retourner un tableau associatif décrivant vos entrées.
 
 ### Exemple de `config/menus.php`
+
 ```php-inline
 // monplugin/config/menus.php
 return [
@@ -24,6 +25,7 @@ return [
 ```
 
 ### Exemple de `config/onglets.php`
+
 ```php-inline
 // monplugin/config/onglets.php
 return [
@@ -52,11 +54,13 @@ return [
 Déplacez la déclaration dans **`config/menus.php`**.
 
 **Avant (`paquet.xml`) :**
+
 ```xml
 <menu nom="mon_outil" titre="monplugin:titre_outil" parent="menu_edition" icone="images/mon-outil-16.png" action="mon_outil_exec" />
 ```
 
 **Après (`config/menus.php`) :**
+
 ```php-inline
 return [
     'mon_outil' => [
@@ -72,11 +76,13 @@ return [
 Déplacez la déclaration dans **`config/onglets.php`**.
 
 **Avant (`paquet.xml`) :**
+
 ```xml
 <onglet nom="infos" titre="monplugin:onglet_infos" parent="mon_outil" icone="images/infos-16.png" />
 ```
 
 **Après (`config/onglets.php`) :**
+
 ```php-inline
 return [
     'mon_outil_infos' => [

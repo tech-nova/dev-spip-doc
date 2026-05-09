@@ -20,11 +20,13 @@ Même si vous conservez temporairement la syntaxe `paquet.xml`, certains identif
 Le menu « Squelettes » (`menu_squelette`) est renommé **« Apparence »** (`menu_apparence`).
 
 **Avant (paquet.xml) :**
+
 ```xml
 <menu nom="..." parent="menu_squelette" ... />
 ```
 
 **Après :**
+
 ```xml
 <menu nom="..." parent="menu_apparence" ... />
 ```
@@ -33,11 +35,13 @@ Le menu « Squelettes » (`menu_squelette`) est renommé **« Apparence »** (`m
 Les identifiants de menus commençant par `bando_` sont dépréciés et doivent désormais commencer par **`menu_`**.
 
 **Avant :**
+
 ```xml
 <menu nom="..." parent="bando_configuration" ... />
 ```
 
 **Après :**
+
 ```xml
 <menu nom="..." parent="menu_configuration" ... />
 ```
@@ -57,6 +61,7 @@ Les nombreuses fonctions de mise en page de l'espace privé (`debut_cadre_xx`, `
 - `cadre_depliable()`, `bloc_des_raccourcis()`.
 
 **Exemple de migration :**
+
 ```php-inline
 // Avant
 echo debut_boite_info();

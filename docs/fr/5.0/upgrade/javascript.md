@@ -15,6 +15,7 @@ Les fonctions suivantes sont désormais disponibles via `import` depuis `ajaxCal
 ### Exemple de migration
 
 **Avant :**
+
 ```javascript
 $(document).ready(function(){
     jQuery('.mon_bloc').animateLoading();
@@ -22,6 +23,7 @@ $(document).ready(function(){
 ```
 
 **Après (Module ESM) :**
+
 ```html
 <script type="module">
     import { animateLoading } from "ajaxCallback.js";

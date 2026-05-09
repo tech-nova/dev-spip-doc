@@ -26,6 +26,7 @@ Plusieurs fonctions dépréciées ont été supprimées. Voici les principales c
 ### Exemples de migration
 
 **Migration de `abs_url()` :**
+
 ```php-inline
 // Avant
 $url = abs_url($url);
@@ -37,6 +38,7 @@ $texte = liens_absolus($texte);
 ```
 
 **Migration de `generer_url_ecrire_objet()` :**
+
 ```php-inline
 // Avant
 $url = generer_url_ecrire_objet(3, 'article');
@@ -46,6 +48,7 @@ $url = generer_objet_url_ecrire(3, 'article');
 ```
 
 **Migration de `json_export()` :**
+
 ```php-inline
 // Avant
 $json = json_export($data);
@@ -72,6 +75,7 @@ De nombreuses constantes de chemin et d'état sont supprimées au profit d'appel
 
 ## Fichiers de langue
 Les fichiers de langue ne doivent plus peupler la globale `$GLOBALS[$GLOBALS['idx_lang']]`. Ils doivent désormais simplement retourner le tableau PHP.
+
 ```php-inline
 // config/lang/paquet-monplugin_fr.php
 return [

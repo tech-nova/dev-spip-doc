@@ -15,7 +15,6 @@ This new tag replaces `#LARGEUR_ECRAN` and allows defining different layouts for
 | `#LAYOUT_PRIVE{complements-bas}` | Complements at the bottom |
 | `#LAYOUT_PRIVE{complements-bas-inverse}` | Complements at the bottom, reversed order |
 
-
 ## `#URL_DOCUMENT_FICHIER` Tag
 
 Always returns the file path of a document, allowing `#URL_DOCUMENT` to point to a web page if desired.
