@@ -19,6 +19,7 @@ Cette page est une référence : elle liste les events disponibles et leurs mét
 | `formulaire_verifier` | `FormulaireVerifierEvent` | Vérification des formulaires CVT |
 | `formulaire_traiter` | `FormulaireTraiterEvent` | Traitement des formulaires CVT |
 | `styliser` | `StyliserEvent` | Sélection du squelette |
+| `pre_liens` | `PreLiensEvent` | Texte avant expansion des raccourcis de liens |
 | `recuperer_fond` | `RecupererFondEvent` | Interception des inclusions |
 | `boite_infos` | `BoiteInfosEvent` | Boîte d'infos objets (privé) |
 | `affiche_milieu` | `AfficheMilieuEvent` | Zone centrale des pages objets |
