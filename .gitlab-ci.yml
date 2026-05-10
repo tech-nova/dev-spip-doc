@@ -1,11 +1,11 @@
-# CI docs avec MkDocs Material et Mike (versioning).
+# CI documentation : Zensical (TOML) + GitLab Pages
 #
-# Structure: un mkdocs-LANG-X.Y.yml par couple langue/version.
+# Configurations : zensical-fr-4.4.toml, zensical-fr-5.0.toml, zensical-en-4.4.toml, zensical-en-5.0.toml
 #
 # Activation recommandee:
 # 1) Remplacer `when: never` par des regles de branche/MR.
 # 2) Configurer GitLab Pages sur l'instance.
-# 3) Verifier `site_url` dans les fichiers mkdocs-*.yml.
+# 3) Verifier `site_url` et la navigation dans les fichiers zensical-*.toml
 
 stages:
   - test
@@ -42,11 +42,9 @@ build:
     - make build
 
 # ==============================================================================
-# Deploiement avec Mike (versioning)
+# Deploiement GitLab Pages (artefact public/ sans branche gh-pages)
 # ==============================================================================
 
-# Production GitLab Pages (sans push git distant : Mike écrit la branche locale gh-pages,
-# puis pages-artifact extrait vers public/). 
 pages:
   stage: deploy
   image: python:3.12
@@ -54,8 +52,6 @@ pages:
     - when: never # Activer: if: $CI_COMMIT_BRANCH == "main"
   script:
     - make install
-    - git config user.name "CI Bot"
-    - git config user.email "ci@spip.net"
     - make pages-artifact
   artifacts:
     paths:
@@ -64,19 +60,15 @@ pages:
     name: documentation
     url: https://docs.spip.net/fr/latest/
 
-# Deploiement manuel (interface web GitLab)
+# Build complet manuel (interface web GitLab) — meme artefact que pages
 deploy-manual:
   stage: deploy
   image: python:3.12
   rules:
     - when: never # Activer: if: $CI_PIPELINE_SOURCE == "web" / when: manual
-  variables:
-    DEPLOY_VERSION: "5.0"
-    DEPLOY_ALIAS: "dev"
-    DEPLOY_LANG: "fr"
   script:
     - make install
-    - git config user.name "CI Bot"
-    - git config user.email "ci@spip.net"
-    - git fetch origin gh-pages:gh-pages || true
-    - make deploy-manual DEPLOY_LANG=$DEPLOY_LANG DEPLOY_VERSION=$DEPLOY_VERSION DEPLOY_ALIAS=$DEPLOY_ALIAS
+    - make pages-artifact
+  artifacts:
+    paths:
+      - public

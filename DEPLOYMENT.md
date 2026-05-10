@@ -1,6 +1,6 @@
-# Guide de déploiement multi-versions avec Mike
+# Guide de déploiement multi-versions avec Zensical
 
-La documentation est générée comme quatre sites MkDocs distincts : une langue et une version par build. Mike déploie ensuite chaque langue dans son propre préfixe.
+La documentation est générée comme **quatre sites Zensical** distincts : une langue et une version par build. Les sorties sont placées sous `public/<langue>/<version>/`, puis des **répertoires copiés** servent d’alias (`latest`, `dev`) pour GitLab Pages (pas de symlinks).
 
 ## Structure source
 
@@ -15,44 +15,43 @@ docs/
     └── 5.0/
 ```
 
-Configurations :
+Configurations actives (TOML) :
 
 ```text
-mkdocs-common.yml
-mkdocs-common-fr.yml
-mkdocs-common-en.yml
-mkdocs-fr-4.4.yml
-mkdocs-fr-5.0.yml
-mkdocs-en-4.4.yml
-mkdocs-en-5.0.yml
+zensical-fr-4.4.toml
+zensical-fr-5.0.toml
+zensical-en-4.4.toml
+zensical-en-5.0.toml
 ```
 
-Les fichiers `mkdocs-fr-*` et `mkdocs-en-*` héritent des fichiers communs via `INHERIT`, afin de ne garder localement que `site_name`, `docs_dir`, le sélecteur de langue et la navigation.
+Note: pour le moment il n’est pas possible de mutualiser des configurations 
+communes entre les différents fichiers. https://github.com/zensical/backlog/issues/126
 
 ## Couche d'abstraction Make
-
-Le projet expose des commandes stables via `Makefile` :
 
 ```bash
 make install
 make lint
 make build
-make deploy-local
+make pages-artifact
 make serve
 ```
 
-Ces commandes restent inchangées même si le moteur interne évolue (MkDocs -> Zensical).
+- **`make build`** : quatre `zensical build --strict` vers `public/fr/4.4`, etc., puis **`scripts/copy-spip-assets.sh public`** une fois et **`scripts/finalize-public.py`**. Les CSS / JS SPIP ne sont plus déclarés en `extra_css` (relatif à chaque `docs_dir`, donc copie dupliquée) : **`overrides/main.html`** injecte `<link>` et `<script>` vers **`/assets/...`** (racine du site), et le script recopie `spip-theme.css`, `spip-nav.js` et les polices Montserrat sous **`public/assets/`** uniquement.
+- **`make build`** crée aussi les alias (`latest` / `dev`), écrit `fr/versions.json` et `en/versions.json`, et ajoute les index de redirection (`/`, `/fr/`, `/en/`). Le site est donc directement servable par **`make serve`** après un `make clean && make build`.
+- **`make pages-artifact`** : efface `public/`, puis relance simplement `make build`.
 
-## Structure publiée
+## Structure publiée (artefact `public/`)
 
 ```text
-gh-pages/
+public/
 ├── index.html          # redirection vers /fr/latest/
+├── assets/             # SPIP partagé : stylesheets/, javascripts/, webfonts/
 ├── fr/
 │   ├── 4.4/
 │   ├── 5.0/
-│   ├── latest/         # alias vers 4.4
-│   ├── dev/            # alias vers 5.0
+│   ├── latest/         # copie de 4.4
+│   ├── dev/            # copie de 5.0
 │   └── versions.json
 └── en/
     ├── 4.4/
@@ -73,92 +72,54 @@ URLs principales :
 ## Déploiement local
 
 ```bash
-source .venv/bin/activate
+source .venv/bin/activate   # optionnel ; make utilise .venv/bin automatiquement
 
-make deploy-local
-make serve
+make deploy-local   # équivalent : make pages-artifact
+make serve          # http.server sur public/ (port 8000)
 ```
 
-## Déploiement production
-
-Ajouter `--push` aux commandes :
+Preview d’une seule doc sans tout reconstruire :
 
 ```bash
-mike deploy --push -F mkdocs-fr-4.4.yml --deploy-prefix fr 4.4 latest --update-aliases
-mike deploy --push -F mkdocs-fr-5.0.yml --deploy-prefix fr 5.0 dev --update-aliases
-mike set-default --push -F mkdocs-fr-4.4.yml --deploy-prefix fr latest
-
-mike deploy --push -F mkdocs-en-4.4.yml --deploy-prefix en 4.4 latest --update-aliases
-mike deploy --push -F mkdocs-en-5.0.yml --deploy-prefix en 5.0 dev --update-aliases
-mike set-default --push -F mkdocs-en-4.4.yml --deploy-prefix en latest
-
-mike set-default --push -F mkdocs-fr-4.4.yml --allow-undefined fr/latest
+make serve-doc DOC=zensical-fr-5.0.toml
+make serve-zensical ZENSICAL_CFG=zensical-fr-5.0.toml
 ```
+
+## Déploiement production (GitLab Pages)
+
+La CI appelle `make pages-artifact` ; le job **`pages`** publie le dossier **`public/`**.
+
+Il n’y a pas de push vers une branche `gh-pages` : le site est entièrement contenu dans l’artefact Pages.
 
 ## Ajouter une version
 
-Pour ajouter SPIP 5.1 :
+1. Créer les répertoires `docs/fr/X.Y/`, `docs/en/X.Y/` et les liens symboliques `assets` comme pour les versions existantes.
+2. Dupliquer `zensical-fr-5.0.toml` / `zensical-en-5.0.toml` vers `zensical-fr-X.Y.toml` / `zensical-en-X.Y.toml` et adapter `site_name`, `docs_dir`, `site_url`, `site_dir`, `edit_uri`, `nav`, `extra.alternate`.
+3. Mettre à jour le `Makefile` : nouvelles variables, ajout aux cibles `build` et `pages-artifact` (copies d’alias et éventuellement `versions.json` si les numéros de version changent).
 
-```bash
-mkdir -p docs/fr/5.1 docs/en/5.1
-ln -s ../../assets docs/fr/5.1/assets
-ln -s ../../assets docs/en/5.1/assets
+## Thème et personnalisation
 
-cp mkdocs-fr-5.0.yml mkdocs-fr-5.1.yml
-cp mkdocs-en-5.0.yml mkdocs-en-5.1.yml
-```
-
-Adapter dans les deux fichiers :
-
-- `site_name`
-- `edit_uri`
-- `docs_dir`
-- `extra.alternate.link`
-- `nav`
-
-Puis déployer :
-
-```bash
-mike deploy -F mkdocs-fr-5.1.yml --deploy-prefix fr 5.1 dev --update-aliases
-mike deploy -F mkdocs-en-5.1.yml --deploy-prefix en 5.1 dev --update-aliases
-```
-
-## Zensical (migration progressive)
-
-Zensical est installé pour des essais de migration sans impact sur la prod :
-
-```bash
-make build-zensical
-```
-
-Le flux de publication reste basé sur MkDocs + Mike tant que le versioning natif Zensical n'est pas retenu.
+- Variante **classic** dans les TOML pour se rapprocher du rendu Material for MkDocs.
+- SPIP : `assets/stylesheets/spip-theme.css`, polices Montserrat locales, `theme.font = false` pour éviter Google Fonts.
+- Boussole : `assets/javascripts/spip-nav.js` (chargement + ré-exécution avec `document$` pour la navigation instantanée Zensical).
+- **Clair / sombre / système** : les configs utilisent trois entrées `[[project.theme.palette]]` avec `media = "(prefers-color-scheme)"` et les variantes `light` / `dark`, comme décrit dans la [documentation Zensical sur les couleurs](https://zensical.org/docs/setup/colors/) (mode automatique synchronisé sur l’OS).
 
 ## CI GitLab
 
-La CI s'appuie sur `make` :
-
-- `make lint` pour le lint Markdown
-- `make build` pour les 4 builds stricts
-- `make deploy-push-all` pour publier toutes les langues/versions
-- `make pages-artifact` pour produire `public/` dans le job `pages` (test GitLab.com)
+- `make lint` — lint Markdown
+- `make build` — quatre builds stricts
+- `make pages-artifact` — artefact `public/` pour le job `pages`
 
 ## Dépannage
 
-### Le sélecteur de version ne s'affiche pas
+### Le sélecteur de version ne liste pas les versions
 
-Utiliser `mike serve`, pas `mkdocs serve`.
+Vérifier que `public/fr/versions.json` et `public/en/versions.json` sont bien générés par `make pages-artifact` et que `[project.extra.version]` avec `provider = "mike"` est présent dans les TOML (compatibilité sélecteur Material).
 
 ### La racine ne redirige pas vers le français
 
-Relancer :
+Vérifier que `public/index.html` est bien créé par `make pages-artifact`.
 
-```bash
-mike set-default -F mkdocs-fr-4.4.yml --allow-undefined fr/latest
-```
+### Prévisualiser sans reconstruire les quatre sites
 
-### Lister les versions
-
-```bash
-mike list --deploy-prefix fr
-mike list --deploy-prefix en
-```
+Utiliser `make serve-doc DOC=zensical-fr-5.0.toml`, ou `make serve-zensical` avec `ZENSICAL_CFG`.

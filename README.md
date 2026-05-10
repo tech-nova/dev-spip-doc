@@ -19,20 +19,12 @@ docs/
     └── 5.0/
 ```
 
-Chaque couple langue/version a sa propre configuration :
+Chaque couple langue/version a sa propre configuration **Zensical** en TOML :
 
-- `mkdocs-fr-4.4.yml`
-- `mkdocs-fr-5.0.yml`
-- `mkdocs-en-4.4.yml`
-- `mkdocs-en-5.0.yml`
-
-La configuration partagée est factorisée dans :
-
-- `mkdocs-common.yml` : options communes à toutes les langues et versions
-- `mkdocs-common-fr.yml` : thème et libellés français
-- `mkdocs-common-en.yml` : thème et libellés anglais
-
-`mkdocs.yml` est un lien symbolique vers `mkdocs-fr-4.4.yml`, ce qui permet de lancer `mike serve` directement.
+- `zensical-fr-4.4.toml`
+- `zensical-fr-5.0.toml`
+- `zensical-en-4.4.toml`
+- `zensical-en-5.0.toml`
 
 ## Installation locale
 
@@ -42,28 +34,38 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+Ou : `make install` (crée `.venv` si besoin).
+
 ## Commandes standard (Make)
 
-Les commandes de travail quotidiennes passent par `make`, pour rester agnostiques du moteur utilisé en interne.
-
 ```bash
-make install       # installe/maj les dépendances Python
+make install       # installe/maj les dépendances Python (Zensical, pymarkdown)
 make lint          # lint Markdown
 make lint-fix      # corrections auto (pymarkdown fix), puis relancer make lint
-make build         # build strict des 4 documentations
-make deploy-local  # met à jour gh-pages localement (sans push)
-make serve         # sert les versions via mike serve
-make clean         # nettoie site/ et public/
+make build         # build strict des 4 documentations vers public/<lang>/<version>/
+make deploy-local  # alias de pages-artifact : site complet + aliases + versions.json
+make serve         # sert le dossier public/ (http.server sur le port 8000)
+make clean         # supprime site/ et public/
 ```
 
 ## Preview d'une seule documentation
 
 ```bash
-mkdocs serve -f mkdocs-fr-4.4.yml
-mkdocs serve -f mkdocs-en-4.4.yml
+make serve-doc DOC=zensical-fr-5.0.toml
+
+make serve-zensical
+make serve-zensical ZENSICAL_CFG=zensical-en-4.4.toml
+```
+
+Équivalent direct :
+
+```bash
+.venv/bin/zensical serve -f zensical-fr-5.0.toml
 ```
 
 ## Preview multi-langues et multi-versions
+
+Construire l’arbre complet (comme en CI GitLab Pages), puis servir :
 
 ```bash
 make deploy-local
@@ -86,20 +88,12 @@ mkdir -p docs/fr/5.1 docs/en/5.1
 ln -s ../../assets docs/fr/5.1/assets
 ln -s ../../assets docs/en/5.1/assets
 
-cp mkdocs-fr-5.0.yml mkdocs-fr-5.1.yml
-cp mkdocs-en-5.0.yml mkdocs-en-5.1.yml
-# Éditer docs_dir, edit_uri, site_name et les liens alternate.
+cp zensical-fr-5.0.toml zensical-fr-5.1.toml
+cp zensical-en-5.0.toml zensical-en-5.1.toml
+# Éditer docs_dir, edit_uri, site_url, site_name, nav, extra.alternate, site_dir (public/...)
 ```
 
-## Test Zensical (expérimental)
-
-Zensical est ajouté en dépendance pour des tests de migration progressive.
-
-```bash
-make build-zensical
-```
-
-Cette commande ne remplace pas encore le pipeline principal MkDocs/Mike.
+Puis ajouter les builds et alias dans le `Makefile` (`FR51`, `EN51`, cibles `build` et `pages-artifact`).
 
 ## Contrôles qualité
 

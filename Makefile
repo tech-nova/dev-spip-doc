@@ -5,21 +5,26 @@ VENV_BIN ?= .venv/bin
 PYTHON_BOOTSTRAP ?= python3
 PIP := $(VENV_BIN)/pip
 PYTHON := $(VENV_BIN)/python
-MKDOCS := $(VENV_BIN)/mkdocs
-MIKE := $(VENV_BIN)/mike
 ZENSICAL := $(VENV_BIN)/zensical
 
-# Mike lance `mkdocs` via PATH (pas le chemin du venv). Sans export, la CI échoue
-# si le venv n'est pas activé (`mkdocs`: aucun fichier ou dossier de ce type).
+# Outils lancés via PATH (sous-processus) : garder le venv en tête
 export PATH := $(CURDIR)/$(VENV_BIN):$(PATH)
 
-FR44 := mkdocs-fr-4.4.yml
-FR50 := mkdocs-fr-5.0.yml
-EN44 := mkdocs-en-4.4.yml
-EN50 := mkdocs-en-5.0.yml
+# Configurations Zensical (TOML)
+FR44 := zensical-fr-4.4.toml
+FR50 := zensical-fr-5.0.toml
+EN44 := zensical-en-4.4.toml
+EN50 := zensical-en-5.0.toml
 
-.PHONY: install lint lint-fix build build-zensical deploy-local serve clean \
-        deploy-push-all deploy-manual pages-artifact
+# Finalisation de l’arborescence public/ (voir DEPLOYMENT.md).
+SPIP_COPY := ./scripts/copy-spip-assets.sh
+FINALIZE_PUBLIC := ./scripts/finalize-public.py
+
+# Prévisualisation d’une seule doc : make serve-zensical ou make serve-doc DOC=…
+ZENSICAL_CFG ?= zensical-fr-5.0.toml
+
+.PHONY: install lint lint-fix build build-zensical deploy-local serve serve-zensical serve-doc clean \
+        pages-artifact deploy-push-all deploy-manual
 
 install:
 	@if [ ! -x "$(PYTHON)" ]; then $(PYTHON_BOOTSTRAP) -m venv .venv; fi
@@ -33,54 +38,45 @@ lint-fix:
 	$(VENV_BIN)/pymarkdown --config .pymarkdown.json fix -r docs/fr docs/en
 
 build:
-	$(MKDOCS) build --strict -f $(FR44)
-	$(MKDOCS) build --strict -f $(FR50)
-	$(MKDOCS) build --strict -f $(EN44)
-	$(MKDOCS) build --strict -f $(EN50)
-
-build-zensical:
 	$(ZENSICAL) build --strict -f $(FR44)
 	$(ZENSICAL) build --strict -f $(FR50)
 	$(ZENSICAL) build --strict -f $(EN44)
 	$(ZENSICAL) build --strict -f $(EN50)
+	$(SPIP_COPY) public
+	$(PYTHON) $(FINALIZE_PUBLIC)
 
-deploy-local:
-	$(MIKE) deploy -F $(FR44) --deploy-prefix fr 4.4 latest --update-aliases
-	$(MIKE) deploy -F $(FR50) --deploy-prefix fr 5.0 dev --update-aliases
-	$(MIKE) set-default -F $(FR44) --deploy-prefix fr latest
-	$(MIKE) deploy -F $(EN44) --deploy-prefix en 4.4 latest --update-aliases
-	$(MIKE) deploy -F $(EN50) --deploy-prefix en 5.0 dev --update-aliases
-	$(MIKE) set-default -F $(EN44) --deploy-prefix en latest
-	$(MIKE) set-default -F $(FR44) --allow-undefined fr/latest
+build-zensical: build
 
-deploy-push-all:
-	$(MIKE) deploy --push -F $(FR44) --deploy-prefix fr 4.4 latest --update-aliases
-	$(MIKE) deploy --push -F $(FR50) --deploy-prefix fr 5.0 dev --update-aliases
-	$(MIKE) set-default --push -F $(FR44) --deploy-prefix fr latest
-	$(MIKE) deploy --push -F $(EN44) --deploy-prefix en 4.4 latest --update-aliases
-	$(MIKE) deploy --push -F $(EN50) --deploy-prefix en 5.0 dev --update-aliases
-	$(MIKE) set-default --push -F $(EN44) --deploy-prefix en latest
-	$(MIKE) set-default --push -F $(FR44) --allow-undefined fr/latest
-
-deploy-manual:
-ifndef DEPLOY_LANG
-	$(error DEPLOY_LANG is required, e.g. DEPLOY_LANG=fr)
-endif
-ifndef DEPLOY_VERSION
-	$(error DEPLOY_VERSION is required, e.g. DEPLOY_VERSION=5.0)
-endif
-ifndef DEPLOY_ALIAS
-	$(error DEPLOY_ALIAS is required, e.g. DEPLOY_ALIAS=dev)
-endif
-	$(MIKE) deploy --push -F mkdocs-$(DEPLOY_LANG)-$(DEPLOY_VERSION).yml --deploy-prefix $(DEPLOY_LANG) $(DEPLOY_VERSION) $(DEPLOY_ALIAS) --update-aliases
-
-pages-artifact: deploy-local
+pages-artifact:
 	rm -rf public
-	mkdir -p public
-	git archive gh-pages | tar -x -C public
+	$(MAKE) build
+
+deploy-local: pages-artifact
+	@echo "Site complet dans public/ — lancez « make serve » pour prévisualiser."
 
 serve:
-	$(MIKE) serve
+	cd public && exec ../$(PYTHON) -m http.server 8000
+
+serve-zensical:
+	$(ZENSICAL) build --strict -f "$(ZENSICAL_CFG)"
+	$(SPIP_COPY) public
+	$(PYTHON) $(FINALIZE_PUBLIC)
+	exec $(ZENSICAL) serve -f "$(ZENSICAL_CFG)"
+
+# Exemple : make serve-doc DOC=zensical-fr-5.0.toml  (nom du fichier à la racine du dépôt docs)
+serve-doc:
+ifndef DOC
+	$(error DOC est requis, ex. DOC=zensical-fr-5.0.toml)
+endif
+	@test -f "$(DOC)" || { echo >&2 "Fichier introuvable : $(DOC)"; exit 1; }
+	$(ZENSICAL) build --strict -f "$(DOC)"
+	$(SPIP_COPY) public
+	$(PYTHON) $(FINALIZE_PUBLIC)
+	exec $(ZENSICAL) serve -f "$(DOC)"
 
 clean:
 	rm -rf site public
+
+deploy-push-all deploy-manual:
+	@echo >&2 "OBSOLÈTE : publication Mike supprimée. Utilisez « make pages-artifact » et la CI GitLab Pages." >&2
+	@exit 1

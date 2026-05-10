@@ -1,7 +1,3 @@
-mkdocs>=1.6,<2.0
-mkdocs-material>=9.5,<10.0
-pymdown-extensions>=10.0,<11.0
+# Documentation : générateur Zensical + lint Markdown
+zensical>=0.0.41
 pymarkdownlnt>=0.9,<1.0
-requests>=2.31,<3.0
-mike>=2.1,<3.0
-zensical

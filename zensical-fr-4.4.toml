@@ -1,0 +1,89 @@
+# SPIP 4.4 — documentation technique (français)
+
+[project]
+site_name = "SPIP 4.4 - Documentation technique"
+site_description = "Documentation technique de SPIP 4.4 LTS"
+site_url = "https://docs.spip.net/fr/4.4/"
+repo_url = "https://git.spip.net/spip/docs"
+repo_name = "spip/docs"
+edit_uri = "-/edit/main/docs/fr/4.4/"
+docs_dir = "docs/fr/4.4"
+site_dir = "public/fr/4.4"
+
+nav = [
+  { "Accueil" = "index.md" },
+  { "Migration" = [
+    { "Guide de migration" = "upgrade/index.md" },
+  ]},
+  { "Fonctionnalités" = [
+    { "Nouvelles fonctionnalités" = "features/index.md" },
+  ]},
+  { "Référence" = [
+    { "Référence technique" = "reference/index.md" },
+  ]},
+]
+
+[project.extra]
+alternate = [
+  { name = "English", link = "/en/4.4/", lang = "en" },
+]
+
+[project.extra.version]
+provider = "mike"
+default = "latest"
+alias = true
+
+[project.theme]
+name = "material"
+variant = "classic"
+custom_dir = "overrides"
+language = "fr"
+font = false
+features = [
+  "navigation.sections",
+  "navigation.indexes",
+  "navigation.top",
+  "content.code.copy",
+  "search.suggest",
+  "search.highlight",
+]
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "Basculer en mode clair"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "custom"
+accent = "purple"
+toggle.icon = "lucide/sun"
+toggle.name = "Basculer en mode sombre"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "custom"
+accent = "purple"
+toggle.icon = "lucide/moon"
+toggle.name = "Utiliser le thème du système"
+
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.footnotes]
+[project.markdown_extensions.md_in_html]
+
+[project.markdown_extensions.toc]
+permalink = true
+
+[project.markdown_extensions.pymdownx.superfences]
+[project.markdown_extensions.pymdownx.details]
+
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+
+[[project.markdown_extensions.pymdownx.highlight.extend_pygments_lang]]
+name = "php-inline"
+lang = "php"
+options = { startinline = true }

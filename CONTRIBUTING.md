@@ -23,6 +23,8 @@
 
 ## Workflow recommande
 
-1. Lancer `pymarkdown scan docs`.
-2. Lancer `python scripts/check_markdown_links.py --docs-dir docs`.
-3. Lancer `mkdocs build --strict`.
+1. `make lint` — analyse Markdown (pymarkdown, récursif sur `docs/fr` et `docs/en`).
+2. Si besoin : `make lint-fix` puis relancer `make lint` pour vérifier ce qui reste manuel.
+3. `make build` — quatre builds Zensical stricts (validation avant déploiement).
+
+Pour une vérification supplémentaire des liens cassés, vous pouvez ajouter un script dédié dans le dépôt ; il n’est pas imposé par le `Makefile` pour l’instant.
