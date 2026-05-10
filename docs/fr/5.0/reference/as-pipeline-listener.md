@@ -17,7 +17,7 @@ Cette page documente le comportement exact de `SpipLeague\Component\Kernel\Attri
 - Attribut sur **méthode** : la méthode annotée est utilisée.
 - Attribut sur **classe** : la méthode appelée par défaut est `__invoke` (sauf si `method` est fourni explicitement).
 
-Pour une meilleure lisibilité, il est recommandé de poser l'attribut sur des méthodes nommées `onNomPipeline(...)`.
+Pour une meilleure lisibilité, il est recommandé de poser l'attribut sur des méthodes nommées `onNomEvenement(...)`.
 
 ## Règles de résolution
 
@@ -54,11 +54,15 @@ Valeurs supportées :
 
 ### Listener explicite
 
+À réserver aux pipelines qui n'ont pas encore d'event spécifique.
+
 ```php-inline
-#[AsPipelineListener('affichage_final', position: 'append')]
-public function onAffichageFinal(AffichageFinalEvent $event): void
+#[AsPipelineListener('pipeline_non_type', position: 'append')]
+public function onPipelineNonType(PipelineEvent $event): void
 {
-    $event->appendToBody('...');
+    $subject = $event->getSubject();
+    // ...
+    $event->setSubject($subject);
 }
 ```
 

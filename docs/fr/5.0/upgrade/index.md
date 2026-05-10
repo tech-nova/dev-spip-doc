@@ -19,13 +19,21 @@ Ce guide vous accompagne dans la mise à jour de vos sites et plugins de SPIP 4.
    * Système de Log (PSR-3)
    * Fonctions supprimées ou renommées
    * Constantes migrées vers le Kernel
-5. **[Javascript et Assets](javascript.md)**
+5. **[Migrer les pipelines](pipelines.md)**
+   * Fonction `pipeline()` et EventDispatcher
+   * Listeners typés et events dédiés
+   * Changements runtime des anciens caches
+6. **[Migrer les pipelines d'un plugin](pipelines-plugins.md)**
+   * Remplacement des fonctions `prefixe_pipeline()`
+   * Déclaration via `config/services.php`
+   * Tests unitaires des listeners
+7. **[Javascript et Assets](javascript.md)**
    * Modules ESM
    * Émancipation de jQuery
    * Migration des balises `<script>` et `<style>`
-6. **[Espace privé et Menus](espace-prive-et-menus.md)**
+8. **[Espace privé et Menus](espace-prive-et-menus.md)**
    * Renommage des pages et menus
    * Modifications de l'UI
-7. **[Dépréciations et Suppressions](deprecations-et-suppressions.md)**
+9. **[Dépréciations et Suppressions](deprecations-et-suppressions.md)**
    * Récapitulatif des éléments retirés
    * Conseils de remplacement

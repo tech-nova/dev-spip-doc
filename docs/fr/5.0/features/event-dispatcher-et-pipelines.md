@@ -1,67 +1,21 @@
 # Event Dispatcher et Pipelines
 
-SPIP 5.0 modernise son système de pipelines en s'appuyant sur le composant **EventDispatcher** de Symfony. Cette approche permet d'utiliser des événements typés
-et des listeners enregistrés comme services.
+SPIP 5.0 modernise son système de pipelines en s'appuyant sur le composant **EventDispatcher** de Symfony. Les pipelines historiques restent disponibles, mais ils peuvent maintenant être manipulés avec des events typés et des listeners enregistrés comme services.
+
+Cette page présente le modèle général. Pour migrer du code existant, consultez [Migrer les pipelines](../upgrade/pipelines.md). Pour la liste des events disponibles, consultez [Événements de pipelines](../reference/evenements-pipelines.md).
 
 ## Concepts clés
 
-- **Event :** Une classe PHP qui transporte les données du pipeline. Chaque pipeline majeur possède sa propre classe d'événement (ex: `AffichageFinalEvent`).
-- **Listener :** Une méthode dans une classe service qui réagit à un événement.
-- **Attribut `#[AsPipelineListener]` :** Utilisé pour déclarer une méthode comme étant un listener de pipeline.
+- **Event :** une classe PHP qui transporte les données du pipeline. Les pipelines majeurs disposent d'une classe dédiée, par exemple `AffichageFinalEvent`.
+- **Listener :** une méthode de service qui réagit à un event.
+- **Attribut `#[AsPipelineListener]` :** la déclaration d'une méthode comme listener de pipeline.
+- **Event générique :** `PipelineEvent` reste disponible pour les pipelines qui n'ont pas encore de classe dédiée.
 
-## `AsPipelineListener` : mode explicite et déduction automatique
+## Déclaration des listeners
 
-L'attribut `#[AsPipelineListener]` supporte deux styles :
+La convention recommandée est de poser `#[AsPipelineListener]` directement sur une méthode nommée `onNomEvenement(...)`.
 
-- **Mode explicite** : on indique le nom du pipeline ;
-- **Mode déduit** : on n'indique pas de pipeline, il est déduit depuis le type du 1er argument de la méthode listener.
-
-Recommandation : préférer des méthodes nommées `onNomPipeline(...)` (ex. `onAffichageFinal(...)`) plutôt que `__invoke`, pour améliorer la lisibilité et la cohérence événementielle.
-
-Quand l'attribut est posé sur la classe, la méthode appelée par défaut est `__invoke`.
-Comme Symfony, vous pouvez aussi poser `#[AsPipelineListener]` directement sur une méthode.
-
-### 1) Mode explicite (historique)
-
-Ce mode reste utile (et recommandé) quand un pipeline ne dispose pas encore d'une classe d'event typée dédiée.
-Dans ce cas, on utilise `PipelineEvent` et on indique explicitement le nom du pipeline.
-
-```php-inline
-use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
-
-final class FooterListener
-{
-    #[AsPipelineListener('affichage_final')]
-    public function onAffichageFinal(AffichageFinalEvent $event): void
-    {
-        $event->appendToBody('<!-- footer -->');
-    }
-}
-```
-
-Exemple avec event générique :
-
-```php-inline
-use SpipLeague\Bridge\Pipeline\PipelineEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
-
-final class LegacyPipelineListener
-{
-    #[AsPipelineListener('pipeline_non_type')]
-    public function onPipelineNonType(PipelineEvent $event): void
-    {
-        $subject = $event->getSubject();
-        $args = $event->getArguments();
-        // ...
-        $event->setSubject($subject);
-    }
-}
-```
-
-### 2) Mode déduit (recommandé quand un event typé existe)
-
-Si l'attribut est utilisé sans argument, SPIP déduit le pipeline à partir de la classe de l'événement typée en premier argument.
+Quand une classe d'event dédiée existe, le nom du pipeline est déduit depuis le type de l'argument :
 
 ```php-inline
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
@@ -77,12 +31,29 @@ final class FooterListener
 }
 ```
 
-La classe d'event doit être annotée avec `#[AsPipelineEvent('nom_pipeline')]` (c'est le cas des events du cœur SPIP).
-Le type générique `PipelineEvent` ne permet pas cette déduction (puisqu'il ne porte pas d'identifiant de pipeline unique).
+Pour un pipeline non encore typé, utilisez `PipelineEvent` et indiquez explicitement le nom du pipeline :
 
-### 3) `union types` (plusieurs pipelines)
+```php-inline
+use SpipLeague\Bridge\Pipeline\PipelineEvent;
+use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
 
-Comme avec Symfony pour `AsEventListener`, un listener peut écouter plusieurs événements typés via un type union :
+final class LegacyPipelineListener
+{
+    #[AsPipelineListener('pipeline_non_type')]
+    public function onPipelineNonType(PipelineEvent $event): void
+    {
+        $subject = $event->getSubject();
+        // ...
+        $event->setSubject($subject);
+    }
+}
+```
+
+La classe d'event doit être annotée avec `#[AsPipelineEvent('nom_pipeline')]` pour permettre la déduction. C'est le cas des events du cœur SPIP. Le type générique `PipelineEvent` ne permet pas cette déduction, puisqu'il ne correspond pas à un pipeline unique.
+
+## Plusieurs pipelines
+
+Un listener peut écouter plusieurs events typés via un type union :
 
 ```php-inline
 use Spip\Framework\Pipeline\Event\AfficheDroiteEvent;
@@ -99,7 +70,7 @@ final class SidebarListener
 }
 ```
 
-### 4) Position d'exécution
+## Position d'exécution
 
 `AsPipelineListener` supporte l'option `position` :
 
@@ -109,85 +80,24 @@ final class SidebarListener
 
 ```php-inline
 #[AsPipelineListener(position: 'prepend')]
-public function __invoke(AffichageFinalEvent $event): void
+public function onAffichageFinal(AffichageFinalEvent $event): void
 {
-    // exécuté tôt dans la chaîne
+    // Exécuté tôt dans la chaîne
 }
 ```
 
-### 5) Cas d'erreur (compilation du conteneur)
+## Avantages
 
-Sans pipeline explicite, SPIP déclenche une erreur si la déduction est impossible :
+Le modèle moderne apporte :
 
-- pas de type sur le 1er argument ;
-- type scalaire/builtin ;
-- type d'event sans attribut `AsPipelineEvent`.
+- une meilleure découvrabilité des extensions ;
+- un typage fort des données transportées ;
+- l'injection de dépendances dans les listeners ;
+- des tests unitaires plus simples.
 
-## Migration des pipelines historiques
+## Où aller ensuite ?
 
-Le système moderne remplace les déclarations `<pipeline>` dans `paquet.xml` et les fonctions `prefixe_nom_pipeline()`.
-
-### Exemple : Migration de `affichage_final`
-
-**Avant (paquet.xml + PHP) :**
-
-```xml
-<pipeline nom="affichage_final" inclure="monplugin_pipelines.php" />
-```
-
-```php-inline
-function monplugin_affichage_final($texte) {
-    return $texte . "<!-- mon pied de page -->";
-}
-```
-
-**Après (Listener moderne) :**
-
-```php-inline
-namespace SpipContrib\Plugin\MonPlugin\Pipeline\Listener;
-
-use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
-
-final class AffichageFinalListener
-{
-    #[AsPipelineListener('affichage_final')]
-    public function onAffichageFinal(AffichageFinalEvent $event): void
-    {
-        $event->appendToBody("<!-- mon pied de page -->");
-    }
-}
-```
-
-## Migration des assets (Head Assets)
-
-Les balises `<style>` et `<script>` de `paquet.xml` doivent également être migrées vers des listeners.
-
-| Type d'asset | Pipeline | Event dédié |
-| :--- | :--- | :--- |
-| CSS Public | `insert_head_css` | `InsertHeadCssEvent` |
-| JS Public | `insert_head` | `InsertHeadEvent` |
-
-### Exemple d'injection CSS
-
-```php-inline
-#[AsPipelineListener('insert_head_css')]
-public function onInsertHeadCss(InsertHeadCssEvent $event): void
-{
-    $event->addStylesheet(find_in_path('css/monplugin.css'));
-}
-```
-
-## Avantages de l'approche moderne
-
-1. **Découvrabilité :** Les listeners sont dans des classes dédiées.
-2. **Typage fort :** Autocomplétion dans l'IDE grâce aux classes Event.
-3. **Injection de dépendances :** Vos listeners peuvent recevoir des services via leur constructeur.
-4. **Testabilité :** Les listeners sont des classes PHP standards, faciles à tester unitairement.
-
-## Prérequis
-
-Pour que vos listeners soient détectés, votre plugin doit :
-
-1. Avoir un autoloading PSR-4 configuré dans `composer.json`.
-2. Avoir un fichier `config/services.php` qui charge vos services (voir [Services et Injection de dépendances](services-symfony.md)).
+- [Migrer les pipelines](../upgrade/pipelines.md) : parcours de migration depuis les appels et fonctions legacy.
+- [Migrer les pipelines d'un plugin](../upgrade/pipelines-plugins.md) : recettes pour `config/services.php`, autoload et tests.
+- [Événements de pipelines](../reference/evenements-pipelines.md) : liste des events disponibles et méthodes utiles.
+- [Référence `AsPipelineListener`](../reference/as-pipeline-listener.md) : signature, résolution, positions et erreurs.

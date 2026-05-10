@@ -18,6 +18,8 @@ nav = [
     { "Environnement et kernel" = "upgrade/environnement-kernel.md" },
     { "Squelettes et syntaxe" = "upgrade/squelettes.md" },
     { "API PHP et fonctions" = "upgrade/php-api.md" },
+    { "Migrer les pipelines" = "upgrade/pipelines.md" },
+    { "Migrer les pipelines d’un plugin" = "upgrade/pipelines-plugins.md" },
     { "Javascript et assets" = "upgrade/javascript.md" },
     { "Espace prive et menus" = "upgrade/espace-prive-et-menus.md" },
     { "Depreciations et suppressions" = "upgrade/deprecations-et-suppressions.md" },
@@ -35,7 +37,7 @@ nav = [
     { "Sommaire reference" = "reference/index.md" },
     { "Parametres SPIP" = "reference/parametres-spip.md" },
     { "SPIP version et symboles" = "reference/spipversion-et-symboles.md" },
-    { "Evenements de pipelines" = "reference/evenements-pipelines.md" },
+    { "Événements de pipelines" = "reference/evenements-pipelines.md" },
     { "Attribut AsPipelineListener" = "reference/as-pipeline-listener.md" },
   ]},
 ]

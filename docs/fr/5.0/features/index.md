@@ -7,7 +7,7 @@ SPIP 5.0 introduit des briques architecturales basées sur Symfony pour facilite
 ### [Event Dispatcher et Pipelines](event-dispatcher-et-pipelines.md)
 
 Le nouveau système de communication entre composants. Remplace avantageusement les pipelines historiques par des événements typés et des listeners enregistrés comme
-services.
+services. Pour les étapes de migration, consultez [Migrer les pipelines](../upgrade/pipelines.md).
 
 ### [Tâches Cron et Attributs](cron-taches-attributs.md)
 
