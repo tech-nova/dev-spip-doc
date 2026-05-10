@@ -1,6 +1,7 @@
 # Event Dispatcher et Pipelines
 
-SPIP 5.0 modernise son système de pipelines en s'appuyant sur le composant **EventDispatcher** de Symfony. Cette approche permet d'utiliser des événements typés et des listeners enregistrés comme services.
+SPIP 5.0 modernise son système de pipelines en s'appuyant sur le composant **EventDispatcher** de Symfony. Cette approche permet d'utiliser des événements typés
+et des listeners enregistrés comme services.
 
 ## Concepts clés
 
@@ -64,12 +65,15 @@ public function onInsertHeadCss(InsertHeadCssEvent $event): void
 ```
 
 ## Avantages de l'approche moderne
+
 1. **Découvrabilité :** Les listeners sont dans des classes dédiées.
 2. **Typage fort :** Autocomplétion dans l'IDE grâce aux classes Event.
 3. **Injection de dépendances :** Vos listeners peuvent recevoir des services via leur constructeur.
 4. **Testabilité :** Les listeners sont des classes PHP standards, faciles à tester unitairement.
 
 ## Prérequis
+
 Pour que vos listeners soient détectés, votre plugin doit :
+
 1. Avoir un autoloading PSR-4 configuré dans `composer.json`.
 2. Avoir un fichier `config/services.php` qui charge vos services (voir [Services et Injection de dépendances](services-symfony.md)).

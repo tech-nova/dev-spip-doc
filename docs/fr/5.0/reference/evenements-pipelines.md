@@ -29,5 +29,6 @@ SPIP 5.0 propose des classes d'événements dédiées pour les pipelines les plu
 Pour les pipelines ne disposant pas encore d'une classe dédiée, vous pouvez utiliser la classe générique **`SpipLeague\Bridge\Pipeline\PipelineEvent`**.
 
 Elle propose les méthodes suivantes :
+
 - `getSubject()` / `setSubject()` : pour manipuler les données principales (anciennement `$flux['data']` ou `$flux`).
 - `getArguments()` / `getArgument($key)` : pour accéder au contexte (anciennement `$flux['args']`).

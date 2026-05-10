@@ -1,10 +1,12 @@
 # Menus et Onglets de l'espace privé
 
-SPIP 5.0 simplifie la déclaration des menus et des onglets de l'espace privé en remplaçant les balises XML de `paquet.xml` par un fichier de configuration PHP plus flexible.
+SPIP 5.0 simplifie la déclaration des menus et des onglets de l'espace privé en remplaçant les balises XML de `paquet.xml` par un fichier de configuration PHP plus
+flexible.
 
 ## Les fichiers de configuration
 
 SPIP 5.0 utilise deux fichiers distincts selon le type d'entrée :
+
 - **`config/menus.php`** : pour les menus principaux et sous-menus de la barre de navigation.
 - **`config/onglets.php`** : pour les onglets à l'intérieur des pages.
 
@@ -51,6 +53,7 @@ return [
 ## Migration depuis `paquet.xml`
 
 ### Migration d'un `<menu>`
+
 Déplacez la déclaration dans **`config/menus.php`**.
 
 **Avant (`paquet.xml`) :**
@@ -73,6 +76,7 @@ return [
 ```
 
 ### Migration d'un `<onglet>`
+
 Déplacez la déclaration dans **`config/onglets.php`**.
 
 **Avant (`paquet.xml`) :**
@@ -106,6 +110,7 @@ return [
 | `menu_configuration` | Configuration |
 
 ## Avantages et performances
+
 - **Performance :** Le format PHP statique permet une lecture extrêmement rapide et une mise en cache native dans l'**OPcache** de PHP.
 - **Simplicité :** Allège considérablement le fichier `paquet.xml` en déportant la configuration de l'interface dans des fichiers dédiés.
 - **Consistance :** Aligné avec les nouveaux standards de configuration de SPIP 5.0 (comme `services.php`).

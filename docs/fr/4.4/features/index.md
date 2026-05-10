@@ -32,7 +32,8 @@ Renvoie toujours le chemin vers le fichier d'un document, permettant d'utiliser 
 ## Filtres d'images
 
 - `image_oriente_selon_exif()` : Réoriente automatiquement une image selon ses métadonnées EXIF
-- Optimisations de performance pour `image_aplatir()`, `image_renforcement()`, `image_flou()`, `image_sepia()`, `image_nb()`, `image_gamma()`, `image_rotation()`, etc.
+- Optimisations de performance pour `image_aplatir()`, `image_renforcement()`, `image_flou()`, `image_sepia()`, `image_nb()`, `image_gamma()`, `image_rotation()`,
+  etc.
 
 ## Librairies spip-league
 

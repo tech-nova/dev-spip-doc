@@ -1,5 +1,5 @@
 # SPIP 5.0 Technical Reference
 
-*(English translation in progress)*
+> Documentation in English is work in progress.
 
 Please refer to the [French version](/fr/5.0/reference/) for the complete guide.

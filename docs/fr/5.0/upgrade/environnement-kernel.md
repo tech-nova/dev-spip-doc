@@ -4,7 +4,9 @@ SPIP 5.0 introduit une gestion de l'environnement basée sur les standards Symfo
 
 ## Variables d'environnement
 
-Le bootstrap du kernel charge automatiquement les fichiers `.env` situés à la racine du projet via le composant `symfony/dotenv`. Les variantes suivantes sont reconnues (par ordre de priorité) :
+Le bootstrap du kernel charge automatiquement les fichiers `.env` situés à la racine du projet via le composant `symfony/dotenv`. Les variantes suivantes sont reconnues
+(par ordre de priorité) :
+
 1. `.env.<APP_ENV>.local`
 2. `.env.<APP_ENV>`
 3. `.env.local`

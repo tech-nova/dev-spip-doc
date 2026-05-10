@@ -74,6 +74,7 @@ De nombreuses constantes de chemin et d'état sont supprimées au profit d'appel
 *Note : `app()` et `param()` sont dans l'espace de nom `SpipLeague\Component\Kernel`.*
 
 ## Fichiers de langue
+
 Les fichiers de langue ne doivent plus peupler la globale `$GLOBALS[$GLOBALS['idx_lang']]`. Ils doivent désormais simplement retourner le tableau PHP.
 
 ```php-inline

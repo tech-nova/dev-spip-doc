@@ -60,14 +60,18 @@ final class MaintenanceService
 | `priorite` | Priorité d'exécution (optionnel, défaut 0). |
 
 ## Codes de retour
+
 Attention, la convention des codes de retour change entre le système legacy et le système moderne :
+
 - **Legacy :** `>= 0` pour le succès.
 - **Moderne (Unix) :** `0` pour le succès, `> 0` pour une erreur.
 
 ## Avantages
+
 - **Organisation :** Les tâches sont regroupées dans `src/Cron/Task/`.
 - **Injection :** Vous pouvez injecter des services (base de données, logger, API) directement dans le constructeur de votre tâche.
 - **Plus de `paquet.xml` :** La déclaration est portée par le code lui-même.
 
 ## Prérequis
+
 Comme pour les listeners, vos classes de tâches doivent être enregistrées comme services via un fichier `config/services.php` dans votre plugin.

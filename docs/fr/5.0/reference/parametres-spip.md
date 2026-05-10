@@ -1,6 +1,7 @@
 # Paramètres de configuration `spip.*`
 
-SPIP 5.0 utilise des paramètres dans son conteneur de services pour centraliser la configuration. Ces paramètres peuvent être utilisés dans vos fichiers `services.php` via la syntaxe `%spip.nom_du_parametre%`.
+SPIP 5.0 utilise des paramètres dans son conteneur de services pour centraliser la configuration. Ces paramètres peuvent être utilisés dans vos fichiers
+`services.php` via la syntaxe `%spip.nom_du_parametre%`.
 
 ## Répertoires (Dirs)
 
@@ -83,11 +84,14 @@ Plusieurs configurations historiques liées à la syndication ont été migrées
 | `spip.cron.svp_actualiser_depots.period` | Période d'actualisation (secondes) | `_SVP_PERIODE_ACTUALISATION_DEPOTS` |
 
 ### Surcharge des tâches cron
+
 Vous pouvez activer/désactiver ou changer la période de n'importe quelle tâche cron via les paramètres :
+
 - `spip.cron.{nom_tache}.enabled` (booléen)
 - `spip.cron.{nom_tache}.period` (secondes)
 
 ## Surcharge des paramètres
+
 Pour surcharger ces paramètres, créez ou modifiez le fichier **`config/custom.php`** :
 
 ```php-inline
