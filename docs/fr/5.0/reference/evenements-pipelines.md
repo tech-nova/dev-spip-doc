@@ -28,6 +28,27 @@ SPIP 5.0 propose des classes d'événements dédiées pour les pipelines les plu
 
 Pour les pipelines ne disposant pas encore d'une classe dédiée, vous pouvez utiliser la classe générique **`SpipLeague\Bridge\Pipeline\PipelineEvent`**.
 
+Dans ce cas, déclarez le listener avec un pipeline explicite :
+
+```php-inline
+use SpipLeague\Bridge\Pipeline\PipelineEvent;
+use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+
+final class LegacyPipelineListener
+{
+    #[AsPipelineListener('mon_pipeline_legacy')]
+    public function __invoke(PipelineEvent $event): void
+    {
+        $data = $event->getSubject();
+        $args = $event->getArguments();
+        // ...
+        $event->setSubject($data);
+    }
+}
+```
+
+`PipelineEvent` ne permet pas la déduction automatique du pipeline avec `#[AsPipelineListener]` sans argument.
+
 Elle propose les méthodes suivantes :
 
 - `getSubject()` / `setSubject()` : pour manipuler les données principales (anciennement `$flux['data']` ou `$flux`).

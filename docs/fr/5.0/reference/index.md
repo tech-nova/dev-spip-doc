@@ -15,3 +15,7 @@ Détails sur la classe `SpipVersion` et les changements dans les globales de ver
 ### [Liste des événements de pipelines](evenements-pipelines.md)
 
 Table de correspondance entre les pipelines historiques et les nouvelles classes d'événements.
+
+### [Référence `AsPipelineListener`](as-pipeline-listener.md)
+
+Détails de la résolution automatique (type-hints, union types), des positions d'exécution et des cas d'erreur.

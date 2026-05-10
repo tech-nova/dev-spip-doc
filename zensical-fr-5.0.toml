@@ -36,6 +36,7 @@ nav = [
     { "Parametres SPIP" = "reference/parametres-spip.md" },
     { "SPIP version et symboles" = "reference/spipversion-et-symboles.md" },
     { "Evenements de pipelines" = "reference/evenements-pipelines.md" },
+    { "Attribut AsPipelineListener" = "reference/as-pipeline-listener.md" },
   ]},
 ]
 
