@@ -51,9 +51,7 @@
   --md-default-fg-color--lightest: #00000012;
 }
 
-/* Adjust for SPIP top navigation bar */
 body {
-  padding-top: 40px;
   font-size: var(--md-text-font-size);
   font-weight: var(--spip-font-weight-light);
 }
@@ -140,11 +138,10 @@ body {
 
 /* SPIP top navigation bar alignment */
 #boussole_spip {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative !important;
+  top: auto !important;
   width: 100%;
-  z-index: 100;
+  z-index: 1;
 }
 
 /* Center the content of the topnav to match Material's content width */
