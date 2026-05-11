@@ -141,7 +141,8 @@ body {
   position: relative !important;
   top: auto !important;
   width: 100%;
-  z-index: 1;
+  /* Keep SPIP dropdowns above Zensical's sticky header (z-index: 4). */
+  z-index: 5;
 }
 
 /* Center the content of the topnav to match Material's content width */
