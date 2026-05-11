@@ -3,7 +3,7 @@
 [project]
 site_name = "SPIP 5.0 - Documentation technique"
 site_description = "Documentation technique de SPIP 5.0"
-site_url = "https://docs.spip.net/fr/5.0/"
+site_url = "https://doc.spip.net/fr/5.0/"
 repo_url = "https://git.spip.net/spip/docs"
 repo_name = "spip/docs"
 edit_uri = "-/edit/main/docs/fr/5.0/"
