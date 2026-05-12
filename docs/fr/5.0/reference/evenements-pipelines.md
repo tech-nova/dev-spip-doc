@@ -18,6 +18,11 @@ Cette page est une référence : elle liste les events disponibles et leurs mét
 | `formulaire_charger` | `FormulaireChargerEvent` | Chargement des formulaires CVT |
 | `formulaire_verifier` | `FormulaireVerifierEvent` | Vérification des formulaires CVT |
 | `formulaire_traiter` | `FormulaireTraiterEvent` | Traitement des formulaires CVT |
+| `formulaire_fond` | `FormulaireHtmlEvent` | HTML rendu d'un formulaire CVT |
+| `affiche_formulaire_login` | `FormulaireHtmlLoginEvent` | HTML rendu du formulaire de login |
+| `editer_contenu_objet` | `FormulaireHtmlEditerObjetEvent` | HTML rendu des formulaires d'édition d'objet |
+| `formulaire_admin` | `FormulaireHtmlAdministrationEvent` | HTML rendu du formulaire d'administration |
+| `traduire` | `FormulaireHtmlTraduireEvent` | HTML rendu du formulaire de traduction |
 | `styliser` | `StyliserEvent` | Sélection du squelette |
 | `pre_liens` | `PreLiensEvent` | Texte avant expansion des raccourcis de liens |
 | `recuperer_fond` | `RecupererFondEvent` | Interception des inclusions |
