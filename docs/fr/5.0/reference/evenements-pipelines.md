@@ -1,6 +1,6 @@
 # Liste des événements de pipelines
 
-SPIP 5.0 propose des classes d'événements dédiées pour les pipelines les plus courants. 
+SPIP 5.0 propose des classes d'événements dédiées pour les pipelines les plus courants.
 Une partie des classes du core se trouvent dans le répertoire `ecrire/src/Framework/Pipeline/Event/`.
 
 Cette page est une référence : elle liste les events disponibles et leurs méthodes utiles. Pour migrer du code existant, consultez [Migrer les pipelines](../upgrade/pipelines.md). Pour les règles de déclaration des listeners, consultez [Référence `AsPipelineListener`](as-pipeline-listener.md).
@@ -32,6 +32,29 @@ Cette page est une référence : elle liste les events disponibles et leurs mét
 | `post_insertion` | `PostInsertionEvent` | Après insertion en base |
 | `pre_edition` | `PreEditionEvent` | Avant modification d'un objet |
 | `post_edition` | `PostEditionEvent` | Après modification d'un objet |
+
+### Pipelines sans classe d’événements
+
+Ces pipelines n’ont pas encore de classe d’événements associés.
+
+- auth_administrer (ecrire)
+- configurer_liste_metas (ecrire)
+- trig_supprimer_objets_tables (ecrire)
+- compagnon_messages (compagnon)
+- forum_objets_depuis_env (forum)
+- mediabox_config (mediabox)
+- afficher_metas_document (medias)
+- get_spip_doc (medias)
+- quete_logo_objet (medias)
+- medias_documents_visibles (medias)
+- medias_methodes_upload (medias)
+- renseigner_document (medias)
+- mots_indexation (mots)
+- revisions_chercher_label
+- pre_syndication (sites)
+- post_syndication (sites)
+- delete_statistiques (stats)
+- svp_afficher_paquet (svp)
 
 ## Utilisation générique
 
@@ -81,7 +104,6 @@ interface PipelineEventInterface extends StoppableEventInterface
     public function toPayload(): mixed;
 }
 ```
-
 
 ## Events disponibles
 
@@ -353,4 +375,3 @@ final class StatsWidgetListener
     }
 }
 ```
-
