@@ -35,7 +35,7 @@ sequenceDiagram
 
 - **Legacy** : `spip.php` à la racine (forme historique).
 - **Standalone** (expérimental) : `public/index.php` — le document root pointe vers `public/`.
-- **Mutualisé** : `sites/default/public/index.php`.
+- **Mutualisé** (expérimental) : `sites/default/public/index.php`.
 
 Le fichier charge `vendor/autoload_runtime.php` (Symfony Runtime) et retourne une fabrique qui résout le service
 `http_kernel` :
