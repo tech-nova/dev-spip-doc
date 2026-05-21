@@ -56,7 +56,7 @@ Lors du premier accès au conteneur :
 1. **Environnement** : chargement optionnel des fichiers `.env` (voir [Environnement et Kernel](../upgrade/environnement-kernel.md)).
 2. **Installation** : `InstallationDetector` reconnaît la forme (`legacy`, `standalone`, `mutualized`) et les
    répertoires projet (`config/`, cache, web).
-3. **Conteneur** : chargement d’un conteneur **compilé** (`tmp/cache/boot/container.php`) s’il est à jour, sinon
+3. **Conteneur** : chargement d’un conteneur **compilé** (`tmp/cache/boot/container.prod.php`) s’il est à jour, sinon
    construction à la volée (`SpipContainerFactory`) à partir de :
    - `config/spip/*.php`
    - `vendor/spip-league/kernel/config/services.php`
