@@ -77,7 +77,12 @@ toggle.name = "Utiliser le thème du système"
 [project.markdown_extensions.toc]
 permalink = true
 
+# Mermaid : https://zensical.org/docs/authoring/diagrams/
 [project.markdown_extensions.pymdownx.superfences]
+custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+
 [project.markdown_extensions.pymdownx.details]
 
 [project.markdown_extensions.pymdownx.highlight]
