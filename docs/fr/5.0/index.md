@@ -13,6 +13,12 @@ Tout ce qu'il faut savoir pour mettre à jour un site ou un plugin de SPIP 4.x v
 - Changements de rupture (Breaking changes)
 - Dépréciations et suppressions
 
+### [Architecture](architecture/index.md)
+
+- [Dépôts spip-league](architecture/depots-spip-league.md) — bibliothèques sous `vendor/spip-league/`
+- [Cycle applicatif HTTP](architecture/cycle-applicatif-http.md) — front controller → Kernel → HttpKernel → legacy
+- [Feuille de route](architecture/feuille-de-route.md) — orientations architecturales futures
+
 ### [Nouvelles fonctionnalités](features/index.md)
 
 Découvrez les briques modernes de SPIP 5.0 et comment les utiliser dans vos développements.

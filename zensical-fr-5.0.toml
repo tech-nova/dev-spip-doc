@@ -12,6 +12,12 @@ site_dir = "public/fr/5.0"
 
 nav = [
   { "Accueil" = "index.md" },
+  { "Architecture" = [
+    { "Sommaire architecture" = "architecture/index.md" },
+    { "Dépôts spip-league" = "architecture/depots-spip-league.md" },
+    { "Cycle applicatif HTTP" = "architecture/cycle-applicatif-http.md" },
+    { "Feuille de route" = "architecture/feuille-de-route.md" },
+  ]},
   { "Migration" = [
     { "Sommaire migration" = "upgrade/index.md" },
     { "Prérequis" = "upgrade/prerequis.md" },
