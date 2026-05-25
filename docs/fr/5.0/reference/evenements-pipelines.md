@@ -41,6 +41,7 @@ Ces pipelines n’ont pas encore de classe d’événements associés.
 
 - auth_administrer (ecrire)
 - configurer_liste_metas (ecrire)
+- trig_purger (ecrire)
 - trig_supprimer_objets_tables (ecrire)
 - compagnon_messages (compagnon)
 - forum_objets_depuis_env (forum)
