@@ -60,6 +60,8 @@ Ces pipelines n’ont pas encore de classe d’événements associés.
 - porte_plume_lien_classe_vers_icone (porte plume)
 - porte_plume_barre_pre_charger (porte plume)
 - porte_plume_barre_charger (porte plume)
+- propre_creer_chaine_url (urls)
+- arbo_creer_chaine_url (urls)
 
 ## Utilisation générique
 
