@@ -7,6 +7,10 @@ SPIP 5 expose le site via un **front controller** minimal qui délègue au runti
 Pour le rôle de chaque paquet Composer, voir [Dépôts spip-league](depots-spip-league.md). La configuration des
 services noyau est dans `vendor/spip-league/kernel/config/services.php`.
 
+L’API moderne partagée (classes `Spip\Framework\*`, fonctions bootstrap `pipeline()`, etc.) est fournie par le paquet
+[`spip/framework`](https://git.spip.net/spip/framework) ; les plugins SPIP 5 le déclarent en `require`. Les stubs
+`spip-league/sdk` ne dupliquent pas ces symboles.
+
 ## Vue d’ensemble
 
 ```mermaid
