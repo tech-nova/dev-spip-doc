@@ -9,6 +9,8 @@ Cette page est une référence : elle liste les events disponibles et leurs mét
 
 | Pipeline historique | Classe d'événement | Description |
 | :--- | :--- | :--- |
+| `affichage_entetes_final` | `AffichageEntetesFinalEvent` | Entêtes HTTP finales des pages publiques |
+| `affichage_entetes_final_prive` | `AffichageEntetesFinalPriveEvent` | Entêtes HTTP finales de l'espace privé |
 | `affichage_final` | `AffichageFinalEvent` | HTML final des pages publiques |
 | `affichage_final_prive` | `AffichageFinalPriveEvent` | HTML final de l'espace privé |
 | `insert_head` | `InsertHeadEvent` | Contenu `<head>` public (JS, meta) |
@@ -55,6 +57,9 @@ Ces pipelines n’ont pas encore de classe d’événements associés.
 - post_syndication (sites)
 - delete_statistiques (stats)
 - svp_afficher_paquet (svp)
+- porte_plume_lien_classe_vers_icone (porte plume)
+- porte_plume_barre_pre_charger (porte plume)
+- porte_plume_barre_charger (porte plume)
 
 ## Utilisation générique
 
