@@ -35,3 +35,22 @@ Tous les fichiers de configuration personnalisés doivent impérativement se tro
 
 - `config/mes_options.php` : pour les options historiques.
 - `config/custom.php` : pour la nouvelle configuration via le conteneur de services Symfony.
+
+## Nettoyage des paramètres d'URI
+
+Une configuration peu surchargée a été modifiée et renommée :
+
+- introduction de la constante `_CONTEXTE_IGNORE_LISTE_VARIABLES` ;
+- suppression de la constante `_CONTEXTE_IGNORE_VARIABLES`.
+
+### Avant
+
+```php
+define('_CONTEXTE_IGNORE_VARIABLES', '/(^var_|^PHPSESSID$|^fbclid$|^utm_)/');
+```
+
+### Après
+
+```php
+define('_CONTEXTE_IGNORE_LISTE_VARIABLES', ['^var_', '^PHPSESSID$', '^fbclid$', '^utm_']);
+```

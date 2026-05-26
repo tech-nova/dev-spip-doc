@@ -20,23 +20,37 @@ Les fonctions suivantes sont désormais disponibles via `import` depuis `ajaxCal
 
 **Avant :**
 
-```javascript
-$(document).ready(function(){
+```html
+<script>
+  var ajax_image_searching = "⌛";
+
+  $(document).ready(function(){
+    console.log(jQuery.spip.load_handlers);
     jQuery('.mon_bloc').animateLoading();
-});
+  });
+</script>
 ```
 
 **Après (Module ESM) :**
 
 ```html
 <script type="module">
-    import { animateLoading } from "ajaxCallback.js";
-    const monbloc = document.querySelector('.mon_bloc');
-    if (monbloc) {
-        animateLoading(monbloc);
-    }
+  import { default as spip } from "config.js";
+  import { animateLoading, onAjaxLoad } from "ajaxCallback.js";
+
+  console.log(spip.load_handlers);
+  spip.ajax_image_searching = "⌛";
+
+  const monbloc = document.querySelector('.mon_bloc');
+  if (monbloc) {
+    animateLoading(monbloc);
+  }
 </script>
 ```
+
+Les balises `<script type="module">` qui contiennent une directive `import` s'exécutent de manière asynchrone et différée,
+une fois que toutes les ressources javascript de la page ont été résolues.
+Auparavant, il fallait différer l'exécution du code en l'encapsulant dans `$(document).ready(function(){...})` ou `$(function(){...})`.
 
 ## Migration des assets (paquet.xml)
 
@@ -50,6 +64,23 @@ Les balises `<style>` et `<script>` dans `paquet.xml` sont dépréciées. Il est
 | JS Privé | `header_prive` | `HeaderPriveEvent` |
 
 Pour plus de détails sur la mise en œuvre, consultez le guide sur les [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md).
+
+## Rétrocompatibilité (`retrocompat.js`)
+
+Un fichier `retrocompat.js` tâche d'assurer la compatibilité avec la syntaxe historique basée sur jQuery et l'objet global `spipConfig`.
+
+Pour le code non ESM, l'objet `spipConfig` reste disponible :
+
+```html
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log(spipConfig.load_handlers);
+    spipConfig.ajax_image_searching = "⌛";
+  });
+</script>
+```
+
+Pour une migration complète vers les modules ESM, consultez l'exemple ci-dessus avec `config.js` et `ajaxCallback.js`.
 
 ## Debugging JS
 

@@ -2,13 +2,16 @@
 
 Cette page montre comment remplacer progressivement les fonctions `prefixe_nom_pipeline()` par des listeners modernes dans un plugin SPIP 5.0.
 
-Pour le fonctionnement général de `pipeline()` et les changements runtime, consultez [Migrer les pipelines](pipelines.md). Cette page se concentre sur l'organisation d'un plugin.
+Pour le fonctionnement général de `pipeline()` et les changements runtime, consultez [Migrer les pipelines](pipelines.md).
+Cette page se concentre sur l'organisation d'un plugin.
 
 ## Vue d'ensemble
 
-Avant SPIP 5.0, un plugin déclarait généralement un pipeline dans `paquet.xml`, puis exposait une fonction globale. En SPIP 5.0, la logique métier peut vivre dans une classe dédiée, avec une méthode `onNomEvenement()` déclarée comme listener.
+Avant SPIP 5.0, un plugin déclarait généralement un pipeline dans `paquet.xml`, puis exposait une fonction globale.
+En SPIP 5.0, la logique métier peut vivre dans une classe dédiée, avec une méthode `onNomEvenement()` déclarée comme listener.
 
-Pendant la transition, les deux modèles peuvent cohabiter : les fonctions legacy continuent d'être appelées, tandis que les nouveaux listeners passent par le dispatcher Symfony.
+Pendant la transition, les deux modèles peuvent cohabiter : les fonctions legacy continuent d'être appelées,
+tandis que les nouveaux listeners passent par le dispatcher Symfony.
 
 ## Déclaration dans `config/services.php`
 
@@ -124,7 +127,8 @@ Les arguments représentent le contexte de l'appel. Ils sont consultables via `g
 
 ## Autoload du plugin
 
-Les plugins distribués avec SPIP bénéficient normalement de l'autoloading déclaré dans le dépôt. Pour un plugin installé via le backoffice, le collecteur d'autoload détecte le `composer.json` du plugin et enregistre ses mappings PSR-4.
+Les plugins distribués avec SPIP bénéficient normalement de l'autoloading déclaré dans le dépôt.
+Pour un plugin installé via le backoffice, le collecteur d'autoload détecte le `composer.json` du plugin et enregistre ses mappings PSR-4.
 
 Pour un plugin installé via SVP, déclarez au minimum un autoload PSR-4 dans le `composer.json` du plugin :
 

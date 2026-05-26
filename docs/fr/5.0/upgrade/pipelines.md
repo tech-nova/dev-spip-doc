@@ -1,13 +1,17 @@
 # Migration des pipelines
 
-SPIP 5.0 fait passer l'exécution des pipelines par l'`EventDispatcher` Symfony. La fonction historique `pipeline()` reste le point d'entrée public, mais elle délègue désormais à un dispatcher de pipelines et transporte les données dans des objets Event.
+SPIP 5.0 fait passer l'exécution des pipelines par l'`EventDispatcher` Symfony.
+La fonction historique `pipeline()` reste le point d'entrée public, mais elle délègue désormais à un dispatcher de pipelines
+et transporte les données dans des objets Event.
 
-Cette page décrit la migration générale des appels et listeners. Pour les recettes propres aux plugins, consultez [Migrer les pipelines d'un plugin](pipelines-plugins.md).
+Cette page décrit la migration générale des appels et listeners.
+Pour les recettes propres aux plugins, consultez [Migrer les pipelines d'un plugin](pipelines-plugins.md).
 
 ## Ce qui change
 
 - Les listeners modernes sont des méthodes de services, déclarées avec `#[AsPipelineListener]` ou via la configuration du plugin.
-- Les classes d'events dédiées du noyau, comme `AffichageFinalEvent`, `InsertHeadEvent` ou `FormulaireVerifierEvent`, remplacent progressivement les payloads manipulés à la main.
+- Les classes d'events dédiées du noyau, comme `AffichageFinalEvent`, `InsertHeadEvent` ou `FormulaireVerifierEvent`,
+  remplacent progressivement les payloads manipulés à la main.
 - Les pipelines qui n'ont pas encore d'event dédié passent par `SpipLeague\Bridge\Pipeline\PipelineEvent`.
 - Les anciens caches de pipelines générés ne sont plus utilisés au runtime.
 
@@ -71,7 +75,8 @@ function monplugin_affichage_final(string $html): string {
 
 Après, avec un event spécifique :
 
-Quand l'argument de la méthode est un event spécifique, n'indiquez pas le nom du pipeline : SPIP le déduit depuis l'attribut `#[AsPipelineEvent]` porté par la classe d'event.
+Quand l'argument de la méthode est un event spécifique, n'indiquez pas le nom du pipeline :
+SPIP le déduit depuis l'attribut `#[AsPipelineEvent]` porté par la classe d'event.
 
 ```php-inline
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;

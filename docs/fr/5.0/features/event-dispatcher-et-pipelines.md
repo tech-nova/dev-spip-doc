@@ -1,8 +1,10 @@
 # Event Dispatcher et Pipelines
 
-SPIP 5.0 modernise son système de pipelines en s'appuyant sur le composant **EventDispatcher** de Symfony. Les pipelines historiques restent disponibles, mais ils peuvent maintenant être manipulés avec des events typés et des listeners enregistrés comme services.
+SPIP 5.0 modernise son système de pipelines en s'appuyant sur le composant **EventDispatcher** de Symfony.
+Les pipelines historiques restent disponibles, mais ils peuvent maintenant être manipulés avec des events typés et des listeners enregistrés comme services.
 
-Cette page présente le modèle général. Pour migrer du code existant, consultez [Migrer les pipelines](../upgrade/pipelines.md). Pour la liste des events disponibles, consultez [Événements de pipelines](../reference/evenements-pipelines.md).
+Cette page présente le modèle général. Pour migrer du code existant, consultez [Migrer les pipelines](../upgrade/pipelines.md).
+Pour la liste des events disponibles, consultez [Événements de pipelines](../reference/evenements-pipelines.md).
 
 ## Concepts clés
 
@@ -49,7 +51,8 @@ final class LegacyPipelineListener
 }
 ```
 
-La classe d'event doit être annotée avec `#[AsPipelineEvent('nom_pipeline')]` pour permettre la déduction. C'est le cas des events du cœur SPIP. Le type générique `PipelineEvent` ne permet pas cette déduction, puisqu'il ne correspond pas à un pipeline unique.
+La classe d'event doit être annotée avec `#[AsPipelineEvent('nom_pipeline')]` pour permettre la déduction.
+C'est le cas des events du cœur SPIP. Le type générique `PipelineEvent` ne permet pas cette déduction, puisqu'il ne correspond pas à un pipeline unique.
 
 ## Plusieurs pipelines
 

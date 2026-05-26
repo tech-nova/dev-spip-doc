@@ -24,6 +24,7 @@ nav = [
     { "Environnement et kernel" = "upgrade/environnement-kernel.md" },
     { "Squelettes et syntaxe" = "upgrade/squelettes.md" },
     { "API PHP et fonctions" = "upgrade/php-api.md" },
+    { "Compilateur de squelettes" = "upgrade/compilateur.md" },
     { "Migrer les pipelines" = "upgrade/pipelines.md" },
     { "Migrer les pipelines d’un plugin" = "upgrade/pipelines-plugins.md" },
     { "Javascript et assets" = "upgrade/javascript.md" },

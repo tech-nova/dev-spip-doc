@@ -143,3 +143,79 @@ Ils sont remplacés par la boucle `DATA`.
 
 - **Balise `#EXPOSER` :** utilisez `[(#EXPOSE{on,off})]` au lieu de `[(#EXPOSER|on,off)]`.
 - **Balise `#EMBED_DOCUMENT` :** utilisez `[(#MODELE{emb, ...})]` au lieu de `[(#EMBED_DOCUMENT|...)]`.
+
+### Filtre `#FORMULAIRE_RECHERCHE|parametre`
+
+**Avant :**
+
+```spip
+[(#FORMULAIRE_RECHERCHE|param)]
+```
+
+**Après :**
+
+```spip
+[(#FORMULAIRE_RECHERCHE{param})]
+```
+
+### Filtre `icone`
+
+Le filtre `icone` est supprimé. Utilisez `icone_verticale` (ou `icone_horizontale`).
+
+**Avant :**
+
+```spip
+[(#URL_ECRIRE{article_edit,id_article=#ID_ARTICLE}
+  |icone{Éditer,article-24.png,#LANG_RIGHT,edit,ajax})]
+```
+
+**Après :**
+
+```spip
+[(#URL_ECRIRE{article_edit,id_article=#ID_ARTICLE}
+  |icone_verticale{Éditer,article,edit,right ajax})]
+```
+
+### Filtre `foreach`
+
+Le filtre déprécié `foreach` est supprimé. Utilisez une boucle `DATA`.
+
+**Avant :**
+
+```spip
+[(#LISTE{a,b,c,d}|foreach)]
+```
+
+**Après :**
+
+```spip
+<BOUCLE_liste(DATA){source tableau, #LISTE{a,b,c,d}}>
+- #CLE => #VALEUR <br />
+</BOUCLE_liste>
+```
+
+## Test HTML5
+
+Les tests pour envoyer un code différent selon que l'on est ou non en HTML5 sont dépréciés et seront supprimés en SPIP 6.
+
+**Avant :**
+
+En squelette :
+
+```spip
+[(#HTML5|oui) <code_specifique_html5>]
+```
+
+En PHP, voir [API PHP et Fonctions](php-api.md#test-html5).
+
+**Après :**
+
+Utiliser directement du code HTML5.
+
+## Formulaire de recherche
+
+La fonction `formulaire_recherche()` est supprimée. Utilisez la balise **`#FORMULAIRE_RECHERCHE_ECRIRE`**.
+
+## Filtre `|image_typo`
+
+Le filtre `|image_typo` n'est plus livré avec SPIP. Installez le plugin [Image Typo](https://plugins.spip.net/image_typo) pour l'obtenir.

@@ -20,28 +20,31 @@ Ce guide vous accompagne dans la mise à jour de vos sites et plugins de SPIP 4.
 
 4. **[API PHP et Fonctions](php-api.md)**
    - Système de Log (PSR-3)
-   - Fonctions supprimées ou renommées
+   - Nouvelles dépréciations et fonctions supprimées
    - Constantes migrées vers le Kernel
 
-5. **[Migrer les pipelines](pipelines.md)**
+5. **[Compilateur de squelettes](compilateur.md)**
+   - `calculer_parties()` et classes PHP du compilateur
+
+6. **[Migrer les pipelines](pipelines.md)**
    - Fonction `pipeline()` et EventDispatcher
    - Listeners typés et events dédiés
    - Changements runtime des anciens caches
 
-6. **[Migrer les pipelines d'un plugin](pipelines-plugins.md)**
+7. **[Migrer les pipelines d'un plugin](pipelines-plugins.md)**
    - Remplacement des fonctions `prefixe_pipeline()`
    - Déclaration via `config/services.php`
    - Tests unitaires des listeners
 
-7. **[Javascript et Assets](javascript.md)**
+8. **[Javascript et Assets](javascript.md)**
    - Modules ESM
    - Émancipation de jQuery
    - Migration des balises `<script>` et `<style>`
 
-8. **[Espace privé et Menus](espace-prive-et-menus.md)**
+9. **[Espace privé et Menus](espace-prive-et-menus.md)**
    - Renommage des pages et menus
    - Modifications de l'UI
 
-9. **[Dépréciations et Suppressions](deprecations-et-suppressions.md)**
-   - Récapitulatif des éléments retirés
-   - Conseils de remplacement
+10. **[Dépréciations et Suppressions](deprecations-et-suppressions.md)**
+    - Récapitulatif des éléments retirés
+    - Conseils de remplacement

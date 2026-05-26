@@ -45,7 +45,7 @@ Le support de NETPBM pour la génération de vignettes est supprimé. Utilisez G
 
 ### Surlignage
 
-Le surlignage des mots de recherche est déplacé dans un plugin externe nommé **Surligne**.
+Le surlignage des mots de recherche est déplacé dans un plugin externe nommé [Surligne](https://plugins.spip.net/surligne).
 
 ### Support `<math>`
 
