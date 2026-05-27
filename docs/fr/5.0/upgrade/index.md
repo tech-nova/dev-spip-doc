@@ -23,6 +23,11 @@ Ce guide vous accompagne dans la mise à jour de vos sites et plugins de SPIP 4.
    - Nouvelles dépréciations et fonctions supprimées
    - Constantes migrées vers le Kernel
 
+4bis. **[Configuration et métas](config.md)**
+   - Service `spip-league/config` (`spip.config`, `spip.config.manager`)
+   - Suppression de `methode::`, metapack et `_FILE_META`
+   - Dépréciation du préfixe `/<store>/...` dans `lire_config()` / `ecrire_config()`
+
 5. **[Compilateur de squelettes](compilateur.md)**
    - `calculer_parties()` et classes PHP du compilateur
 
