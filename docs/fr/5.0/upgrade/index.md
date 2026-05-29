@@ -23,33 +23,33 @@ Ce guide vous accompagne dans la mise à jour de vos sites et plugins de SPIP 4.
    - Nouvelles dépréciations et fonctions supprimées
    - Constantes migrées vers le Kernel
 
-4bis. **[Configuration et métas](config.md)**
+5. **[Configuration et métas](config.md)**
    - Service `spip-league/config` (`spip.config`, `spip.config.manager`)
    - Suppression de `methode::`, metapack et `_FILE_META`
    - Dépréciation du préfixe `/<store>/...` dans `lire_config()` / `ecrire_config()`
 
-5. **[Compilateur de squelettes](compilateur.md)**
+6. **[Compilateur de squelettes](compilateur.md)**
    - `calculer_parties()` et classes PHP du compilateur
 
-6. **[Migrer les pipelines](pipelines.md)**
+7. **[Migrer les pipelines](pipelines.md)**
    - Fonction `pipeline()` et EventDispatcher
    - Listeners typés et events dédiés
    - Changements runtime des anciens caches
 
-7. **[Migrer les pipelines d'un plugin](pipelines-plugins.md)**
+8. **[Migrer les pipelines d'un plugin](pipelines-plugins.md)**
    - Remplacement des fonctions `prefixe_pipeline()`
    - Déclaration via `config/services.php`
    - Tests unitaires des listeners
 
-8. **[Javascript et Assets](javascript.md)**
+9. **[Javascript et Assets](javascript.md)**
    - Modules ESM
    - Émancipation de jQuery
    - Migration des balises `<script>` et `<style>`
 
-9. **[Espace privé et Menus](espace-prive-et-menus.md)**
-   - Renommage des pages et menus
-   - Modifications de l'UI
+10. **[Espace privé et Menus](espace-prive-et-menus.md)**
+    - Renommage des pages et menus
+    - Modifications de l'UI
 
-10. **[Dépréciations et Suppressions](deprecations-et-suppressions.md)**
+11. **[Dépréciations et Suppressions](deprecations-et-suppressions.md)**
     - Récapitulatif des éléments retirés
     - Conseils de remplacement
