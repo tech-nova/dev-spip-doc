@@ -42,15 +42,21 @@ $services->set(MonService::class)
     ->arg('$cacheDir', '%spip.dirs.tmp%cache/');
 ```
 
-## Accès manuel au conteneur (Legacy Bridge)
+## Façade `Spip` (transition SPIP 5.0)
 
-Si vous devez accéder à un service depuis un code legacy (squelette ou fonction PHP classique), vous pouvez utiliser la fonction `app()` :
+Pour le code procédural (squelettes, `ecrire/`, plugins), préférez la façade **`Spip`** aux fonctions `service()` / `param()` (dépréciées) :
 
 ```php-inline
-use function SpipLeague\Component\Kernel\app;
+$timezone = Spip::config('timezone');
+$config = Spip::configs();
+$id = Spip::input('id_article');
+$logger = Spip::logger();
 
-$monService = app()->getContainer()->get(MonService::class);
+$service = Spip::service('nom');
+$param = Spip::param('nom');
 ```
+
+Voir [Façade Spip et Inputs](acces-services-spip.md) pour le détail (`Inputs`, bootstrap HTTP, dépréciations).
 
 *Note : Privilégiez toujours l'injection de dépendances dans vos nouvelles classes.*
 

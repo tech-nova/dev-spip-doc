@@ -21,6 +21,10 @@ Découvrez la nouvelle façon de déclarer vos menus et onglets via le fichier `
 
 Utilisez la puissance du conteneur de services Symfony. Autowiring, autoconfiguration et gestion fine des dépendances pour vos classes PHP.
 
+### [Façade Spip et Inputs](acces-services-spip.md)
+
+Accès typé aux services courants (`Spip::config('cle')`, `Spip::configs()`, `Spip::input()`, …), objet `Inputs` (`spip-league/http`) sur `RequestStack`.
+
 ### [Configuration (spip-league/config)](config.md)
 
 Centralisation des métas et tables auxiliaires via **`spip-league/config`** : services `spip.config` et `spip.config.manager`, stores SQL taggés, cache PSR-16 et pont legacy vers `lire_config()` / `ecrire_config()`. Pour la migration depuis SPIP 4.x, consultez [Configuration et métas](../upgrade/config.md).
