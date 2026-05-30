@@ -25,7 +25,6 @@ La classe `SpipLeague\Bridge\Http\Inputs` (`spip-league/http`) est enregistrée 
 - Sans Request courante : lecture → `null`, écriture → exception.
 - Les fonctions `_request()` / `set_request()` restent disponibles mais dépréciées ; elles délèguent à `Spip::` (charset AJAX conservé dans `_request()`).
 
-
 ## Migration
 
 - Nouveau code procédural : préférer `Spip::config('cle')`, `Spip::configs()`, `Spip::input()`, etc.
