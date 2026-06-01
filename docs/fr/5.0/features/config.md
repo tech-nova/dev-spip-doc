@@ -94,4 +94,6 @@ Les fonctions globales **`lire_config()`**, **`ecrire_config()`**, **`effacer_co
 
 > Doctrine : le pont ne lit ni n’écrit `$GLOBALS[$table]` directement, et utilise `request_stack` plutôt que `$_GET`. La synchronisation vers `$GLOBALS['meta']` passe par `LegacyGlobalsBridge` (`@internal`), injecté par `ConfigManager` — réservée au code legacy qui lit encore `$GLOBALS['meta']['cle']`.
 
+Le miroir **`$GLOBALS['meta']`** (et les `$GLOBALS[$store]` des tables auxiliaires) expose les **chaînes brutes** telles qu’en `spip_meta.valeur` : pas la vue désérialisée de `spip.config`. Une meta entière écrite via `->set()` / `ecrire_config()` y apparaît par exemple en `"[150]"`, alors que `lire_config('taille_preview')` renvoie l’entier `150`. Voir la section [Sérialisation des valeurs et `$GLOBALS['meta']`](../upgrade/config.md#sérialisation-des-valeurs-et-globalmeta) du guide de migration.
+
 Voir [Migration configuration](../upgrade/config.md).
