@@ -40,6 +40,7 @@ nav = [
     { "Services Symfony" = "features/services-symfony.md" },
     { "Configuration" = "features/config.md" },
     { "HTTP request response" = "features/http-request-response.md" },
+    { "Guard (écran de sécurité)" = "features/guard.md" },
     { "Logger" = "features/logger.md" },
   ]},
   { "Référence" = [
