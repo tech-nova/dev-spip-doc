@@ -1,3 +1,8 @@
+---
+hide:
+- navigation
+---
+
 # SPIP 5.0 - Technical Documentation
 
 Welcome to the SPIP 5.0 documentation. This version marks a major step in SPIP's modernization with Symfony components and modern practices (SOLID, PSR).

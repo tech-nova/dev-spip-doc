@@ -1,3 +1,8 @@
+---
+hide:
+- navigation
+---
+
 # SPIP 5.0 - Documentation technique
 
 Bienvenue dans la documentation de SPIP 5.0. Cette version marque une étape importante dans la modernisation en cours de SPIP avec l'intégration de composants
