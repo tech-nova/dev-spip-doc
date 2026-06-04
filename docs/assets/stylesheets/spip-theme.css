@@ -154,7 +154,83 @@ body {
   padding-right: 0.8rem !important;
 }
 
-/* Ensure the topnav items use the same font */
-.menu_container.spip-theme > ul > li a {
-  font-family: 'Montserrat', sans-serif !important;
+/*
+ * Boussole (styles injectés par spipnav.js) : reprendre 0.9em / 400 comme spip.net,
+ * et verrouiller la barre à 40px pour que le logo reste centré à toutes largeurs.
+ */
+#boussole_spip.menu_container {
+  height: 40px;
+  min-height: 40px;
+  max-height: 40px;
+}
+
+#boussole_spip > ul {
+  height: 40px;
+  min-height: 40px;
+  max-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+#boussole_spip > ul > li {
+  float: none;
+  height: 40px;
+  max-height: 40px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+#boussole_spip > ul > li > .caret {
+  align-self: center;
+}
+
+#boussole_spip > ul > li > a {
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 0.9em !important;
+  font-weight: 400 !important;
+  line-height: 40px !important;
+}
+
+#boussole_spip > ul > li:first-child > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px !important;
+  line-height: 1 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+#boussole_spip > ul > li:first-child img {
+  display: block;
+  vertical-align: middle;
+}
+
+/* Onglets Zensical : alignement gauche avec le titre, graisse, filet actif */
+[dir="ltr"] .md-tabs__list {
+  margin-left: 0.6rem;
+}
+
+.md-tabs {
+  box-shadow: inset 0 -.05rem 0 hsla(0, 0%, 20%, 0.1);
+}
+[data-md-color-scheme="slate"] .md-tabs {
+  box-shadow: inset 0 -.05rem 0 hsla(0,0%,100%,.1);
+}
+
+.md-tabs__link {
+  font-weight: 500;
+  opacity: 0.88;
+  border-bottom: 1px solid transparent;
+  margin-bottom: -1px;
+}
+
+.md-tabs__item--active {
+  border-bottom: 1px solid var(--md-primary-bg-color);
+}
+/* Filet bas : 1px partout ; actif = blanc / fond clair du thème (lisible sur bandeau violet) */
+.md-tabs__item--active .md-tabs__link {
+  opacity: 1;
+  font-weight: 600;
 }
