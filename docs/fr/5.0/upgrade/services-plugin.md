@@ -17,7 +17,7 @@ et l’autoconfiguration (`AsPipelineListener`, `AsCronTask`, etc.).
 
 ### 1. Créer `config/services.php`
 
-```php-inline
+```php
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $container): void {
@@ -32,7 +32,7 @@ return static function (ContainerConfigurator $container): void {
 
 ### 2. Utiliser les paramètres SPIP
 
-```php-inline
+```php
 $services->set(MonService::class)
     ->arg('$cacheDir', '%spip.dirs.tmp%cache/');
 ```

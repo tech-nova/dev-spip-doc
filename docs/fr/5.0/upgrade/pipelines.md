@@ -22,31 +22,31 @@ Pour les recettes propres aux plugins, consultez [Migrer les pipelines d'un plug
 
 Le mode legacy reste accepté :
 
-```php-inline
+```php
 $html = pipeline('affichage_final', $html);
 ```
 
 Pour un pipeline structuré, l'ancienne forme `['args' => ..., 'data' => ...]` reste comprise :
 
-```php-inline
+```php
 $champs = pipeline('pre_edition', ['args' => ['table' => 'spip_articles'], 'data' => $champs]);
 ```
 
 En SPIP 5.0, préférez la forme à trois arguments, plus lisible :
 
-```php-inline
+```php
 $champs = pipeline('pre_edition', $champs, ['table' => 'spip_articles', 'id_objet' => 12]);
 ```
 
 Si le pipeline doit rester structuré avec un contexte vide, passez explicitement `[]` en troisième argument :
 
-```php-inline
+```php
 $data = pipeline('mon_pipeline', $data, []);
 ```
 
 Quand un event dédié existe, la forme recommandée consiste à instancier l'event, à appeler `pipeline($event)`, puis à relire les données typées :
 
-```php-inline
+```php
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
 
 $event = new AffichageFinalEvent($html);
@@ -56,7 +56,7 @@ $html = $event->getHtml();
 
 Pour un pipeline non encore typé :
 
-```php-inline
+```php
 use SpipLeague\Bridge\Pipeline\PipelineEvent;
 
 $event = new PipelineEvent('mon_pipeline', $data, ['id' => 12]);
@@ -70,7 +70,7 @@ Les anciennes fonctions de pipeline peuvent être remplacées progressivement pa
 
 Avant :
 
-```php-inline
+```php
 function monplugin_affichage_final(string $html): string {
     return str_replace('</body>', '<script src="/js/plugin.js"></script></body>', $html);
 }
@@ -81,7 +81,7 @@ Après, avec un event spécifique :
 Quand l'argument de la méthode est un event spécifique, n'indiquez pas le nom du pipeline :
 SPIP le déduit depuis l'attribut `#[AsPipelineEvent]` porté par la classe d'event.
 
-```php-inline
+```php
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
 use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
 
@@ -97,7 +97,7 @@ final class FooterListener
 
 Avec `PipelineEvent`, la déduction est impossible : il faut déclarer explicitement le pipeline.
 
-```php-inline
+```php
 use SpipLeague\Bridge\Pipeline\PipelineEvent;
 use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
 
@@ -118,13 +118,13 @@ final class LegacyPipelineListener
 
 Un appel legacy peut rester inchangé pendant la transition :
 
-```php-inline
+```php
 $html = pipeline('affichage_final', $html);
 ```
 
 Quand le code appelant a accès à une classe d'event dédiée, il peut basculer vers l'appel typé :
 
-```php-inline
+```php
 $event = new AffichageFinalEvent($html);
 pipeline($event);
 $html = $event->getHtml();
@@ -141,7 +141,7 @@ Le noyau expose le dispatcher Symfony et le dispatcher de pipelines :
 
 Pour un service déclaré explicitement, l'enregistrement peut cibler une méthode nommée :
 
-```php-inline
+```php
 $registry->registerService('mon_pipeline', 'mon_service_id', 'onMonPipeline');
 ```
 

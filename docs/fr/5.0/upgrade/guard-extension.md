@@ -16,7 +16,7 @@ Bloquer ou autoriser une requête selon une logique métier (quota API, IP, rout
 
 ### 1. Implémenter `GuardRuleInterface`
 
-```php-inline
+```php
 use SpipLeague\Component\Guard\Attribute\AsGuard;
 use SpipLeague\Component\Guard\GuardContext;
 use SpipLeague\Component\Guard\GuardRuleInterface;

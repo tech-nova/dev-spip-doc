@@ -49,7 +49,7 @@ sequenceDiagram
 Le fichier charge `vendor/autoload_runtime.php` (Symfony Runtime) et retourne une fabrique qui résout le service
 `http_kernel` :
 
-```php-inline
+```php
 return static function (array $context): SpipHttpKernel {
     return service('http_kernel');
 };

@@ -16,7 +16,7 @@ Remplacer le pipeline `taches_generales_cron` et les déclarations XML par des s
 
 ### 1. Tâche sur une classe (`__invoke`)
 
-```php-inline
+```php
 namespace SpipContrib\Plugin\MonPlugin\Cron\Task;
 
 use SpipLeague\Component\Kernel\Attribute\AsCronTask;
@@ -34,7 +34,7 @@ final class NettoyageTask
 
 ### 2. Plusieurs tâches dans un même service
 
-```php-inline
+```php
 #[AsCronTask(name: 'monplugin_raz', periode: 86400)]
 public function remiseAZero(): int
 {

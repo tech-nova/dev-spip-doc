@@ -16,7 +16,7 @@ Déclarer les entrées de navigation de l’espace privé en PHP statique (OPcac
 
 ### 1. Créer `config/menus.php`
 
-```php-inline
+```php
 return [
     'mon_outil' => [
         'titre'  => 'monplugin:titre_outil',
@@ -29,7 +29,7 @@ return [
 
 ### 2. Créer `config/onglets.php`
 
-```php-inline
+```php
 return [
     'mon_outil_infos' => [
         'titre'  => 'monplugin:onglet_infos',

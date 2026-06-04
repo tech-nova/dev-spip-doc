@@ -19,7 +19,7 @@ Pour que SPIP détecte les listeners avec attributs et puisse injecter leurs dé
 
 Avec `autoconfigure()`, les méthodes annotées avec `#[AsPipelineListener]` sont enregistrées automatiquement.
 
-```php-inline
+```php
 <?php
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -39,7 +39,7 @@ Voir aussi [Services et injection de dépendances](../features/services-symfony.
 
 Avant :
 
-```php-inline
+```php
 function monplugin_affichage_final(string $html): string {
     return str_replace('</body>', '<script src="/js/monplugin.js"></script></body>', $html);
 }
@@ -47,7 +47,7 @@ function monplugin_affichage_final(string $html): string {
 
 Après :
 
-```php-inline
+```php
 namespace MonPlugin\Pipeline\Listener;
 
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
@@ -69,7 +69,7 @@ L'attribut n'a pas besoin d'argument parce que `AffichageFinalEvent` indique dé
 
 Avant :
 
-```php-inline
+```php
 function monplugin_pre_edition(array $flux): array {
     $id = (int) ($flux['args']['id_objet'] ?? 0);
     $flux['data']['maj'] = date('Y-m-d H:i:s');
@@ -80,7 +80,7 @@ function monplugin_pre_edition(array $flux): array {
 
 Après, si un event dédié existe :
 
-```php-inline
+```php
 namespace MonPlugin\Pipeline\Listener;
 
 use Spip\Framework\Pipeline\Event\PreEditionEvent;
@@ -102,7 +102,7 @@ final class PreEditionListener
 
 Si le pipeline n'a pas encore d'event dédié, utilisez `PipelineEvent` avec un nom explicite :
 
-```php-inline
+```php
 namespace MonPlugin\Pipeline\Listener;
 
 use SpipLeague\Bridge\Pipeline\PipelineEvent;
@@ -146,7 +146,7 @@ Pour un plugin installé via SVP, déclarez au minimum un autoload PSR-4 dans le
 
 Un listener est un service du conteneur. Il peut donc recevoir ses dépendances par constructeur dès lors qu'il est chargé par `config/services.php`.
 
-```php-inline
+```php
 namespace MonPlugin\Pipeline\Listener;
 
 use Psr\Log\LoggerInterface;
@@ -180,7 +180,7 @@ final class ConfigMetasListener
 
 Un listener est une classe PHP standard. Pour le tester, instanciez l'event, appelez la méthode listener, puis vérifiez l'état de l'event.
 
-```php-inline
+```php
 use MonPlugin\Pipeline\Listener\AffichageFinalListener;
 use PHPUnit\Framework\TestCase;
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;

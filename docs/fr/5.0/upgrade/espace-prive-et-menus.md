@@ -76,7 +76,7 @@ le couple unique **`boite_ouvrir()`** et **`boite_fermer()`**.
 
 **Exemple de migration :**
 
-```php-inline
+```php
 // Avant
 echo debut_boite_info();
 echo "Mon contenu";

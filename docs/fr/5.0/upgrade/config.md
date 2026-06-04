@@ -181,7 +181,7 @@ Les signatures globales (`lire_config`, `ecrire_config`, `effacer_config`, `ecri
 
 ## Utilisation depuis un plugin (PHP moderne)
 
-```php-inline
+```php
 use function SpipLeague\Component\Kernel\service;
 
 $config = service('spip.config');
@@ -194,7 +194,7 @@ $perso->refresh();
 
 ### Store custom
 
-```php-inline
+```php
 $services
     ->set('mon_plugin.config.store', SqlConfigStore::class)
     ->arg('$tableSuffix', 'mon_table')

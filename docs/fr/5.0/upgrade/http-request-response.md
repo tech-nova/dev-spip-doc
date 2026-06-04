@@ -15,7 +15,7 @@ Remplacer `_request()` et les sorties directes par l’API HttpFoundation là o�
 
 ### 1. Obtenir la requête courante
 
-```php-inline
+```php
 use function SpipLeague\Component\Kernel\service;
 
 $request = service('request_stack')->getCurrentRequest();
@@ -24,13 +24,13 @@ $id = $request?->query->get('id_article');
 
 ### 2. Lire POST et cookies
 
-```php-inline
+```php
 $titre = $request->request->get('titre');
 ```
 
 ### 3. Retourner une Response
 
-```php-inline
+```php
 use Symfony\Component\HttpFoundation\Response;
 
 return new Response('Contenu', 200, ['Content-Type' => 'text/plain']);
@@ -38,7 +38,7 @@ return new Response('Contenu', 200, ['Content-Type' => 'text/plain']);
 
 ### 4. Court-circuiter avec EarlyResponseException
 
-```php-inline
+```php
 use SpipLeague\Bridge\Http\EarlyResponseException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

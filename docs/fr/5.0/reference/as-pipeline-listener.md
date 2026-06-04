@@ -6,7 +6,7 @@ Migration : [Migrer les pipelines d'un plugin](../upgrade/pipelines-plugins.md).
 
 ## Signature
 
-```php-inline
+```php
 #[AsPipelineListener(
     ?string $pipeline = null,
     string $position = 'normal',
@@ -58,7 +58,7 @@ Valeurs supportées :
 
 À réserver aux pipelines qui n'ont pas encore d'event spécifique.
 
-```php-inline
+```php
 #[AsPipelineListener('pipeline_non_type', position: 'append')]
 public function onPipelineNonType(PipelineEvent $event): void
 {
@@ -70,7 +70,7 @@ public function onPipelineNonType(PipelineEvent $event): void
 
 ### Listener déduit
 
-```php-inline
+```php
 #[AsPipelineListener]
 public function onAffichageFinal(AffichageFinalEvent $event): void
 {
@@ -80,7 +80,7 @@ public function onAffichageFinal(AffichageFinalEvent $event): void
 
 ### Listener multi-pipelines (union type)
 
-```php-inline
+```php
 #[AsPipelineListener]
 public function onSidebar(AfficheGaucheEvent|AfficheDroiteEvent $event): void
 {

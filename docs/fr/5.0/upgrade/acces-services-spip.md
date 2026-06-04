@@ -15,28 +15,28 @@ Adopter la façade de transition SPIP 5.0 sans multiplier les fonctions globales
 
 ### 1. Configuration
 
-```php-inline
+```php
 $site = Spip::config('nom_site');
 $repo = Spip::configs();
 ```
 
 ### 2. Logs
 
-```php-inline
+```php
 Spip::logger()->info('Message');
 Spip::logger('mysql')->debug('Requête');
 ```
 
 ### 3. Entrées HTTP
 
-```php-inline
+```php
 $id = Spip::input('id_article');
 $all = Spip::inputs();
 ```
 
 ### 4. Services et paramètres
 
-```php-inline
+```php
 $kernel = Spip::service('kernel');
 $tmp = Spip::param('spip.dirs.tmp');
 ```

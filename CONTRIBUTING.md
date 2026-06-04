@@ -6,7 +6,7 @@
 - Fichiers en kebab-case.
 - Liens relatifs entre pages Markdown.
 - Pas d'accents dans les noms de fichiers.
-- Utiliser `php-inline` pour les extraits de code PHP sans `<?php`.
+- Utiliser `php` pour les extraits de code PHP (sans `<?php` en tête : le surlignage est configuré en `startinline` dans les fichiers `zensical-*.toml`).
 
 ## Style d'écriture (Diátaxis)
 

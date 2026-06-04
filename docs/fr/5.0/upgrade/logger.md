@@ -17,21 +17,21 @@ Utiliser `spip_logger()` et l’injection de `LoggerInterface` avec les paramèt
 
 **Avant :**
 
-```php-inline
+```php
 spip_log('Message', _LOG_ERREUR);
 spip_log('Plugin', 'mon_plugin');
 ```
 
 **Après :**
 
-```php-inline
+```php
 spip_logger()->error('Message');
 spip_logger('mon_plugin')->info('Plugin');
 ```
 
 ### 2. Configurer le logger global
 
-```php-inline
+```php
 // config/custom.php
 return static function (ContainerConfigurator $container): void {
     $container->parameters()
@@ -48,7 +48,7 @@ return static function (ContainerConfigurator $container): void {
 
 ### 3. Injecter le logger dans un service
 
-```php-inline
+```php
 public function __construct(
     private readonly LoggerInterface $logger,
 ) {}
@@ -56,13 +56,13 @@ public function __construct(
 
 ### 4. Logger dédié au plugin
 
-```php-inline
+```php
 $services->set('spip.mon_plugin.logger', LoggerInterface::class)
     ->factory([service('spip.logger_registry'), 'get'])
     ->args(['mon_plugin']);
 ```
 
-```php-inline
+```php
 #[Autowire(service: 'spip.mon_plugin.logger')]
 private readonly LoggerInterface $logger,
 ```

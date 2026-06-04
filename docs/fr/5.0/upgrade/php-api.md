@@ -165,7 +165,7 @@ Remplacez-les par l'appel à la fonction `lister_tables_objets_sql()`.
 
 **Migration de `abs_url()` :**
 
-```php-inline
+```php
 // Avant
 $url = abs_url($url);
 $texte = abs_url($texte);
@@ -177,7 +177,7 @@ $texte = liens_absolus($texte);
 
 **Migration de `generer_url_ecrire_objet()` :**
 
-```php-inline
+```php
 // Avant
 $url = generer_url_ecrire_objet(3, 'article');
 
@@ -187,7 +187,7 @@ $url = generer_objet_url_ecrire(3, 'article');
 
 **Migration de `json_export()` :**
 
-```php-inline
+```php
 // Avant
 $json = json_export($data);
 
@@ -334,7 +334,7 @@ Préférez cependant `find_in_theme()` ou `chemin_image()` (qui recherchent dans
 Les fichiers de langue ne doivent plus peupler la globale `$GLOBALS[$GLOBALS['idx_lang']]`.
 Ils doivent désormais simplement retourner le tableau PHP.
 
-```php-inline
+```php
 // config/lang/paquet-monplugin_fr.php
 return [
     'monplugin_titre' => 'Mon Plugin',
