@@ -1,5 +1,9 @@
 # Cycle applicatif HTTP
 
+Cette page **explique** le parcours d’une requête HTTP dans SPIP 5.0.
+
+## En bref
+
 SPIP 5 expose le site via un **front controller** minimal qui délègue au runtime Symfony, puis au noyau HTTP
 **spip-league**. Cette page décrit la séquence actuelle d’une requête web : du point d’entrée jusqu’à la
 `Response` renvoyée au client.

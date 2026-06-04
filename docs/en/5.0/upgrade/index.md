@@ -1,5 +1,7 @@
-# Migration Guide to SPIP 5.0
+# SPIP 5.0 — Migration guide
 
-> Documentation in English is work in progress.
+This section will contain **how-to** migration guides. Content is being translated from the [French upgrade index](/fr/5.0/upgrade/).
 
-Please refer to the [French version](/fr/5.0/upgrade/) for the complete guide.
+For now, refer to the French documentation:
+
+- [Migration overview (FR)](/fr/5.0/upgrade/)

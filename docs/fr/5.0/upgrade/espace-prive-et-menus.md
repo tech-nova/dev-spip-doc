@@ -1,6 +1,11 @@
-# Espace privé et Menus
+# Espace privé et menus — ruptures UI
 
-L'espace privé de SPIP 5.0 bénéficie de plusieurs renommages et simplifications pour une meilleure cohérence.
+Ce guide pratique recense les **ruptures** de l’espace privé SPIP 5.0 (renommages, UI).
+Pour migrer menus et onglets : [Migrer menus et onglets](menus-onglets.md).
+
+## Objectif
+
+Mettre à jour liens, identifiants de menus et squelettes privés après passage à SPIP 5.0.
 
 ## Renommage de la page Admin Tech
 
@@ -11,11 +16,8 @@ La page `?exec=admin_tech` est renommée en **`?exec=admin_bdd`**.
 
 ## Menus de l'espace privé
 
-SPIP 5.0 simplifie la déclaration des menus et des onglets en remplaçant les balises `<menu>` et `<onglet>` de `paquet.xml` par des fichiers de configuration
-**`config/menus.php`** et **`config/onglets.php`**.
-
-Pour plus de détails sur la nouvelle syntaxe et la migration complète, consultez le guide dédié :
-**[Menus et Onglets de l'espace privé](../features/menus.md)**.
+Migration `config/menus.php` / `config/onglets.php` : [Migrer menus et onglets](menus-onglets.md).
+Modèle : [Menus et onglets](../features/menus.md).
 
 ### Renommages importants
 
@@ -90,3 +92,8 @@ echo boite_fermer();
 
 Le comportement du formulaire d'association de liens a été modifié. L'édition est désormais possible dès que l'on a l'autorisation de modifier l'objet. Si vous avez
 surchargé ce formulaire, vérifiez la gestion du paramètre `editable`.
+
+## Voir aussi
+
+- [Migrer menus et onglets](menus-onglets.md)
+- [Menus et onglets](../features/menus.md)

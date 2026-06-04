@@ -1,5 +1,7 @@
 # Migration des pipelines
 
+Ce guide pratique décrit **comment** migrer les appels et listeners de pipelines vers l'Event Dispatcher de SPIP 5.0.
+
 SPIP 5.0 fait passer l'exécution des pipelines par l'`EventDispatcher` Symfony.
 La fonction historique `pipeline()` reste le point d'entrée public, mais elle délègue désormais à un dispatcher de pipelines
 et transporte les données dans des objets Event.
@@ -149,8 +151,9 @@ $registry->registerService('mon_pipeline', 'mon_service_id', 'onMonPipeline');
 - `$GLOBALS['spip_pipeline']` et `$GLOBALS['spip_matrice']` ne sont plus la source runtime de l'exécution.
 - La constante `_CACHE_PIPELINES` a été supprimée.
 
-## Références
+## Voir aussi
 
-- [Migrer les pipelines d'un plugin](pipelines-plugins.md) : déclaration dans `config/services.php`, autoload et tests.
-- [Événements de pipelines](../reference/evenements-pipelines.md) : liste des events disponibles.
-- [Référence `AsPipelineListener`](../reference/as-pipeline-listener.md) : règles de résolution de l'attribut.
+- [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md) — modèle et concepts
+- [Migrer les pipelines d'un plugin](pipelines-plugins.md)
+- [Événements de pipelines](../reference/evenements-pipelines.md)
+- [Référence `AsPipelineListener`](../reference/as-pipeline-listener.md)

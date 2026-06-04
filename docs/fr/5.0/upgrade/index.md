@@ -1,55 +1,35 @@
 # Guide de migration vers SPIP 5.0
 
-Ce guide vous accompagne dans la mise à jour de vos sites et plugins de SPIP 4.x vers SPIP 5.0.
+Ce guide regroupe les **guides pratiques** pour mettre à jour sites et plugins de SPIP 4.x vers SPIP 5.0.
+Pour comprendre le « pourquoi » des briques modernes, voir [Fonctionnalités](../features/index.md).
 
 ## Sommaire de migration
 
-1. **[Préliminaires et Prérequis](prerequis.md)**
-   - PHP 8.2+
-   - Migration de la base de données
-   - Nouveau layout des `plugins-dist/`
+### Préparation
 
-2. **[Environnement et Kernel](environnement-kernel.md)**
-   - Variables d'environnement `.env`
-   - Configuration du Kernel
+- **[Prérequis](prerequis.md)** — PHP 8.2+, base de données, `plugins-dist/`
+- **[Environnement et Kernel](environnement-kernel.md)** — `.env`, configuration du Kernel
 
-3. **[Squelettes et Syntaxe](squelettes.md)**
-   - Parties optionnelles des balises
-   - Casse des items de langue
-   - Inclusions PHP supprimées
+### Cœur et squelettes
 
-4. **[API PHP et Fonctions](php-api.md)**
-   - Système de Log (PSR-3)
-   - Nouvelles dépréciations et fonctions supprimées
-   - Constantes migrées vers le Kernel
+- **[Squelettes et syntaxe](squelettes.md)**
+- **[API PHP et fonctions](php-api.md)**
+- **[Configuration et métas](config.md)**
+- **[Compilateur de squelettes](compilateur.md)**
 
-5. **[Configuration et métas](config.md)**
-   - Service `spip-league/config` (`spip.config`, `spip.config.manager`)
-   - Suppression de `methode::`, metapack et `_FILE_META`
-   - Dépréciation du préfixe `/<store>/...` dans `lire_config()` / `ecrire_config()`
+### Plugins modernes
 
-6. **[Compilateur de squelettes](compilateur.md)**
-   - `calculer_parties()` et classes PHP du compilateur
+- **[Migrer les pipelines](pipelines.md)** · [dans un plugin](pipelines-plugins.md)
+- **[Migrer les tâches cron](cron-taches-attributs.md)**
+- **[Configurer les services d’un plugin](services-plugin.md)**
+- **[Migrer menus et onglets](menus-onglets.md)**
+- **[Façade Spip et Inputs](acces-services-spip.md)**
+- **[HTTP Request/Response](http-request-response.md)**
+- **[Logs PSR-3](logger.md)**
+- **[Étendre Guard](guard-extension.md)**
 
-7. **[Migrer les pipelines](pipelines.md)**
-   - Fonction `pipeline()` et EventDispatcher
-   - Listeners typés et events dédiés
-   - Changements runtime des anciens caches
+### Interface et fin de migration
 
-8. **[Migrer les pipelines d'un plugin](pipelines-plugins.md)**
-   - Remplacement des fonctions `prefixe_pipeline()`
-   - Déclaration via `config/services.php`
-   - Tests unitaires des listeners
-
-9. **[Javascript et Assets](javascript.md)**
-   - Modules ESM
-   - Émancipation de jQuery
-   - Migration des balises `<script>` et `<style>`
-
-10. **[Espace privé et Menus](espace-prive-et-menus.md)**
-    - Renommage des pages et menus
-    - Modifications de l'UI
-
-11. **[Dépréciations et Suppressions](deprecations-et-suppressions.md)**
-    - Récapitulatif des éléments retirés
-    - Conseils de remplacement
+- **[Javascript et assets](javascript.md)**
+- **[Espace privé — ruptures UI](espace-prive-et-menus.md)**
+- **[Dépréciations et suppressions](deprecations-et-suppressions.md)**

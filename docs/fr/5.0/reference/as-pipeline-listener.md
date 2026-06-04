@@ -85,3 +85,9 @@ public function onSidebar(AfficheGaucheEvent|AfficheDroiteEvent $event): void
     // enregistré pour les deux pipelines
 }
 ```
+
+## Voir aussi
+
+- [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md)
+- [Migrer les pipelines d'un plugin](../upgrade/pipelines-plugins.md)
+- [Événements de pipelines](evenements-pipelines.md)

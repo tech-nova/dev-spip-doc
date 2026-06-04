@@ -1,38 +1,17 @@
 # Nouvelles fonctionnalités de SPIP 5.0
 
-SPIP 5.0 introduit des briques architecturales basées sur Symfony pour faciliter le développement de plugins robustes, testables et maintenables.
+Cette section **explique** les briques modernes de SPIP 5.0 (Symfony, attributs, conteneur). Les guides pratiques de migration et de mise en œuvre sont dans [Migration](../upgrade/index.md).
 
-## Sommaire des fonctionnalités
+## Sommaire
 
-### [Event Dispatcher et Pipelines](event-dispatcher-et-pipelines.md)
-
-Le nouveau système de communication entre composants. Remplace avantageusement les pipelines historiques par des événements typés et des listeners enregistrés comme
-services. Pour les étapes de migration, consultez [Migrer les pipelines](../upgrade/pipelines.md).
-
-### [Tâches Cron et Attributs](cron-taches-attributs.md)
-
-Déclarez vos tâches de fond simplement avec l'attribut `#[AsCronTask]`. Plus besoin de modifier `paquet.xml` ou de passer par le pipeline `taches_generales_cron`.
-
-### [Menus et Onglets de l'espace privé](menus.md)
-
-Découvrez la nouvelle façon de déclarer vos menus et onglets via le fichier `config/menus.php`, remplaçant les balises XML de `paquet.xml`.
-
-### [Services et Injection de dépendances](services-symfony.md)
-
-Utilisez la puissance du conteneur de services Symfony. Autowiring, autoconfiguration et gestion fine des dépendances pour vos classes PHP.
-
-### [Façade Spip et Inputs](acces-services-spip.md)
-
-Accès typé aux services courants (`Spip::config('cle')`, `Spip::configs()`, `Spip::input()`, …), objet `Inputs` (`spip-league/http`) sur `RequestStack`.
-
-### [Configuration (spip-league/config)](config.md)
-
-Centralisation des métas et tables auxiliaires via **`spip-league/config`** : services `spip.config` et `spip.config.manager`, stores SQL taggés, cache PSR-16 et pont legacy vers `lire_config()` / `ecrire_config()`. Pour la migration depuis SPIP 4.x, consultez [Configuration et métas](../upgrade/config.md).
-
-### [Gestion HTTP (Request/Response)](http-request-response.md)
-
-SPIP 5.0 utilise désormais `Symfony\Component\HttpFoundation`. Découvrez comment manipuler la requête et retourner des réponses proprement.
-
-### [Système de Log (PSR-3)](logger.md)
-
-Utilisez le nouveau logger compatible PSR-3. Découvrez comment configurer vos logs et injecter le logger dans vos services.
+| Sujet | Explication | Guide pratique |
+|-------|-------------|----------------|
+| Pipelines / Event Dispatcher | [Event Dispatcher et Pipelines](event-dispatcher-et-pipelines.md) | [Migrer les pipelines](../upgrade/pipelines.md) |
+| Tâches cron | [Cron et attributs](cron-taches-attributs.md) | [Migrer les tâches cron](../upgrade/cron-taches-attributs.md) |
+| Menus privé | [Menus et onglets](menus.md) | [Migrer menus et onglets](../upgrade/menus-onglets.md) |
+| Services | [Services Symfony](services-symfony.md) | [Services d’un plugin](../upgrade/services-plugin.md) |
+| Façade Spip | [Façade Spip et Inputs](acces-services-spip.md) | [Migrer vers Spip](../upgrade/acces-services-spip.md) |
+| Configuration | [Configuration](config.md) | [Configuration et métas](../upgrade/config.md) |
+| HTTP | [Request/Response](http-request-response.md) | [HTTP dans un plugin](../upgrade/http-request-response.md) |
+| Guard | [Guard](guard.md) | [Étendre Guard](../upgrade/guard-extension.md) |
+| Logs | [Logger PSR-3](logger.md) | [Migrer les logs](../upgrade/logger.md) |

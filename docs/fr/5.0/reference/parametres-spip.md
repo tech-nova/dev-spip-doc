@@ -1,8 +1,11 @@
 # Paramètres SPIP (conteneur)
 
+Page de **référence** : services du conteneur liés à la configuration SPIP 5.0.
+
 ## Configuration
 
-Il n’y a plus de paramètres `spip.config.*` dans `config/spip/config.php` du projet. Le store par défaut (`meta`) et le cache (`spip.cache.config`, TTL 1 mois) sont déclarés dans le kernel.
+Il n’y a plus de paramètres `spip.config.*` dans `config/spip/config.php` du projet.
+Le store `meta` et le cache `spip.cache.config` (TTL 1 mois) sont déclarés dans le kernel.
 
 ## Services associés
 
@@ -12,4 +15,7 @@ Il n’y a plus de paramètres `spip.config.*` dans `config/spip/config.php` du 
 - `spip.cache.config` — adaptateur cache fichiers pour la configuration
 - `spip.serializer` — sérialisation des valeurs structurées
 
-Voir [Configuration (feature)](../features/config.md).
+## Voir aussi
+
+- [Configuration (feature)](../features/config.md)
+- [Migration — Configuration et métas](../upgrade/config.md)

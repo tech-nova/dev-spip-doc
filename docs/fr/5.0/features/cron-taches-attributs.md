@@ -1,77 +1,37 @@
 # Tâches Cron et Attributs
 
-Dans SPIP 5.0, la déclaration des tâches de fond (génie) est simplifiée grâce à l'utilisation d'attributs PHP.
+Cette page **explique** le modèle de tâches de fond de SPIP 5.0. Pour déclarer ou migrer une tâche dans un plugin, voir le guide pratique.
 
-## L'attribut `#[AsCronTask]`
+## En bref
 
-Cet attribut peut être placé soit sur une **classe** (utilisant alors la méthode `__invoke()`), soit directement sur une **méthode** spécifique d'un service.
+Les tâches cron se déclarent avec **`#[AsCronTask]`** sur une classe ou une méthode,
+remplaçant le pipeline `taches_generales_cron` et `paquet.xml`.
 
-### Exemple 1 : Sur une classe (méthode `__invoke`)
+## Contexte
 
-```php-inline
-namespace SpipContrib\Plugin\MonPlugin\Cron\Task;
+Historiquement : XML + fonctions globales, code retour `>= 0` = succès.
+SPIP 5.0 : services injectables, convention Unix (`0` = succès).
 
-use SpipLeague\Component\Kernel\Attribute\AsCronTask;
+## Fonctionnement
 
-#[AsCronTask(name: 'monplugin_nettoyage', periode: 3600)]
-final class NettoyageTask
-{
-    public function __invoke(): int
-    {
-        // logique...
-        return 0; // Succès
-    }
-}
-```
+- L’attribut porte un **nom** unique et une **période** minimale (60 s).
+- La classe peut implémenter `__invoke()` ou exposer plusieurs méthodes annotées.
+- Le conteneur découvre les tâches via autoconfigure, comme pour les listeners de pipelines.
 
-### Exemple 2 : Sur une méthode spécifique
+## Différences avec SPIP 4.x
 
-C'est utile si vous souhaitez regrouper plusieurs tâches au sein d'un même service.
+| SPIP 4.x | SPIP 5.0 |
+|----------|----------|
+| Pipeline `taches_generales_cron` | `#[AsCronTask]` |
+| Déclaration dans `paquet.xml` | Code + `config/services.php` |
+| Code retour `>= 0` | Code retour `0` = succès |
 
-```php-inline
-namespace SpipContrib\Plugin\MonPlugin\Service;
+## Limites et pièges
 
-use SpipLeague\Component\Kernel\Attribute\AsCronTask;
+- Les classes de tâches doivent être des **services** du plugin (autoload + `config/services.php`).
+- Ne pas mélanger les conventions de code de retour legacy et moderne.
 
-final class MaintenanceService
-{
-    #[AsCronTask(name: 'monplugin_raz', periode: 86400)]
-    public function remiseAZero(): int
-    {
-        // logique...
-        return 0;
-    }
+## Voir aussi
 
-    #[AsCronTask(name: 'monplugin_optimise', periode: 3600)]
-    public function optimiser(): int
-    {
-        // logique...
-        return 0;
-    }
-}
-```
-
-## Paramètres de l'attribut
-
-| Paramètre | Description |
-| :--- | :--- |
-| `name` | Nom unique de la tâche (requis). |
-| `periode` | Période d'exécution en secondes (requis, min 60). |
-| `priorite` | Priorité d'exécution (optionnel, défaut 0). |
-
-## Codes de retour
-
-Attention, la convention des codes de retour change entre le système legacy et le système moderne :
-
-- **Legacy :** `>= 0` pour le succès.
-- **Moderne (Unix) :** `0` pour le succès, `> 0` pour une erreur.
-
-## Avantages
-
-- **Organisation :** Les tâches sont regroupées dans `src/Cron/Task/`.
-- **Injection :** Vous pouvez injecter des services (base de données, logger, API) directement dans le constructeur de votre tâche.
-- **Plus de `paquet.xml` :** La déclaration est portée par le code lui-même.
-
-## Prérequis
-
-Comme pour les listeners, vos classes de tâches doivent être enregistrées comme services via un fichier `config/services.php` dans votre plugin.
+- [Migrer les tâches cron](../upgrade/cron-taches-attributs.md)
+- [Services et injection de dépendances](services-symfony.md)

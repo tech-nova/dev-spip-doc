@@ -1,5 +1,8 @@
 # Migration — Configuration et métas
 
+Ce guide pratique décrit **comment** migrer configuration et métas vers `spip-league/config`.
+Voir [Configuration (feature)](../features/config.md) pour le modèle.
+
 ## Suppressions (SPIP 5.0)
 
 Sans période de dépréciation, supprimées du tronc :
@@ -36,7 +39,9 @@ Le 3ᵉ argument `$unserialize = false` est déprécié ; la (dé)sérialisation
 
 ## Doctrine pour le pont legacy
 
-À partir de 5.0, le pont (`ecrire/inc/meta.php`, `ecrire/inc/config.php`) **ne lit ni n’écrit `$GLOBALS[$table]` directement**. Le miroir global reste exposé pour la BC mais comme effet de bord du `ConfigRepository`, jamais comme source de vérité. Les plugins en cours de migration doivent en faire autant.
+À partir de 5.0, le pont (`ecrire/inc/meta.php`, `ecrire/inc/config.php`) **ne lit ni n’écrit `$GLOBALS[$table]` directement**.
+Le miroir global reste exposé pour la BC comme effet de bord du `ConfigRepository`, jamais comme source de vérité.
+Les plugins en cours de migration doivent en faire autant.
 
 Pour la même raison, `$_GET['renouvelle_alea']` est remplacé par le service `request_stack` :
 
@@ -47,7 +52,7 @@ if ($request !== null && $request->query->has('renouvelle_alea')) {
 }
 ```
 
-## Sérialisation des valeurs et `$GLOBALS['meta']`
+## Sérialisation des valeurs et miroir meta
 
 ### Règle de stockage (SPIP 5)
 
@@ -58,16 +63,19 @@ Toute valeur de configuration est persistée en **chaîne** :
 | Table SQL **`spip_meta`** (colonne `valeur`) | Chaîne exacte écrite en base |
 | Tables auxiliaires **`spip_<store>`** | Même règle pour les stores non-`meta` |
 | Cache PSR-16 `tmp/cache/config/` | Snapshot de ces chaînes |
-| Miroir **`$GLOBALS['meta']`** (et `$GLOBALS[$store]`) | **Même chaîne brute** que en SQL — pas de désérialisation automatique |
+| Miroir **`$GLOBALS['meta']`** (et `$GLOBALS[$store]`) | **Même chaîne brute** que en SQL — pas de désérialisation auto |
 
-Lors d’une écriture via `ecrire_config()` (deprécié), `Spip::configs()->set()` ou `Spip::service('spip.config')->set()`, le paquet `spip-league/config` applique `ConfigPathAccessor::packValue()` :
+Lors d’une écriture via `ecrire_config()` (deprécié), `Spip::configs()->set()` ou `Spip::service('spip.config')->set()`,
+le paquet `spip-league/config` applique `ConfigPathAccessor::packValue()` :
 
 - **Valeur déjà `string`** → stockée telle quelle (`oui`, `utf-8`, chemins, etc.).
-- **Tout autre type** (`int`, `bool`, `array`, …) → sérialisation JSON via le service **`spip.serializer`** (`spip-league/serializer`), au format `[…]` (ex. entier `150` → chaîne `"[150]"`, booléen `true` → `"[true]"`, tableau → `"[{...}]"`).
+- **Tout autre type** (`int`, `bool`, `array`, …) → JSON via **`spip.serializer`** (`spip-league/serializer`), format `[…]`
+  (ex. `150` → `"[150]"`, `true` → `"[true]"`).
 
 La colonne `spip_meta.valeur` et le miroir global sont mis à jour **avec la même chaîne** à chaque écriture.
 
-À ce stade, il n’y a **pas** de migration SQL automatique des anciennes valeurs : une clé n’adopte le format JSON qu’à la **prochaine écriture** via le nouveau stack (`config->set`, `ecrire_config`, etc.).
+À ce stade, pas de migration SQL automatique des anciennes valeurs :
+une clé n’adopte le JSON qu’à la **prochaine écriture** (`config->set`, `ecrire_config`, etc.).
 
 ### Différence `ecrire_meta()` vs `config->set()`
 
@@ -102,7 +110,7 @@ $GLOBALS['meta']['taille_preview'] == '150';
 $GLOBALS['meta']['taille_preview'] === '150';
 ```
 
-**Lecture recommandée** (désérialisation gérée par `ConfigPathAccessor` / `spip.serializer`, y compris l’ancien `serialize()` PHP avec `accept_legacy` quand applicable) :
+**Lecture recommandée** (désérialisation via `ConfigPathAccessor` / `spip.serializer`, legacy `serialize()` si applicable) :
 
 ```php
 lire_config('taille_preview'); // deprécié
@@ -112,20 +120,22 @@ Spip::config('taille_preview');
 
 ### Ancien format `serialize()` PHP
 
-Historiquement, de nombreuses métas stockent des structures via **`serialize()`** PHP (`a:…` en base), par exemple `ecrire_meta('plugin_installes', serialize($liste))` ou des casiers `ecrire_config`.
+Historiquement, de nombreuses métas utilisent **`serialize()`** PHP (`a:…` en base),
+ex. `ecrire_meta('plugin_installes', serialize($liste))`.
 
 | Situation | En base / `$GLOBALS` | Lecture |
 |-----------|----------------------|---------|
 | Clé **non réécrite** depuis SPIP 5 | Blob `serialize()` inchangé | `lire_config()` / `->get()` gèrent le legacy |
-| Clé **réécrite** via `config->set()` / `ecrire_config()` | Format JSON `[…]` | `lire_config()` / `->get()` ; ne pas faire `unserialize($GLOBALS['meta'][…])` sur le miroir |
+| Clé **réécrite** via `config->set()` / `ecrire_config()` | Format JSON `[…]` | `lire_config()` / `->get()` ; pas `unserialize()` sur le miroir |
 
-Sur une clé migrée vers JSON, `unserialize($GLOBALS['meta']['cle'])` sur le miroir global **échoue** ou est incohérent : le miroir contient la chaîne JSON brute, pas un blob PHP `serialize()`.
+Sur une clé migrée vers JSON, `unserialize($GLOBALS['meta']['cle'])` **échoue** :
+le miroir contient la chaîne JSON brute, pas un blob `serialize()`.
 
 ### Tableau récapitulatif
 
 | Écriture | Type en PHP | `spip_meta.valeur` / `$GLOBALS['meta']['cle']` | `lire_config('cle')` |
 |----------|-------------|-----------------------------------------------|----------------------|
-| `ecrire_meta('x', 150)` | int | `"150"` (cast) | `150` (int) si désérialisé comme nombre, ou chaîne selon heuristique |
+| `ecrire_meta('x', 150)` | int | `"150"` (cast) | `150` (int) ou chaîne selon heuristique |
 | `config->set('x', 150)` | int | `"[150]"` | `150` (int) |
 | `ecrire_meta('x', 'oui')` | string | `"oui"` | `"oui"` |
 | `config->set('x', 'oui')` | string | `"oui"` | `"oui"` |
@@ -136,31 +146,65 @@ Sur une clé migrée vers JSON, `unserialize($GLOBALS['meta']['cle'])` sur le mi
 
 - Remplacer toutes les lectures **`$GLOBALS['meta']['cle']`** par `Spip::config('cle')`
 - Remplacer toutes les écritures **`$GLOBALS['meta']['cle'] = 'X'`** par `Spip::configs()->set('cle', 'X')`
-- **Prioritairement** les lectures sensibles de **`$GLOBALS['meta']['cle']`** (comparaisons numériques, booléens, sérialisations PHP),
-- **Aucune écriture** directe de **`$GLOBALS['meta']['cle'] = 'X';`** ne doit être faite : il n’y a plus aucune persistance en cache ou SQL ainsi
-- Ne pas supposer qu’une `$GLOBALS['meta']['cle']` qui paraissait de type `int` reste une chaîne décimale (`"150"`) : elle deviendra `"[150]"` dans la table SQL et le mirroir `$GLOBALS['meta']['cle']`.
+- **Prioritairement** les lectures sensibles de **`$GLOBALS['meta']['cle']`** (comparaisons numériques, booléens, sérialisations PHP).
+- **Aucune écriture** directe **`$GLOBALS['meta']['cle'] = 'X';`** : plus de persistance cache/SQL ainsi.
+- Ne pas supposer qu’un `int` en miroir reste `"150"` : après `config->set`, ce sera `"[150]"` en SQL et miroir.
 - Auditer les **`unserialize($GLOBALS['meta'][…])`** ; migrer vers `Spip::config()` qui s’occupera de la désérialisation.
-- Si besoin de conserver pour une raison legacy une entrée "non sérialisée" en base, `Spip::configs()->set('cle', (string) 150)` conviendra, mais c’est déconseillé, le typage (int) d’origine sera perdu, la prochaine lecture retournera string '150' donc.
+- `Spip::configs()->set('cle', (string) 150)` force une chaîne non JSON (déconseillé : perte du typage int).
 - Même vigilance pour les tables meta auxiliaires (`$GLOBALS['spip_table_meta']`) : mêmes règles de persistance et de miroir.
 
 ## Cache fichier `_FILE_META`
 
-Le fichier `tmp/meta_cache.php` (`_FILE_META`) n’est plus utilisé. Le cache est stocké sous **`tmp/cache/config/`** via `spip-league/cache` (fichiers PHP `return …` compatibles opcache).
+Le fichier `tmp/meta_cache.php` (`_FILE_META`) n’est plus utilisé.
+Le cache est sous **`tmp/cache/config/`** via `spip-league/cache` (fichiers PHP `return …`, opcache).
 
-Lors d’une réinitialisation complète, appeler `service('spip.config')->reset()` (purge le PSR-16 **et** le miroir global) plutôt que `spip_unlink(_FILE_META)`.
+Lors d’une réinitialisation complète, appeler `service('spip.config')->reset()` (purge PSR-16 **et** miroir)
+plutôt que `spip_unlink(_FILE_META)`.
 
 ## Schéma SQL des tables de configuration
 
-`installer_table_meta()` / `supprimer_table_meta()` restent disponibles, mais la création et la suppression de la table SQL sont déléguées à **`SqlConfigStore::install()` / `::uninstall()`**. Le wrapper `installer_table_meta()` se contente d’instancier le store, d’appeler `install()` puis de rafraîchir le repository associé. Idem pour la suppression. L’enregistrement du store dans la meta **`tables_config`** est désormais réalisé automatiquement par `ConfigManager` dès qu’un repository non-`meta` est créé.
+`installer_table_meta()` / `supprimer_table_meta()` délèguent à **`SqlConfigStore::install()` / `::uninstall()`**.
+Le wrapper instancie le store, appelle `install()` puis rafraîchit le repository.
+L’enregistrement dans **`tables_config`** est automatique via `ConfigManager` pour tout store non-`meta`.
 
 ## Signatures stables
 
-Les signatures des fonctions globales **`lire_config`**, **`ecrire_config`**, **`effacer_config`**, **`ecrire_meta`**, **`lire_metas`**, **`effacer_meta`**, **`installer_table_meta`**, **`supprimer_table_meta`** sont inchangées pour les plugins existants.
+Les signatures globales (`lire_config`, `ecrire_config`, `effacer_config`, `ecrire_meta`, etc.) restent inchangées pour les plugins existants.
 
 ## Plugins tiers
 
 - Vérifier l’absence d’appels **`methode::`** (traités désormais comme des clés littérales).
-- Remplacer les appels `touch_meta($antidate, $table)` par `service('spip.config.manager')->repository($table)->refresh()` si un rechargement explicite est nécessaire.
+- Remplacer `touch_meta($antidate, $table)` par `service('spip.config.manager')->repository($table)->refresh()` si besoin.
 - Remplacer les `spip_unlink(_FILE_META)` par `service('spip.config')->reset()`.
-- Remplacer progressivement les appels `lire_config()` par l’injection de **`ConfigRepositoryInterface`** (`spip.config`) ou **`ConfigManagerInterface`**.
-- Tenir compte du [changement de sérialisation](#sérialisation-des-valeurs-et-globalmeta) pour tout accès direct à `$GLOBALS['meta']` ou `unserialize()` sur des métas.
+- Remplacer `lire_config()` par injection de **`ConfigRepositoryInterface`** ou **`ConfigManagerInterface`**.
+- Tenir compte de la section [Sérialisation des valeurs et miroir meta](#serialisation-des-valeurs-et-miroir-meta) pour `$GLOBALS['meta']` et `unserialize()`.
+
+## Utilisation depuis un plugin (PHP moderne)
+
+```php-inline
+use function SpipLeague\Component\Kernel\service;
+
+$config = service('spip.config');
+$site = $config->get('nom_site', 'Mon site');
+$config->set('mon_plugin/reglage', ['actif' => true]);
+
+$perso = service('spip.config.manager')->repository('meta_perso');
+$perso->refresh();
+```
+
+### Store custom
+
+```php-inline
+$services
+    ->set('mon_plugin.config.store', SqlConfigStore::class)
+    ->arg('$tableSuffix', 'mon_table')
+    ->tag('spip.config.store', ['name' => 'mon_table']);
+```
+
+Puis : `service('spip.config.manager')->repository('mon_table')`. Le nom est enregistré automatiquement dans la méta `tables_config`.
+
+## Voir aussi
+
+- [Configuration (spip-league/config)](../features/config.md)
+- [Paramètres SPIP](../reference/parametres-spip.md)
+- [Migrer vers la façade Spip](acces-services-spip.md)

@@ -1,99 +1,60 @@
 # Configuration (spip-league/config)
 
-SPIP 5.0 centralise la gestion de la configuration (métas et tables auxiliaires) dans le paquet **`spip-league/config`**, exposé via le conteneur de services.
+Cette page **explique** l’architecture de configuration de SPIP 5.0.
+Pour migrer depuis SPIP 4.x ou utiliser les APIs depuis un plugin, voir le guide pratique.
 
-## Architecture en trois couches
+## En bref
+
+SPIP 5.0 centralise métas et tables auxiliaires dans **`spip-league/config`**, via `spip.config` et `spip.config.manager`,
+avec cache PSR-16 et pont vers `lire_config()` / `ecrire_config()`.
+
+## Contexte
+
+La configuration historique mélangeait fichiers, métas SQL et préfixes (`methode::`, `/<store>/...`).
+Le nouveau stack unifie persistance, sérialisation et cycle de vie (bootstrap, refresh, reset) avec compatibilité `ecrire/`.
+
+## Architecture en couches
 
 | Couche | Interface | Rôle |
 |--------|-----------|------|
 | Store | `ConfigStoreInterface` | Persistance brute (chaînes SQL, mémoire…) |
-| Entrées | `ConfigEntries` | Working set, cache PSR-16, écritures SQL ; fabriqué par `ConfigManager` |
+| Entrées | `ConfigEntries` | Working set, cache PSR-16, écritures SQL |
 | Chemins | `ConfigPathAccessor` | `get`/`set` structurés (casiers, sérialisation) |
-| Repository | `ConfigRepositoryInterface` | Façade publique + cycle de vie (`bootstrap`, `refresh`, `reset`) |
-| Entrées (API) | `ConfigEntriesInterface` | Accès brut via `entries()` (`@internal`, pont `ecrire/`) |
-| Legacy | `LegacyGlobalsBridge` | Working set synchronisé vers `$GLOBALS['meta']` (BC) |
-| Manager | `ConfigManagerInterface` | Factory : assemble store + entries + repository |
+| Repository | `ConfigRepositoryInterface` | Façade publique + cycle de vie |
+| Legacy | `LegacyGlobalsBridge` | Miroir `$GLOBALS['meta']` (BC) |
+| Manager | `ConfigManagerInterface` | Factory des repositories par store |
 
-Le store par défaut s’appelle **`meta`** (table `spip_meta`).
+Le store par défaut est **`meta`** (table `spip_meta`).
 
 ### Working set, cache et SQL
 
-Par requête, les données suivent cet ordre :
-
-1. **Working set** — snapshot en mémoire (via `LegacyGlobalsBridge`, miroir de `$GLOBALS['meta']` pour le code legacy).
-2. **Cache PSR-16** — fichier sous `tmp/cache/config/` si le working set est vide (`bootstrap()`).
-3. **Store SQL** — relecture complète (`refresh()` / `refreshFromStore()`).
-
-`ConfigEntries::all()` renvoie le snapshot courant et peut déclencher un `bootstrap()` si le working set est vide. Ce n’est pas un simple getter passif.
-
-Évolution prévue : introduire `ConfigWorkingSetInterface` pour découpler le working set de `$GLOBALS` ; le bridge legacy n’en serait plus qu’un adaptateur.
+Par requête : working set → cache PSR-16 (`tmp/cache/config/`) → SQL.
+Le miroir `$GLOBALS['meta']` expose les **chaînes brutes** SQL, pas la vue désérialisée de `spip.config->get()`.
 
 ## Services du conteneur
 
 | ID | Description |
 |----|-------------|
-| `spip.config` | Repository du store `meta` (usage courant) |
-| `spip.config.manager` | Accès à tous les stores enregistrés |
+| `spip.config` | Repository du store `meta` |
+| `spip.config.manager` | Accès à tous les stores |
 | `spip.config.store_registry` | Registre des stores |
-| `spip.serializer` | Sérialisation des valeurs structurées (logger canal `serializer`) |
-| `spip.cache.config` | Cache fichiers `FlatFilesystem` opcache-friendly (`tmp/cache/config/`, TTL défaut 1 mois) |
+| `spip.serializer` | Sérialisation des valeurs structurées |
+| `spip.cache.config` | Cache fichiers (TTL défaut 1 mois) |
 
-Le TTL du cache est géré par l’adaptateur `spip-league/cache` (défaut `P1M`). Chaque écriture régénère le fichier cache ; l’expiration passive intervient si aucune écriture n’a lieu pendant la durée du TTL.
-
-Préchauffage : `bin/spip cache:warmup` appelle `service('spip.config')->bootstrap()` après la recompilation des plugins.
-
-## Utilisation en PHP moderne
-
-```php
-use function SpipLeague\Component\Kernel\service;
-
-// Lecture / écriture (clé simple ou casier/sous-casier)
-$config = service('spip.config');
-$site = $config->get('nom_site', 'Mon site');
-$config->set('charset', 'utf-8');
-$config->set('mon_plugin/reglage', ['actif' => true]);
-
-// Autre store (table spip_*)
-$perso = service('spip.config.manager')->repository('meta_perso');
-$perso->refresh();
-```
-
-## Ajouter un store custom (plugin)
-
-Déclarer un service taggé dans le `config/services.php` du plugin :
-
-```php
-use SpipLeague\Component\Config\Store\SqlConfigStore;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
-
-$services
-    ->set('mon_plugin.config.store', SqlConfigStore::class)
-    ->arg('$tableSuffix', 'mon_table')
-    ->tag('spip.config.store', ['name' => 'mon_table']);
-```
-
-Puis : `service('spip.config.manager')->repository('mon_table')`.
-
-Dès qu’un repository non-`meta` est résolu, le `ConfigManager` enregistre automatiquement son nom dans la méta **`tables_config`**. Plus besoin de gérer manuellement cette liste depuis `lire_metas()` ou un installeur.
-
-Pour un usage fréquent, exposer un alias dédié dans le même fichier (comme `spip.config` pour `meta`).
-
-## Schéma SQL — `SqlConfigStore::install()` / `::uninstall()`
-
-`SqlConfigStore` porte la création et la suppression de la table SQL (`spip_<store>`) via les helpers legacy `trouver_table` / `creer_ou_upgrader_table` / `sql_drop_table`. Cette responsabilité sera reprise par le futur composant DBAL ; en attendant, le wrapper `installer_table_meta()` / `supprimer_table_meta()` ne fait que déléguer.
-
-```php
-$store = new SqlConfigStore('mon_table');
-$store->install();   // crée spip_mon_table si nécessaire
-$store->uninstall(); // supprime si la table est vide (sauf 'meta')
-```
+Préchauffage : `bin/spip cache:warmup` appelle `bootstrap()` après recompilation des plugins.
 
 ## Pont legacy
 
-Les fonctions globales **`lire_config()`**, **`ecrire_config()`**, **`effacer_config()`**, **`ecrire_meta()`**, **`lire_metas()`**, **`effacer_meta()`**, **`installer_table_meta()`** et **`supprimer_table_meta()`** restent disponibles et délèguent aux repositories (`entries()` pour l’accès brut type `ecrire_meta`).
+Les fonctions globales `lire_config()`, `ecrire_config()`, `ecrire_meta()`, etc. délèguent aux repositories.
+Le pont ne lit ni n’écrit `$GLOBALS[$table]` comme source de vérité ; sync via `LegacyGlobalsBridge` (`@internal`).
 
-> Doctrine : le pont ne lit ni n’écrit `$GLOBALS[$table]` directement, et utilise `request_stack` plutôt que `$_GET`. La synchronisation vers `$GLOBALS['meta']` passe par `LegacyGlobalsBridge` (`@internal`), injecté par `ConfigManager` — réservée au code legacy qui lit encore `$GLOBALS['meta']['cle']`.
+## Limites et pièges
 
-Le miroir **`$GLOBALS['meta']`** (et les `$GLOBALS[$store]` des tables auxiliaires) expose les **chaînes brutes** telles qu’en `spip_meta.valeur` : pas la vue désérialisée de `spip.config`. Une meta entière écrite via `->set()` / `ecrire_config()` y apparaît par exemple en `"[150]"`, alors que `lire_config('taille_preview')` renvoie l’entier `150`. Voir la section [Sérialisation des valeurs et `$GLOBALS['meta']`](../upgrade/config.md#sérialisation-des-valeurs-et-globalmeta) du guide de migration.
+- Ne pas lire `$GLOBALS['meta']` pour obtenir une valeur désérialisée : utiliser `spip.config` ou `Spip::config()`.
+- Les stores custom et l’usage PHP détaillé sont dans le guide de migration, pas ici.
 
-Voir [Migration configuration](../upgrade/config.md).
+## Voir aussi
+
+- [Migration — Configuration et métas](../upgrade/config.md)
+- [Paramètres SPIP](../reference/parametres-spip.md)
+- [Façade Spip et Inputs](acces-services-spip.md)

@@ -116,6 +116,14 @@ La doc est organisée par langue et version (`docs/fr/5.0/`, etc.). Les dossiers
 
 Lors d'une contribution nouvelle ou d'une révision, vérifier que la page correspond au type du dossier cible, ou proposer un déplacement / une scission si le contenu déborde.
 
+### Alignement du corpus existant
+
+- **`features/`** : explication uniquement ; procédures → **`upgrade/`** (guide pratique associé).
+- **`upgrade/`** : how-to ; pas de long exposé conceptuel (lien vers `features/`).
+- **`reference/`** : faits, tables, signatures.
+- Suivi interne : [AUDIT-DIATAXIS.md](AUDIT-DIATAXIS.md) (non publié sur le site).
+- **Traductions** : stabiliser le français (`docs/fr/5.0/`) avant de traduire ; les index `docs/en/` et `docs/fr/4.4/` peuvent renvoyer vers le contenu FR en attendant.
+
 ## Checklist de revue
 
 - Navigation mise à jour si une page est ajoutée ou déplacée.
