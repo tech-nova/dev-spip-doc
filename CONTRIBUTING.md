@@ -33,6 +33,12 @@ La documentation SPIP s'appuie sur le cadre [Diátaxis](https://diataxis.fr/) : 
 - Exemple : l'explication des pipelines vit dans `features/`, les étapes de migration dans `upgrade/` — chaque page renvoie à l'autre via `## Voir aussi`.
 - Préférer les liens relatifs entre pages Markdown du même dépôt.
 
+### Liens en introduction
+
+- Page **explication** (`features/`) : l’intro doit contenir un **lien Markdown** vers le guide pratique jumelé principal (et, si utile, vers la référence), pas une formule vague du type « voir le guide pratique » sans URL.
+- Page **guide pratique** (`upgrade/`) : l’intro doit lier vers la page **explication** associée (`Le modèle est expliqué dans […](…)`).
+- La section `## Voir aussi` complète le maillage (liens secondaires) ; le lien principal peut y figurer également.
+
 ### Terminologie précise
 
 Utiliser de préférence les termes suivants, de façon cohérente sur toute la doc :

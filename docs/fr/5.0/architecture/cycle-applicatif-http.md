@@ -1,6 +1,7 @@
 # Cycle applicatif HTTP
 
 Cette page **explique** le parcours d’une requête HTTP dans SPIP 5.0.
+Voir aussi [Dépôts spip-league](depots-spip-league.md), [Gestion HTTP](../features/http-request-response.md), [Guard](../features/guard.md).
 
 ## En bref
 

@@ -1,6 +1,7 @@
 # Migrer vers la façade Spip
 
 Ce guide pratique décrit **comment** remplacer `service()`, `param()` et `_request()` par **`Spip::`** dans le code procédural.
+Le modèle est expliqué dans [Façade Spip et Inputs](../features/acces-services-spip.md).
 
 ## Objectif
 

@@ -1,6 +1,7 @@
 # Migration des pipelines
 
 Ce guide pratique décrit **comment** migrer les appels et listeners de pipelines vers l'Event Dispatcher de SPIP 5.0.
+Le modèle est expliqué dans [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md).
 
 SPIP 5.0 fait passer l'exécution des pipelines par l'`EventDispatcher` Symfony.
 La fonction historique `pipeline()` reste le point d'entrée public, mais elle délègue désormais à un dispatcher de pipelines

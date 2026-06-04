@@ -1,7 +1,7 @@
 # Configuration (spip-league/config)
 
 Cette page **explique** l’architecture de configuration de SPIP 5.0.
-Pour migrer depuis SPIP 4.x ou utiliser les APIs depuis un plugin, voir le guide pratique.
+Pour migrer depuis SPIP 4.x ou utiliser les APIs depuis un plugin, voir [Migration — Configuration et métas](../upgrade/config.md).
 
 ## En bref
 

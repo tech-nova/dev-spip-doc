@@ -1,6 +1,7 @@
 # Gestion HTTP (Request/Response)
 
-Cette page **explique** l’usage de **HttpFoundation** dans SPIP 5.0. Pour manipuler requête et réponse dans un plugin, voir le guide pratique.
+Cette page **explique** l’usage de **HttpFoundation** dans SPIP 5.0.
+Pour manipuler requête et réponse dans un plugin, voir [HTTP Request/Response dans un plugin](../upgrade/http-request-response.md).
 
 ## En bref
 

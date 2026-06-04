@@ -1,6 +1,7 @@
 # Tâches Cron et Attributs
 
-Cette page **explique** le modèle de tâches de fond de SPIP 5.0. Pour déclarer ou migrer une tâche dans un plugin, voir le guide pratique.
+Cette page **explique** le modèle de tâches de fond de SPIP 5.0.
+Pour déclarer ou migrer une tâche dans un plugin, voir [Migrer les tâches cron](../upgrade/cron-taches-attributs.md).
 
 ## En bref
 

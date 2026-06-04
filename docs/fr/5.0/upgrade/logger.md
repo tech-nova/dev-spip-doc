@@ -1,6 +1,7 @@
 # Migrer et configurer les logs
 
 Ce guide pratique décrit **comment** passer de `spip_log()` à PSR-3 et configurer un logger de plugin.
+Le modèle est expliqué dans [Système de log](../features/logger.md).
 
 ## Objectif
 

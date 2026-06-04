@@ -1,6 +1,7 @@
 # Étendre Guard dans un plugin
 
 Ce guide pratique décrit **comment** ajouter une règle personnalisée au moteur Guard de SPIP 5.0.
+Le modèle est expliqué dans [Guard](../features/guard.md).
 
 ## Objectif
 

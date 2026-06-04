@@ -1,6 +1,7 @@
 # HTTP Request/Response dans un plugin
 
 Ce guide pratique décrit **comment** utiliser `Request`, `Response` et `EarlyResponseException` en SPIP 5.0.
+Le modèle est expliqué dans [Gestion HTTP](../features/http-request-response.md).
 
 ## Objectif
 

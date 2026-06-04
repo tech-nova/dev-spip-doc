@@ -1,7 +1,7 @@
 # Façade Spip et entrées HTTP (Inputs)
 
 Cette page **explique** la façade **`Spip`** et le service **`Inputs`** (code procédural).
-Pour migrer depuis `service()` / `_request()`, voir le guide pratique.
+Pour migrer depuis `service()` / `_request()`, voir [Migrer vers la façade Spip](../upgrade/acces-services-spip.md).
 
 ## En bref
 

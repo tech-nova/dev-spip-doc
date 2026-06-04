@@ -1,6 +1,7 @@
 # Migrer menus et onglets de l’espace privé
 
 Ce guide pratique décrit **comment** remplacer les balises `<menu>` et `<onglet>` de `paquet.xml` par `config/menus.php` et `config/onglets.php`.
+Le modèle est expliqué dans [Menus et onglets](../features/menus.md).
 
 ## Objectif
 

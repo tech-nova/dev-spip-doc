@@ -1,6 +1,8 @@
 # Référence `AsPipelineListener`
 
-Cette page documente le comportement exact de `SpipLeague\Component\Kernel\Attribute\AsPipelineListener` dans SPIP 5.0-dev.
+Page de **référence** : comportement de `SpipLeague\Component\Kernel\Attribute\AsPipelineListener` dans SPIP 5.0-dev.
+Contexte : [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md).
+Migration : [Migrer les pipelines d'un plugin](../upgrade/pipelines-plugins.md).
 
 ## Signature
 

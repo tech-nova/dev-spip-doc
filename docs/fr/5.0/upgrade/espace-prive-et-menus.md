@@ -1,7 +1,7 @@
 # Espace privé et menus — ruptures UI
 
 Ce guide pratique recense les **ruptures** de l’espace privé SPIP 5.0 (renommages, UI).
-Pour migrer menus et onglets : [Migrer menus et onglets](menus-onglets.md).
+Pour la déclaration des menus : [Migrer menus et onglets](menus-onglets.md) — modèle dans [Menus et onglets](../features/menus.md).
 
 ## Objectif
 

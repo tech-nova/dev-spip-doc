@@ -1,7 +1,8 @@
 # Event Dispatcher et Pipelines
 
 Cette page **explique** le modèle de communication par événements de SPIP 5.0.
-Pour migrer du code, voir les guides pratiques ; pour les signatures, voir la référence.
+Pour migrer du code : [Migrer les pipelines](../upgrade/pipelines.md), [dans un plugin](../upgrade/pipelines-plugins.md).
+Pour les signatures : [Événements de pipelines](../reference/evenements-pipelines.md), [`AsPipelineListener`](../reference/as-pipeline-listener.md).
 
 ## En bref
 

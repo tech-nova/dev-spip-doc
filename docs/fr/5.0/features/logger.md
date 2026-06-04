@@ -1,6 +1,7 @@
 # Système de log (PSR-3)
 
-Cette page **explique** la journalisation PSR-3 de SPIP 5.0. Pour migrer `spip_log()` ou configurer un logger de plugin, voir le guide pratique.
+Cette page **explique** la journalisation PSR-3 de SPIP 5.0.
+Pour migrer `spip_log()` ou configurer un logger de plugin, voir [Migrer et configurer les logs](../upgrade/logger.md).
 
 ## En bref
 

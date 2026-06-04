@@ -1,7 +1,7 @@
 # Guard (écran de sécurité moderne)
 
 Cette page **explique** **`spip-league/guard`**, successeur de l’écran de sécurité historique.
-Pour ajouter une règle dans un plugin, voir le guide pratique.
+Pour ajouter une règle dans un plugin, voir [Étendre Guard](../upgrade/guard-extension.md).
 
 ## En bref
 

@@ -1,6 +1,7 @@
 # Services et injection de dépendances
 
-Cette page **explique** l’intégration du conteneur de services Symfony dans SPIP 5.0. Pour configurer un plugin, voir le guide pratique.
+Cette page **explique** l’intégration du conteneur de services Symfony dans SPIP 5.0.
+Pour configurer un plugin, voir [Configurer les services d’un plugin](../upgrade/services-plugin.md).
 
 ## En bref
 
