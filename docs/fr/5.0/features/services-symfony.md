@@ -16,6 +16,7 @@ Le conteneur permet classes testables, listeners et tâches cron par attributs.
 
 - Modularité et tests unitaires (mock des dépendances).
 - Découverte automatique des listeners, tâches cron, règles Guard, etc.
+- Injection de dépendance automatisée.
 - Alignement avec l’écosystème Symfony.
 
 ## Fonctionnement

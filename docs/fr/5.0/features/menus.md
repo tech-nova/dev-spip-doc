@@ -1,8 +1,9 @@
 # Menus et onglets de l'espace privé
 
 Cette page **explique** le modèle de navigation de l’espace privé en SPIP 5.0.
-Pour migrer depuis `paquet.xml`, voir [Migrer menus et onglets](../upgrade/menus-onglets.md)
-(ruptures UI : [Espace privé et menus](../upgrade/espace-prive-et-menus.md)).
+
+!!! warning "Éléments susceptibles d’évolution"
+    Le fonctionnement décrit pourrait évoluer avec des développements ultérieurs pour SPIP 5.0.
 
 ## En bref
 

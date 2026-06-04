@@ -18,7 +18,9 @@ Remplacer `_request()` et les sorties directes par l’API HttpFoundation là o�
 ```php
 use function SpipLeague\Component\Kernel\service;
 
-$request = service('request_stack')->getCurrentRequest();
+$request = Spip::request();
+// est équivalent à 
+$request = Spip::service('request_stack')->getCurrentRequest();
 $id = $request?->query->get('id_article');
 ```
 

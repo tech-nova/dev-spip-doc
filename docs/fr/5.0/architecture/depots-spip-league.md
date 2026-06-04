@@ -4,11 +4,6 @@ SPIP 5 s’appuie sur une série de bibliothèques PHP maintenues par l’organi
 [spip-league](https://git.spip.net/spip-league). Elles constituent la couche « moderne » du projet
 (conteneur Symfony, HTTP, pipelines typés, cache, chemins, etc.), distincte du code historique dans `ecrire/`.
 
-C’est le point de départ recommandé pour lire les implémentations, contribuer ou déboguer.
-
-Pour le déroulement d’une requête HTTP (front controller, Kernel, handlers), voir
-[Cycle applicatif HTTP](cycle-applicatif-http.md).
-
 ## Paquets installés
 
 Le tableau suivant recense les paquets **spip-league** d’une distribution SPIP 5
@@ -18,6 +13,7 @@ Le tableau suivant recense les paquets **spip-league** d’une distribution SPIP
 | :--- | :--- | :--- |
 | **kernel** | Noyau applicatif : détection d’installation, conteneur, routage, attributs pipeline/cron. | [kernel](https://git.spip.net/spip-league/kernel) |
 | **http-kernel** | Orchestration HTTP : bootstrap legacy, handlers, Request → Response. | [http-kernel](https://git.spip.net/spip-league/http-kernel) |
+| **guard** | Écran de sécurité moderne : règles de protection sur `kernel.request` (bots, abus d’URL, delestage). | [guard](https://git.spip.net/spip-league/guard) |
 | **http** | Pont HTTP (exceptions de flux, intégration HttpFoundation). | [http](https://git.spip.net/spip-league/http) |
 | **pipeline-bridge** | Pont pipelines SPIP ↔ `symfony/event-dispatcher`. | [pipeline-bridge](https://git.spip.net/spip-league/pipeline-bridge) |
 | **composer-installer** | Plugin Composer : layout SPIP, extensions, autoload. | [composer-installer](https://git.spip.net/spip-league/composer-installer) |
@@ -34,8 +30,8 @@ Le tableau suivant recense les paquets **spip-league** d’une distribution SPIP
 
 ## Regroupement fonctionnel
 
-- **Noyau et HTTP** : `kernel`, `http`, `http-kernel` — voir [Services Symfony](../features/services-symfony.md) et
-  [HTTP Request/Response](../features/http-request-response.md).
+- **Noyau et HTTP** : `kernel`, `http`, `http-kernel`, `guard` — voir [Services Symfony](../features/services-symfony.md),
+  [HTTP Request/Response](../features/http-request-response.md) et [Guard](../features/guard.md).
 - **Intégration Composer & CLI** : `composer-installer`, `console`.
 - **Événements** : `pipeline-bridge` (+ attributs dans `kernel`) — voir
   [Event Dispatcher et pipelines](../features/event-dispatcher-et-pipelines.md).

@@ -10,10 +10,10 @@ Sans période de dépréciation, supprimées du tronc :
 | Élément                       | Remplacement                                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------------------------ |
 | Préfixe **`methode::cle`**    | dispatch vers `lire_config_<methode>_dist` n’est plus reconnu                                    |
-| `lire_config_metapack_dist`   | `service('spip.config.manager')->repository('<store>')->get(...)`                               |
+| `lire_config_metapack_dist`   | `Spip::configs('<store>')->get(...)`                               |
 | `ecrire_config_metapack_dist` | idem `->set(...)`                                                                                |
 | **`expliquer_config()`**      | `SpipLeague\Component\Config\ConfigPath::parseLegacyStoreReference()` (interne au pont)          |
-| **`touch_meta()`**            | `service('spip.config')->refresh()` ou régénération implicite du cache après écriture          |
+| **`touch_meta()`**            | `Spip::config()->refresh()` ou régénération implicite du cache après écriture          |
 | **`cache_meta()`**            | géré automatiquement par `ConfigRepository` (PSR-16 `spip.cache.config`)                         |
 | **`_META_CACHE_TIME`**        | TTL par défaut de `spip.cache.config` (`FlatFilesystem`, 1 mois)                                 |
 | **`_FILE_META`**              | cache PSR-16 sous `tmp/cache/config/` ; appeler `service('spip.config')->reset()` pour le purger |
@@ -27,10 +27,23 @@ Sans période de dépréciation, supprimées du tronc :
 **Migration :**
 
 ```php
+lire_config('mon_param');
+lire_config('mon_casier/mon_param');
+ecrire_config('nom', 'valeur');
+
+Spip::config('mon_param');
+Spip::config('mon_casier/mon_param');
+Spip::configs()->set('nom', 'valeur');
+```
+
+### `lire_config('/<store>/...')`
+
+Cas très rares (écritures ailleurs que dans la table spip_meta):
+
+```php
 lire_config('/meta_perso/mon_casier');
 
-service('spip.config.manager')->repository('meta_perso')->get('mon_casier');
-service('spip.config')->get('mon_casier');
+Spip::configs('meta_perso')->get('mon_casier');
 ```
 
 ### `lire_config(,, false)`
@@ -46,8 +59,10 @@ Les plugins en cours de migration doivent en faire autant.
 Pour la même raison, `$_GET['renouvelle_alea']` est remplacé par le service `request_stack` :
 
 ```php
-$request = service('request_stack')->getCurrentRequest();
-if ($request !== null && $request->query->has('renouvelle_alea')) {
+$request = Spip::request();
+// est équivalent à 
+$request = Spip::service('request_stack')->getCurrentRequest();
+if ($request?->query->has('renouvelle_alea')) {
     // ...
 }
 ```

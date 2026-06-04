@@ -20,9 +20,9 @@ Symfony et l'adoption de pratiques de développement modernes (SOLID, typage str
 
 Découvrez les briques modernes de SPIP 5.0 et comment les utiliser dans vos développements.
 
+- Injection de dépendances (Services Symfony)
 - Système de Pipelines (Event Dispatcher)
 - Tâches Cron (Attributs)
-- Injection de dépendances (Services Symfony)
 - Gestion HTTP (Request/Response)
 
 ### [Référence technique](reference/index.md)

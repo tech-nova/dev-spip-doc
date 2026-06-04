@@ -1,7 +1,6 @@
 # Cycle applicatif HTTP
 
 Cette page **explique** le parcours d’une requête HTTP dans SPIP 5.0.
-Voir aussi [Dépôts spip-league](depots-spip-league.md), [Gestion HTTP](../features/http-request-response.md), [Guard](../features/guard.md).
 
 ## En bref
 
@@ -9,8 +8,7 @@ SPIP 5 expose le site via un **front controller** minimal qui délègue au runti
 **spip-league**. Cette page décrit la séquence actuelle d’une requête web : du point d’entrée jusqu’à la
 `Response` renvoyée au client.
 
-Pour le rôle de chaque paquet Composer, voir [Dépôts spip-league](depots-spip-league.md). La configuration des
-services noyau est dans `vendor/spip-league/kernel/config/services.php`.
+La configuration des services noyau est dans `vendor/spip-league/kernel/config/services.php`.
 
 L’API moderne partagée (classes `Spip\Framework\*`, fonctions bootstrap `pipeline()`, etc.) est fournie par le paquet
 [`spip/framework`](https://git.spip.net/spip/framework) ; les plugins SPIP 5 le déclarent en `require`. Les stubs
@@ -43,20 +41,23 @@ sequenceDiagram
 ## 1. Point d’entrée et runtime
 
 - **Legacy** : `spip.php` à la racine (forme historique).
-- **Standalone** (expérimental) : `public/index.php` — le document root pointe vers `public/`.
-- **Mutualisé** (expérimental) : `sites/default/public/index.php`.
+- **Standalone** (expérimental — todo) : `public/index.php` — le document root pointe vers `public/`.
+- **Mutualisé** (expérimental — todo) : `sites/default/public/index.php`.
 
 Le fichier charge `vendor/autoload_runtime.php` (Symfony Runtime) et retourne une fabrique qui résout le service
 `http_kernel` :
 
 ```php
 return static function (array $context): SpipHttpKernel {
-    return service('http_kernel');
+    return Spip::service('http_kernel');
 };
 ```
 
-Les helpers `service()`, `app()` et `param()` sont définis dans `vendor/spip-league/kernel/boot.php` : ils
-construisent le **Kernel SPIP** et son conteneur au premier appel.
+Le helper `Spip` est dans l’espace de nom global.
+`Spip::app()` retourne sur la fonction `app()` définie dans `vendor/spip-league/kernel/boot.php` : elle construit le **Kernel SPIP** et son conteneur au premier appel.
+
+Les helpers `service()`, et `param()` sont dépréciés au profit de `Spip::service()` et `Spip::param()`.
+De même, préférer l’usage `Spip::app()` à `app()`.
 
 ## 2. Boot du Kernel (`spip-league/kernel`)
 
@@ -109,6 +110,8 @@ appliquer immédiatement les nouveaux services (listeners, tâches cron, etc.) �
 ## Voir aussi
 
 - [Dépôts spip-league](depots-spip-league.md)
+- [Gestion HTTP](../features/http-request-response.md),
+- [Guard](../features/guard.md).
 - [Services et injection de dépendances](../features/services-symfony.md)
 - [Environnement et Kernel](../upgrade/environnement-kernel.md)
 - [Event Dispatcher et pipelines](../features/event-dispatcher-et-pipelines.md)

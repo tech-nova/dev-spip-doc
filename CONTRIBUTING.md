@@ -6,11 +6,11 @@
 - Fichiers en kebab-case.
 - Liens relatifs entre pages Markdown.
 - Pas d'accents dans les noms de fichiers.
-- Utiliser `php` pour les extraits de code PHP (sans `<?php` en tête : le surlignage est configuré en `startinline` dans les fichiers `zensical-*.toml`).
+- Utiliser `php` pour les extraits de code PHP (sans `<?php` en tête).
 
 ## Style d'écriture (Diátaxis)
 
-La documentation SPIP s'appuie sur le cadre [Diátaxis](https://diataxis.fr/) : quatre types de pages, chacun répondant à un besoin distinct du lecteur. L'objectif est d'obtenir des pages **par sujet (topic)**, précises et réutilisables. Éviter l’ambiguïté, les omissions et les présupposés non explicites afin de limiter les erreurs d’inférence — notamment pour des agents IA.
+La documentation SPIP s'appuie sur le cadre [Diátaxis](https://diataxis.fr/) : quatre types de pages, chacun répondant à un besoin distinct des lectrices et lecteurs. L'objectif est d'obtenir des pages **par sujet (topic)**, précises et réutilisables. Éviter l’ambiguïté, les omissions et les présupposés non explicites afin de limiter les erreurs d’inférence — notamment pour des agents IA.
 
 ### Les quatre types de pages
 
@@ -24,7 +24,7 @@ La documentation SPIP s'appuie sur le cadre [Diátaxis](https://diataxis.fr/) : 
 ### Règle du topic unique
 
 - **Une page = un sujet = un type dominant.**
-- Si une page mélange explication et procédure (par ex. présenter un concept *et* détailler la migration), **scinder** en deux pages ou **lier** vers la page adaptée plutôt que tout regrouper.
+- Si une page mélange explication et procédure (par ex. présenter un concept *et* détailler la migration), **scinder** en deux pages et/ou **lier** vers la page adaptée plutôt que tout regrouper.
 - Le titre H1 (`#`) nomme clairement le sujet ; le lecteur doit pouvoir identifier le type de page dès l'introduction.
 
 ### Single-sourcing
@@ -35,9 +35,11 @@ La documentation SPIP s'appuie sur le cadre [Diátaxis](https://diataxis.fr/) : 
 
 ### Liens en introduction
 
-- Page **explication** (`features/`) : l’intro doit contenir un **lien Markdown** vers le guide pratique jumelé principal (et, si utile, vers la référence), pas une formule vague du type « voir le guide pratique » sans URL.
-- Page **guide pratique** (`upgrade/`) : l’intro doit lier vers la page **explication** associée (`Le modèle est expliqué dans […](…)`).
-- La section `## Voir aussi` complète le maillage (liens secondaires) ; le lien principal peut y figurer également.
+Les liens et renvois sont placés en fins d’article dans la section `## Voir aussi`.
+
+Si cela paraît nécessaire, et selon la longeur de la page, des renvois peuvent être indiqués dès l’introduction. Par exemple
+- Page **explication** (`features/`) : l’intro peut contenir un **lien Markdown** vers le guide pratique jumelé principal et, si utile, vers la référence.
+- Page **guide pratique** (`upgrade/`) : l’intro peut lier vers la page **explication** associée (`Le modèle est expliqué dans […](…)`).
 
 ### Terminologie précise
 
@@ -48,7 +50,7 @@ Utiliser de préférence les termes suivants, de façon cohérente sur toute la 
 | Conteneur Symfony | conteneur de services, autowiring | « DI » sans contexte |
 | Ancien mécanisme SPIP | pipeline (historique), fonction `pipeline()` | « hook » générique |
 | Nouveau mécanisme | Event Dispatcher, listener, événement | « pipeline » pour un listener Symfony |
-| Configuration | `spip.config`, métas, store | « config » seul si ambigu |
+| Configuration | `spip.config`, métas | « config » seul si ambigu |
 | Version | SPIP 5.0, SPIP 4.x | « la nouvelle version » |
 | Packages modernes | `spip-league/*` | « le nouveau SPIP » |
 
@@ -114,11 +116,11 @@ La doc est organisée par langue et version (`docs/fr/5.0/`, etc.). Les dossiers
 | Dossier actuel | Type Diátaxis visé | Remarques |
 |----------------|-------------------|-----------|
 | `architecture/` | **Explication** | Contexte, cycle applicatif, feuille de route |
-| `upgrade/` (Migration) | **Guide pratique** | Tâches de migration SPIP 4.x → 5.0 |
+| `features/` | **Explication** | Explication des briques modernes et liens vers `upgrade/` pour les étapes opératoires |
 | `reference/` | **Référence** | Paramètres, symboles, événements, attributs |
-| `features/` | **Explication** (cible) | Aujourd'hui parfois **mixte** (concept + procédure) ; privilégier l'explication des briques modernes et lier vers `upgrade/` pour les étapes opératoires |
+| `upgrade/` (Migration) | **Guide pratique** | Tâches de migration SPIP 4.x → 5.0 |
 
-**Quadrant non encore couvert :** les **tutoriels** (apprentissage guidé de bout en bout, ex. « Créer un premier plugin SPIP 5 »). Piste future ; pas d'obligation de créer ce dossier immédiatement.
+**Quadrant non encore couvert :** les **tutoriels** (apprentissage guidé de bout en bout, ex. « Créer un premier plugin SPIP 5 »).
 
 Lors d'une contribution nouvelle ou d'une révision, vérifier que la page correspond au type du dossier cible, ou proposer un déplacement / une scission si le contenu déborde.
 

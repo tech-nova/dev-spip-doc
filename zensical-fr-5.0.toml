@@ -20,13 +20,13 @@ nav = [
   ]},
   { "Fonctionnalités" = [
     { "Sommaire features" = "features/index.md" },
-    { "Communication" = [
-      { "Event dispatcher" = "features/event-dispatcher-et-pipelines.md" },
-    ]},
     { "Services et configuration" = [
       { "Services Symfony" = "features/services-symfony.md" },
       { "Façade Spip" = "features/acces-services-spip.md" },
       { "Configuration" = "features/config.md" },
+    ]},
+    { "Pipelines & Événements" = [
+      { "Event dispatcher" = "features/event-dispatcher-et-pipelines.md" },
     ]},
     { "Interface et sécurité" = [
       { "Menus" = "features/menus.md" },
