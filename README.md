@@ -2,6 +2,8 @@
 
 Documentation technique des évolutions de SPIP, organisée par langue puis par version.
 
+Nous visons des pages **claires, par sujet**, chacune autosuffisante : une page traite un seul topic et un seul type d’information (éviter de mélanger concept et procédure). Les bonnes pratiques retenues sont le *single-sourcing* (centraliser l’information, lier plutôt que recopier), le *topic-based authoring*, une **terminologie précise** et une **structure** lisible. Le cadre éditorial de référence est **Diátaxis** (tutoriels, guides pratiques, référence, explications). Voir [CONTRIBUTING.md](CONTRIBUTING.md) pour le guide d’écriture détaillé.
+
 ## Structure
 
 ```text
