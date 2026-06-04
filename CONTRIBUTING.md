@@ -127,8 +127,19 @@ Lors d'une contribution nouvelle ou d'une révision, vérifier que la page corre
 - **`features/`** : explication uniquement ; procédures → **`upgrade/`** (guide pratique associé).
 - **`upgrade/`** : how-to ; pas de long exposé conceptuel (lien vers `features/`).
 - **`reference/`** : faits, tables, signatures.
-- Suivi interne : [AUDIT-DIATAXIS.md](AUDIT-DIATAXIS.md) (non publié sur le site).
 - **Traductions** : stabiliser le français (`docs/fr/5.0/`) avant de traduire ; les index `docs/en/` et `docs/fr/4.4/` peuvent renvoyer vers le contenu FR en attendant.
+
+### Navigation (Zensical / SPIP 5.0)
+
+Configuration dans `zensical-fr-5.0.toml` :
+
+- **Onglets** (`navigation.tabs`) : un onglet par section racine du `nav` (Accueil, Architecture, Migration, Fonctionnalités, Référence).
+- **Accueil** : conservé comme premier onglet (page d’accueil) ; le logo renvoie aussi vers l’index.
+- **Profondeur** : regrouper les longues listes (surtout `upgrade/`) en sous-sections niveau 3, alignées sur les sommaires `*/index.md`.
+- **Libellés** : courts dans le `nav` ; titre complet dans le H1 de la page.
+- Ne pas activer `navigation.expand` (sidebar trop longue) ni `navigation.prune` (exploration limitée).
+
+Voir [Navigation — Zensical](https://zensical.org/docs/setup/navigation/).
 
 ## Checklist de revue
 
