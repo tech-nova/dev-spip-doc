@@ -18,6 +18,33 @@ nav = [
     { "Cycle applicatif HTTP" = "architecture/cycle-applicatif-http.md" },
     { "Feuille de route" = "architecture/feuille-de-route.md" },
   ]},
+  { "Fonctionnalités" = [
+    { "Sommaire features" = "features/index.md" },
+    { "Communication" = [
+      { "Event dispatcher" = "features/event-dispatcher-et-pipelines.md" },
+    ]},
+    { "Services et configuration" = [
+      { "Services Symfony" = "features/services-symfony.md" },
+      { "Façade Spip" = "features/acces-services-spip.md" },
+      { "Configuration" = "features/config.md" },
+    ]},
+    { "Interface et sécurité" = [
+      { "Menus" = "features/menus.md" },
+      { "HTTP" = "features/http-request-response.md" },
+      { "Guard" = "features/guard.md" },
+    ]},
+    { "Exécution" = [
+      { "Cron" = "features/cron-taches-attributs.md" },
+      { "Logger" = "features/logger.md" },
+    ]},
+  ]},
+  { "Référence" = [
+    { "Sommaire réference" = "reference/index.md" },
+    { "Paramètres SPIP" = "reference/parametres-spip.md" },
+    { "SPIP version et symboles" = "reference/spipversion-et-symboles.md" },
+    { "Événements pipelines" = "reference/evenements-pipelines.md" },
+    { "AsPipelineListener" = "reference/as-pipeline-listener.md" },
+  ]},
   { "Migration" = [
     { "Sommaire migration" = "upgrade/index.md" },
     { "Préparation" = [
@@ -46,33 +73,6 @@ nav = [
       { "Espace privé (ruptures)" = "upgrade/espace-prive-et-menus.md" },
       { "Dépréciations" = "upgrade/deprecations-et-suppressions.md" },
     ]},
-  ]},
-  { "Fonctionnalités" = [
-    { "Sommaire features" = "features/index.md" },
-    { "Communication" = [
-      { "Event dispatcher" = "features/event-dispatcher-et-pipelines.md" },
-    ]},
-    { "Services et configuration" = [
-      { "Services Symfony" = "features/services-symfony.md" },
-      { "Façade Spip" = "features/acces-services-spip.md" },
-      { "Configuration" = "features/config.md" },
-    ]},
-    { "Interface et sécurité" = [
-      { "Menus" = "features/menus.md" },
-      { "HTTP" = "features/http-request-response.md" },
-      { "Guard" = "features/guard.md" },
-    ]},
-    { "Exécution" = [
-      { "Cron" = "features/cron-taches-attributs.md" },
-      { "Logger" = "features/logger.md" },
-    ]},
-  ]},
-  { "Référence" = [
-    { "Sommaire réference" = "reference/index.md" },
-    { "Paramètres SPIP" = "reference/parametres-spip.md" },
-    { "SPIP version et symboles" = "reference/spipversion-et-symboles.md" },
-    { "Événements pipelines" = "reference/evenements-pipelines.md" },
-    { "AsPipelineListener" = "reference/as-pipeline-listener.md" },
   ]},
 ]
 

@@ -5,14 +5,6 @@ Symfony et l'adoption de pratiques de développement modernes (SOLID, typage str
 
 ## Sommaire
 
-### [Guide de migration](upgrade/index.md)
-
-Tout ce qu'il faut savoir pour mettre à jour un site ou un plugin de SPIP 4.x vers SPIP 5.0.
-
-- Prérequis techniques
-- Changements de rupture (Breaking changes)
-- Dépréciations et suppressions
-
 ### [Architecture](architecture/index.md)
 
 - [Dépôts spip-league](architecture/depots-spip-league.md) — bibliothèques sous `vendor/spip-league/`
@@ -35,3 +27,11 @@ Détails techniques et tables de correspondance.
 - Paramètres de configuration `spip.*`
 - Versionnement et symboles
 - Liste des événements de pipelines
+
+### [Guide de migration](upgrade/index.md)
+
+Mise à jour d'un site ou d'un plugin depuis SPIP 4.x vers SPIP 5.0.
+
+- Prérequis techniques
+- Changements de rupture (Breaking changes)
+- Dépréciations et suppressions
