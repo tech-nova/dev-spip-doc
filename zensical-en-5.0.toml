@@ -33,6 +33,7 @@ variant = "classic"
 custom_dir = "overrides"
 language = "en"
 font = false
+favicon = "/assets/images/favicon.svg"
 features = [
   "navigation.sections",
   "navigation.indexes",
