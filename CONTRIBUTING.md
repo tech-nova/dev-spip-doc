@@ -30,16 +30,52 @@ La documentation SPIP s'appuie sur le cadre [Diátaxis](https://diataxis.fr/) : 
 ### Single-sourcing
 
 - Ne pas dupliquer le même contenu sur plusieurs pages : **une source canonique**, des liens ailleurs.
-- Exemple : l'explication des pipelines vit dans `features/`, les étapes de migration dans `upgrade/` — chaque page renvoie à l'autre via `## Voir aussi`.
+- Exemple : l'explication des pipelines vit dans `features/`, les étapes de migration dans `guides/migration/` — chaque page renvoie à l'autre via `## Voir aussi`.
 - Préférer les liens relatifs entre pages Markdown du même dépôt.
 
 ### Liens en introduction
 
-Les liens et renvois sont placés en fins d’article dans la section `## Voir aussi`.
+Par défaut, **tous** les renvois vont en fin d'article dans la section `## Voir aussi`.
 
-Si cela paraît nécessaire, et selon la longeur de la page, des renvois peuvent être indiqués dès l’introduction. Par exemple
-- Page **explication** (`features/`) : l’intro peut contenir un **lien Markdown** vers le guide pratique jumelé principal et, si utile, vers la référence.
-- Page **guide pratique** (`upgrade/`) : l’intro peut lier vers la page **explication** associée (`Le modèle est expliqué dans […](…)`).
+En introduction, on tolère **au plus un seul lien** : celui vers la page **jumelée du type complémentaire** (explication ↔ guide pratique), formulé de façon homogène. Concrètement :
+
+- Page **explication** (`features/`) : l'intro peut lier vers le guide pratique jumelé (`Mise en œuvre : [...](...)`).
+- Page **guide pratique** (`guides/`) : l'intro peut lier vers la page **explication** associée (`Le modèle est expliqué dans [...](...)`).
+- **Jamais** de lien vers `reference/` en intro (toujours en `## Voir aussi`), ni de second lien « bonus ».
+
+Éviter la phrase d'ouverture boilerplate « Cette page **explique**… / Ce guide pratique décrit **comment**… » : le type de page est déjà porté par l'onglet de navigation et le H1. Préférer une intro substantielle qui entre dans le sujet.
+
+### Code dans les pages d'explication
+
+Diátaxis proscrit les **instructions** (pas-à-pas) dans l'explication, **pas** le code illustratif. Une page `features/` **doit** donc montrer un court extrait **canonique / idiomatique** (≈ 15 lignes max) donnant à voir « à quoi ressemble » l'API publique.
+
+- `features/` : *un* extrait minimal qui illustre l'usage typique (pas de prérequis, pas d'étapes numérotées).
+- `guides/` : la procédure complète, étape par étape, avec variantes et dépannage.
+
+Éviter la duplication : l'extrait de `features/` reste conceptuel et court ; il ne recopie pas mot pour mot un bloc d'un guide.
+
+### Frontière interne / public
+
+`doc.spip.net` (ce dépôt) s'adresse aux **utilisateurs et développeuses** : API publique stable, points d'**extensibilité**, migration. Les **détails d'implémentation interne** d'un composant (couches privées, classes `@internal`, choix d'architecture) vivent dans le dépôt du composant : `vendor/spip-league/<paquet>/docs/*.md` (+ `README.md`), à destination des **contributeurs** de ce composant.
+
+En cas de doute : « est-ce nécessaire pour *utiliser* ou *étendre* la brique ? » → ici ; « est-ce utile seulement pour *modifier le composant* ? » → docs du dépôt.
+
+### Organisation par type, pas par concept
+
+Les dossiers suivent les **types** Diátaxis (`features/` = explication, `guides/` = how-to, `reference/` = référence), **pas** les concepts. Un concept (ex. `spip.config`) se matérialise de façon transverse, sans dossier dédié, via trois leviers :
+
+1. **Hub** : la page `features/<concept>.md` est le point d'entrée ; son `## Voir aussi` liste les facettes (how-to dans `guides/`, signatures dans `reference/`).
+2. **Nommage en miroir** : même radical de fichier d'un dossier à l'autre (`features/config.md` ↔ `guides/migration/config.md`).
+3. **Matrice d'index** : `features/index.md` tient la table « Sujet | Explication | Guide pratique | Référence » qui sert d'index par concept.
+
+Raisons : beaucoup de how-to sont transverses (prérequis, dépréciations…), les concepts ont des facettes asymétriques, et le type garde des URLs stables.
+
+### How-to (`guides/`) et migration (`guides/migration/`)
+
+Le quadrant how-to de Diátaxis s'appelle « Guides ». La **migration 4.x → 5.0** n'en est qu'un sous-ensemble :
+
+- `guides/` : how-to **généraux**, utiles même pour un plugin neuf (ex. « Configurer les services d'un plugin »).
+- `guides/migration/` : how-to **spécifiques à la migration** depuis SPIP 4.x (prérequis, dépréciations, changements de syntaxe…).
 
 ### Terminologie précise
 
@@ -116,9 +152,10 @@ La doc est organisée par langue et version (`docs/fr/5.0/`, etc.). Les dossiers
 | Dossier actuel | Type Diátaxis visé | Remarques |
 |----------------|-------------------|-----------|
 | `architecture/` | **Explication** | Contexte, cycle applicatif, feuille de route |
-| `features/` | **Explication** | Explication des briques modernes et liens vers `upgrade/` pour les étapes opératoires |
+| `features/` | **Explication** | Explication des briques modernes (+ extrait canonique) et liens vers `guides/` pour les étapes opératoires |
 | `reference/` | **Référence** | Paramètres, symboles, événements, attributs |
-| `upgrade/` (Migration) | **Guide pratique** | Tâches de migration SPIP 4.x → 5.0 |
+| `guides/` | **Guide pratique** | How-to généraux (faire X en SPIP 5.0) |
+| `guides/migration/` | **Guide pratique** | Tâches de migration SPIP 4.x → 5.0 |
 
 **Quadrant non encore couvert :** les **tutoriels** (apprentissage guidé de bout en bout, ex. « Créer un premier plugin SPIP 5 »).
 
@@ -126,18 +163,19 @@ Lors d'une contribution nouvelle ou d'une révision, vérifier que la page corre
 
 ### Alignement du corpus existant
 
-- **`features/`** : explication uniquement ; procédures → **`upgrade/`** (guide pratique associé).
-- **`upgrade/`** : how-to ; pas de long exposé conceptuel (lien vers `features/`).
+- **`features/`** : explication + un extrait canonique court ; procédures détaillées → **`guides/`**.
+- **`guides/`** : how-to généraux ; **`guides/migration/`** : how-to spécifiques à la migration 4.x → 5.0. Pas de long exposé conceptuel (lien vers `features/`).
 - **`reference/`** : faits, tables, signatures.
+- **Détails internes d'un composant** : dans `vendor/spip-league/<paquet>/docs/` (+ `README.md`), pas sur `doc.spip.net`.
 - **Traductions** : stabiliser le français (`docs/fr/5.0/`) avant de traduire ; les index `docs/en/` et `docs/fr/4.4/` peuvent renvoyer vers le contenu FR en attendant.
 
 ### Navigation (Zensical / SPIP 5.0)
 
 Configuration dans `zensical-fr-5.0.toml` :
 
-- **Onglets** (`navigation.tabs`) : Accueil, Architecture, Fonctionnalités, Référence, Migration (guides 4.x → 5.0 en dernier).
+- **Onglets** (`navigation.tabs`) : Accueil, Architecture, Fonctionnalités, Référence, Guides (avec la migration 4.x → 5.0 en sous-section, en dernier).
 - **Accueil** : conservé comme premier onglet (page d’accueil) ; le logo renvoie aussi vers l’index.
-- **Profondeur** : regrouper les longues listes (surtout `upgrade/`) en sous-sections niveau 3, alignées sur les sommaires `*/index.md`.
+- **Profondeur** : regrouper les longues listes (surtout `guides/`) en sous-sections niveau 3, alignées sur les sommaires `*/index.md`.
 - **Libellés** : courts dans le `nav` ; titre complet dans le H1 de la page.
 - Ne pas activer `navigation.expand` (sidebar trop longue) ni `navigation.prune` (exploration limitée).
 

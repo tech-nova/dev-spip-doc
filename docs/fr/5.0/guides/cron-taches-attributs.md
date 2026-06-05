@@ -1,6 +1,6 @@
 # Migrer les tâches cron
 
-Ce guide pratique décrit **comment** déclarer des tâches de fond avec `#[AsCronTask]` dans un plugin SPIP 5.0.
+Les tâches de fond se déclarent avec `#[AsCronTask]` sur un service du plugin.
 Le modèle est expliqué dans [Tâches Cron et Attributs](../features/cron-taches-attributs.md).
 
 ## Objectif

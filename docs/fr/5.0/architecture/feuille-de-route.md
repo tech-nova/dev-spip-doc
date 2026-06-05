@@ -63,4 +63,4 @@ Objectif : alignement maximal avec l’écosystème Symfony, si la faisabilité 
 - [Dépôts spip-league](depots-spip-league.md)
 - [Cycle applicatif HTTP](cycle-applicatif-http.md)
 - [Services Symfony](../features/services-symfony.md)
-- [Guide de migration](../upgrade/index.md)
+- [Guides et migration](../guides/index.md)

@@ -1,31 +1,35 @@
 # Système de log (PSR-3)
 
-Cette page **explique** la journalisation PSR-3 de SPIP 5.0.
-Pour migrer `spip_log()` ou configurer un logger de plugin, voir [Migrer et configurer les logs](../upgrade/logger.md).
+SPIP 5.0 adopte **PSR-3** pour la journalisation : la fonction `Spip::logger()`, l'injection de `LoggerInterface`
+dans les services, et des paramètres conteneur `spip.logger.*` (rotation, niveau, chemins).
+Des loggers dédiés par plugin sont possibles via `spip.logger_registry`.
 
-## En bref
+Migrer `spip_log()` ou configurer un logger : [Logs PSR-3](../guides/logger.md).
 
-SPIP 5.0 adopte **PSR-3** : `spip_logger()`, injection de `LoggerInterface`, paramètres conteneur `spip.logger.*`.
+## Usage typique
 
-## Contexte
+```php
+Spip::logger()->error('Échec de la connexion');
+Spip::logger('mon_plugin')->info('Traitement terminé');
+```
 
-`spip_log()` et les constantes `_LOG_*` mélangeaient niveaux et canaux. Le nouveau stack permet rotation, filtres et loggers dédiés par plugin via `spip.logger_registry`.
+Dans un service, préférer l'injection de `Psr\Log\LoggerInterface` au constructeur.
 
 ## Fonctionnement
 
 - Logger principal : service `logger` / `Psr\Log\LoggerInterface`.
-- Canaux nommés : `spip_logger('mon_plugin')`.
+- Canaux nommés : `Spip::logger('mon_plugin')`.
 - Configuration : `spip.logger.max_level`, `max_files`, `log_path`, etc. (souvent dans `config/custom.php`).
 
 ## Différences avec SPIP 4.x
 
 | SPIP 4.x | SPIP 5.0 |
 |----------|----------|
-| `spip_log()` | `spip_logger()->info()` |
+| `spip_log()` | `Spip::logger()->info()` |
 | `_LOG_ERREUR`, etc. | `error()`, `warning()`, … |
 | Globales `$nombre_de_logs` | Paramètres `spip.logger.*` |
 
 ## Voir aussi
 
-- [Migrer et configurer les logs](../upgrade/logger.md)
+- [Logs PSR-3](../guides/logger.md)
 - [Services d’un plugin](services-symfony.md)

@@ -1,6 +1,6 @@
 # Configurer les services d’un plugin
 
-Ce guide pratique décrit **comment** activer le conteneur Symfony dans un plugin SPIP 5.0 (`config/services.php`, autowiring).
+Le conteneur Symfony s’active dans un plugin via `config/services.php` (autowiring, autoconfigure).
 Le modèle est expliqué dans [Services et injection de dépendances](../features/services-symfony.md).
 
 ## Objectif

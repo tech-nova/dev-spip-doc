@@ -1,7 +1,7 @@
 # Migration — Configuration et métas
 
-Ce guide pratique décrit **comment** migrer configuration et métas vers `spip-league/config`.
-Voir [Configuration (feature)](../features/config.md) pour le modèle.
+Migration de la configuration et des métas vers `spip-league/config`.
+Le modèle est expliqué dans [Configuration](../../features/config.md).
 
 ## Suppressions (SPIP 5.0)
 
@@ -220,6 +220,6 @@ Puis : `service('spip.config.manager')->repository('mon_table')`. Le nom est enr
 
 ## Voir aussi
 
-- [Configuration (spip-league/config)](../features/config.md)
-- [Paramètres SPIP](../reference/parametres-spip.md)
-- [Migrer vers la façade Spip](acces-services-spip.md)
+- [Configuration (spip-league/config)](../../features/config.md)
+- [Paramètres SPIP](../../reference/parametres-spip.md)
+- [Migrer vers la façade Spip](../acces-services-spip.md)

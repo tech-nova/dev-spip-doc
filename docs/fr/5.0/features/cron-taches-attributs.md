@@ -1,17 +1,26 @@
 # Tâches Cron et Attributs
 
-Cette page **explique** le modèle de tâches de fond de SPIP 5.0.
-Pour déclarer ou migrer une tâche dans un plugin, voir [Migrer les tâches cron](../upgrade/cron-taches-attributs.md).
+En SPIP 5.0, les tâches de fond se déclarent avec l'attribut **`#[AsCronTask]`** sur une classe ou une méthode
+de service, remplaçant le pipeline `taches_generales_cron` et les déclarations `paquet.xml`.
+Les tâches deviennent des services injectables et testables.
 
-## En bref
+Déclaration dans un plugin : [Déclarer des tâches cron](../guides/cron-taches-attributs.md).
 
-Les tâches cron se déclarent avec **`#[AsCronTask]`** sur une classe ou une méthode,
-remplaçant le pipeline `taches_generales_cron` et `paquet.xml`.
+## Usage typique
 
-## Contexte
+```php
+use SpipLeague\Component\Kernel\Attribute\AsCronTask;
 
-Historiquement : XML + fonctions globales, code retour `>= 0` = succès.
-SPIP 5.0 : services injectables, convention Unix (`0` = succès).
+#[AsCronTask(name: 'monplugin_nettoyage', periode: 3600)]
+final class NettoyageTask
+{
+    public function __invoke(): int
+    {
+        // logique de la tâche…
+        return 0; // 0 = succès (convention Unix)
+    }
+}
+```
 
 ## Fonctionnement
 
@@ -34,5 +43,5 @@ SPIP 5.0 : services injectables, convention Unix (`0` = succès).
 
 ## Voir aussi
 
-- [Migrer les tâches cron](../upgrade/cron-taches-attributs.md)
+- [Déclarer des tâches cron](../guides/cron-taches-attributs.md)
 - [Services et injection de dépendances](services-symfony.md)

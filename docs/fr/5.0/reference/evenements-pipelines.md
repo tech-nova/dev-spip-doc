@@ -4,7 +4,7 @@ SPIP 5.0 propose des classes d'événements dédiées pour les pipelines les plu
 Une partie des classes du core se trouvent dans le répertoire `ecrire/src/Framework/Pipeline/Event/`.
 
 Cette page est une référence : elle liste les events disponibles et leurs méthodes utiles.
-Pour migrer du code existant, consultez [Migrer les pipelines](../upgrade/pipelines.md).
+Pour migrer du code existant, consultez [Migrer les pipelines](../guides/migration/pipelines.md).
 Pour les règles de déclaration des listeners, consultez [Référence `AsPipelineListener`](as-pipeline-listener.md).
 
 ## Table de correspondance

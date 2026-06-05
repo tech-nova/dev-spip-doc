@@ -1,6 +1,6 @@
 # Migrer menus et onglets de l’espace privé
 
-Ce guide pratique décrit **comment** remplacer les balises `<menu>` et `<onglet>` de `paquet.xml` par `config/menus.php` et `config/onglets.php`.
+Les menus et onglets de l’espace privé se déclarent dans `config/menus.php` et `config/onglets.php`, en remplacement des balises `<menu>` / `<onglet>` de `paquet.xml`.
 Le modèle est expliqué dans [Menus et onglets](../features/menus.md).
 
 ## Objectif
@@ -72,7 +72,7 @@ return [
 
 - `menu_squelette` → **`menu_apparence`** (SPIP 5.0).
 - Préfixes `bando_*` → **`menu_*`** (dépréciés).
-- Renommages UI et boîtes privées : [Espace privé — ruptures](espace-prive-et-menus.md).
+- Renommages UI et boîtes privées : [Espace privé — ruptures](migration/espace-prive-et-menus.md).
 
 ## Vérification
 
@@ -82,4 +82,4 @@ return [
 ## Voir aussi
 
 - [Menus et onglets](../features/menus.md) — modèle et identifiants standards
-- [Espace privé et menus](espace-prive-et-menus.md) — renommages et UI
+- [Espace privé et menus](migration/espace-prive-et-menus.md) — renommages et UI

@@ -1,16 +1,24 @@
 # Services et injection de dépendances
 
-Cette page **explique** l’intégration du conteneur de services Symfony dans SPIP 5.0.
-Pour configurer un plugin, voir [Configurer les services d’un plugin](../upgrade/services-plugin.md).
+SPIP 5.0 intègre le **conteneur de services Symfony** : autowiring, autoconfiguration des attributs
+(listeners, tâches cron, règles Guard…) et paramètres `spip.*` injectables.
+Chaque plugin peut fournir un fichier `config/services.php` pour enregistrer ses classes comme services.
 
-## En bref
+Configuration dans un plugin : [Configurer les services d’un plugin](../guides/services-plugin.md).
 
-SPIP 5.0 utilise le **conteneur de services Symfony** : autowiring, autoconfiguration des attributs, paramètres `spip.*` injectables dans les définitions de services.
+## Usage typique
 
-## Contexte
+```php
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-Le code legacy s’appuyait sur globales, `include_spip()` et `service()` peu typés.
-Le conteneur permet classes testables, listeners et tâches cron par attributs.
+return static function (ContainerConfigurator $container): void {
+    $container->services()
+        ->defaults()
+            ->autowire()
+            ->autoconfigure()
+        ->load('MonPlugin\\', '../src/');
+};
+```
 
 ## Pourquoi utiliser les services ?
 
@@ -36,5 +44,5 @@ Pour des bibliothèques tierces sans Composer racine, prévoir un `vendor/` emba
 
 ## Voir aussi
 
-- [Configurer les services d’un plugin](../upgrade/services-plugin.md)
+- [Configurer les services d’un plugin](../guides/services-plugin.md)
 - [Façade Spip et Inputs](acces-services-spip.md)

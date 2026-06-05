@@ -21,4 +21,4 @@ TODO: parler des surcharges config/custom.php (ou via plugins config/services.ph
 ## Voir aussi
 
 - [Configuration (feature)](../features/config.md)
-- [Migration — Configuration et métas](../upgrade/config.md)
+- [Migration — Configuration et métas](../guides/migration/config.md)

@@ -1,15 +1,22 @@
 # Façade Spip et entrées HTTP (Inputs)
 
-Cette page **explique** la façade **`Spip`** et le service **`Inputs`** (code procédural).
-Pour migrer depuis `service()` / `_request()`, voir [Migrer vers la façade Spip](../upgrade/acces-services-spip.md).
+La classe **`Spip`** (`spip/framework`) centralise l'accès typé à la configuration, aux logs, aux entrées HTTP
+et au conteneur, pour le code procédural de transition. Le service **`Inputs`** porte la lecture/écriture
+des entrées HTTP via `RequestStack`. Les anciennes fonctions `service()` et `param()` sont dépréciées en 5.0.
 
-## En bref
+Remplacer `service()` / `_request()` : [Utiliser la façade Spip](../guides/acces-services-spip.md).
 
-`Spip` (`spip/framework`) centralise l’accès typé à la config, aux logs, aux entrées HTTP et au conteneur. `service()` et `param()` sont dépréciés en 5.0.
+## Usage typique
 
-## Contexte
+```php
+use Spip\Framework\Spip;
 
-Les fonctions globales multipliées rendaient difficile l’autocomplétion et les tests. La façade offre un point d’entrée unique ; le code objet doit préférer l’injection des services concernés dans les classes.
+$titre = Spip::config('nom_site');     // configuration
+Spip::logger('mon_plugin')->info('…'); // logs PSR-3
+$id = Spip::input('id_article');       // entrée HTTP
+```
+
+Le code **objet** doit préférer l'injection des services concernés (config, logger, `RequestStack`) dans ses constructeurs ; la façade reste réservée au code procédural.
 
 ## API principale
 
@@ -26,10 +33,10 @@ Les fonctions globales multipliées rendaient difficile l’autocomplétion et l
 
 `SpipLeague\Bridge\Http\Inputs` lit et écrit via **`RequestStack`** uniquement.
 Sans requête : lecture → `null`, écriture → exception.
-`_request()` / `set_request()` (dépréciés) délèguent à `Spip::` .
+`_request()` / `set_request()` (dépréciés) délèguent à `Spip::`.
 
 ## Voir aussi
 
-- [Migrer vers la façade Spip](../upgrade/acces-services-spip.md)
+- [Utiliser la façade Spip](../guides/acces-services-spip.md)
 - [Configuration](config.md)
 - [HTTP Request/Response](http-request-response.md)

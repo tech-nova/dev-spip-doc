@@ -1,7 +1,7 @@
 # Espace privé et menus — ruptures UI
 
-Ce guide pratique recense les **ruptures** de l’espace privé SPIP 5.0 (renommages, UI).
-Pour la déclaration des menus : [Migrer menus et onglets](menus-onglets.md) — modèle dans [Menus et onglets](../features/menus.md).
+Recensement des **ruptures** de l’espace privé SPIP 5.0 (renommages, UI).
+Le modèle des menus est expliqué dans [Menus et onglets](../../features/menus.md).
 
 ## Objectif
 
@@ -16,8 +16,8 @@ La page `?exec=admin_tech` est renommée en **`?exec=admin_bdd`**.
 
 ## Menus de l'espace privé
 
-Migration `config/menus.php` / `config/onglets.php` : [Migrer menus et onglets](menus-onglets.md).
-Modèle : [Menus et onglets](../features/menus.md).
+Migration `config/menus.php` / `config/onglets.php` : [Migrer menus et onglets](../menus-onglets.md).
+Modèle : [Menus et onglets](../../features/menus.md).
 
 ### Renommages importants
 
@@ -95,5 +95,5 @@ surchargé ce formulaire, vérifiez la gestion du paramètre `editable`.
 
 ## Voir aussi
 
-- [Migrer menus et onglets](menus-onglets.md)
-- [Menus et onglets](../features/menus.md)
+- [Migrer menus et onglets](../menus-onglets.md)
+- [Menus et onglets](../../features/menus.md)

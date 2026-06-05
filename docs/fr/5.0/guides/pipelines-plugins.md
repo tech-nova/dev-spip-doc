@@ -1,9 +1,7 @@
 # Migration des pipelines dans les plugins
 
-Ce guide pratique décrit **comment** remplacer les fonctions `prefixe_nom_pipeline()` par des listeners modernes dans un plugin SPIP 5.0.
+Dans un plugin, les fonctions `prefixe_nom_pipeline()` sont remplacées par des listeners modernes déclarés en services.
 Le modèle est expliqué dans [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md).
-Pour le fonctionnement général de `pipeline()` et les changements runtime, voir [Migrer les pipelines](pipelines.md).
-Cette page se concentre sur l'organisation d'un plugin.
 
 ## Vue d'ensemble
 
@@ -210,6 +208,6 @@ Pour tester l'intégration complète, construisez un conteneur de test, enregist
 ## Voir aussi
 
 - [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md)
-- [Migrer les pipelines](pipelines.md)
+- [Migrer les pipelines](migration/pipelines.md)
 - [Événements de pipelines](../reference/evenements-pipelines.md)
 - [Référence `AsPipelineListener`](../reference/as-pipeline-listener.md)

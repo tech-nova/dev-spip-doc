@@ -1,11 +1,11 @@
-# Migrer et configurer les logs
+# Configurer et utiliser les logs (PSR-3)
 
-Ce guide pratique décrit **comment** passer de `spip_log()` à PSR-3 et configurer un logger de plugin.
+`Spip::logger()` et l’injection de `LoggerInterface` remplacent `spip_log()`, avec les paramètres `spip.logger.*`.
 Le modèle est expliqué dans [Système de log](../features/logger.md).
 
 ## Objectif
 
-Utiliser `spip_logger()` et l’injection de `LoggerInterface` avec les paramètres du conteneur.
+Utiliser `Spip::logger()` et l’injection de `LoggerInterface` avec les paramètres du conteneur.
 
 ## Prérequis
 
@@ -25,8 +25,8 @@ spip_log('Plugin', 'mon_plugin');
 **Après :**
 
 ```php
-spip_logger()->error('Message');
-spip_logger('mon_plugin')->info('Plugin');
+Spip::logger()->error('Message');
+Spip::logger('mon_plugin')->info('Plugin');
 ```
 
 ### 2. Configurer le logger global
@@ -75,4 +75,4 @@ private readonly LoggerInterface $logger,
 ## Voir aussi
 
 - [Système de log](../features/logger.md)
-- [API PHP — dépréciations](php-api.md)
+- [API PHP — dépréciations](migration/php-api.md)

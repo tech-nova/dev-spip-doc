@@ -33,10 +33,9 @@ Détails techniques et tables de correspondance.
 - Versionnement et symboles
 - Liste des événements de pipelines
 
-### [Guide de migration](upgrade/index.md)
+### [Guides](guides/index.md)
 
-Mise à jour d'un site ou d'un plugin depuis SPIP 4.x vers SPIP 5.0.
+Guides pratiques (how-to) pour SPIP 5.0, dont la [migration depuis SPIP 4.x](guides/migration/index.md).
 
-- Prérequis techniques
-- Changements de rupture (Breaking changes)
-- Dépréciations et suppressions
+- How-to généraux (services, pipelines, cron, logs…)
+- Migration : prérequis, ruptures, dépréciations et suppressions

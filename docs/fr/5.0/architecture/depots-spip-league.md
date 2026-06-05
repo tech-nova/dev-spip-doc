@@ -13,7 +13,7 @@ Le tableau suivant recense les paquets **spip-league** d’une distribution SPIP
 | :--- | :--- | :--- |
 | **kernel** | Noyau applicatif : détection d’installation, conteneur, routage, attributs pipeline/cron. | [kernel](https://git.spip.net/spip-league/kernel) |
 | **http-kernel** | Orchestration HTTP : bootstrap legacy, handlers, Request → Response. | [http-kernel](https://git.spip.net/spip-league/http-kernel) |
-| **guard** | Écran de sécurité moderne : règles de protection sur `kernel.request` (bots, abus d’URL, delestage). | [guard](https://git.spip.net/spip-league/guard) |
+| **guard** | Écran de sécurité : règles sur `kernel.request` (bots, abus d’URL, délestage). | [guard](https://git.spip.net/spip-league/guard) |
 | **http** | Pont HTTP (exceptions de flux, intégration HttpFoundation). | [http](https://git.spip.net/spip-league/http) |
 | **pipeline-bridge** | Pont pipelines SPIP ↔ `symfony/event-dispatcher`. | [pipeline-bridge](https://git.spip.net/spip-league/pipeline-bridge) |
 | **composer-installer** | Plugin Composer : layout SPIP, extensions, autoload. | [composer-installer](https://git.spip.net/spip-league/composer-installer) |
@@ -67,5 +67,5 @@ etc.).
 ## Voir aussi
 
 - [Cycle applicatif HTTP](cycle-applicatif-http.md)
-- [Environnement et Kernel](../upgrade/environnement-kernel.md)
+- [Environnement et Kernel](../guides/migration/environnement-kernel.md)
 - [Services et injection de dépendances](../features/services-symfony.md)

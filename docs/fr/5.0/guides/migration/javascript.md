@@ -63,7 +63,7 @@ Les balises `<style>` et `<script>` dans `paquet.xml` sont dépréciées. Il est
 | JS Public | `insert_head` | `InsertHeadEvent` |
 | JS Privé | `header_prive` | `HeaderPriveEvent` |
 
-Pour plus de détails sur la mise en œuvre, consultez le guide sur les [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md).
+Pour plus de détails sur la mise en œuvre, consultez le guide sur les [Event Dispatcher et Pipelines](../../features/event-dispatcher-et-pipelines.md).
 
 ## Rétrocompatibilité (`retrocompat.js`)
 

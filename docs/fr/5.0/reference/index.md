@@ -20,4 +20,4 @@ Table de correspondance entre les pipelines historiques et les nouvelles classes
 
 Détails de la résolution automatique (type-hints, union types), des positions d'exécution et des cas d'erreur.
 
-Pour les exemples de migration, consultez [Migrer les pipelines](../upgrade/pipelines.md).
+Pour les exemples de migration, consultez [Migrer les pipelines](../guides/migration/pipelines.md).

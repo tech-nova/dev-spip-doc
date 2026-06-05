@@ -1,13 +1,15 @@
 # Menus et onglets de l'espace privé
 
-Cette page **explique** le modèle de navigation de l’espace privé en SPIP 5.0.
+En SPIP 5.0, les menus et onglets de l'espace privé se déclarent dans **`config/menus.php`** et **`config/onglets.php`**
+(tableaux PHP statiques), remplaçant les balises XML de `paquet.xml`.
+Le format profite de l'OPcache et s'aligne sur `services.php`.
 
 !!! warning "Éléments susceptibles d’évolution"
-    Le fonctionnement décrit pourrait évoluer avec des développements ultérieurs pour SPIP 5.0.
+    Le fonctionnement décrit pourrait évoluer avec des développements ultérieurs pour SPIP 5.0.
 
-## En bref
+Déclarer ses menus dans un plugin : [Migrer menus et onglets](../guides/menus-onglets.md).
 
-Les menus et onglets se déclarent dans **`config/menus.php`** et **`config/onglets.php`** (tableaux PHP), remplaçant les balises XML de `paquet.xml`.
+## Usage typique
 
 ## Contexte
 
@@ -39,5 +41,5 @@ Le format PHP statique s’aligne sur `services.php` et profite de l’OPcache.
 
 ## Voir aussi
 
-- [Migrer menus et onglets](../upgrade/menus-onglets.md)
-- [Espace privé — ruptures et UI](../upgrade/espace-prive-et-menus.md)
+- [Migrer menus et onglets](../guides/menus-onglets.md)
+- [Espace privé — ruptures et UI](../guides/migration/espace-prive-et-menus.md)

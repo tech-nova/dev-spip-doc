@@ -1,18 +1,32 @@
 # Event Dispatcher et Pipelines
 
-Cette page **explique** le modèle de communication par événements de SPIP 5.0.
-Pour migrer du code : [Migrer les pipelines](../upgrade/pipelines.md), [dans un plugin](../upgrade/pipelines-plugins.md).
-Pour les signatures : [Événements de pipelines](../reference/evenements-pipelines.md), [`AsPipelineListener`](../reference/as-pipeline-listener.md).
+Les pipelines SPIP — ces points fixes où les plugins interceptent des données du cycle de publication —
+reposent en SPIP 5.0 sur l'**Event Dispatcher** de Symfony : événements typés, listeners déclarés en services,
+et un pont qui garde la fonction `pipeline()` compatible.
 
-## En bref
+Mise en œuvre dans un plugin : [Pipelines dans un plugin](../guides/pipelines-plugins.md).
 
-SPIP 5.0 s’appuie sur le **Event Dispatcher** de Symfony pour les pipelines historiques :
-events typés, listeners en services, pont avec `pipeline()` pour la compatibilité.
+## Usage typique
+
+Un listener est une méthode de service annotée. Quand l'argument est un event dédié, le pipeline est déduit du type :
+
+```php
+use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
+use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+
+final class FooterListener
+{
+    #[AsPipelineListener]
+    public function onAffichageFinal(AffichageFinalEvent $event): void
+    {
+        $event->appendToBody('<script src="/js/plugin.js"></script>');
+    }
+}
+```
 
 ## Contexte
 
-Les pipelines SPIP permettent aux plugins d’intercepter des données à des points fixes du cycle de publication.
-Le modèle historique reposait sur des fonctions globales et `pipelines.php`.
+Le modèle historique reposait sur des fonctions globales et `pipelines.php`, avec des données souvent non typées.
 SPIP 5.0 conserve ce mécanisme tout en offrant une couche typée et testable.
 
 ## Concepts clés
@@ -42,11 +56,11 @@ Les données passent par l’objet event plutôt que par des tableaux non typés
 
 - Ne pas confondre **pipeline historique** et **listener Symfony** dans la terminologie.
 - Les pipelines sans classe dédiée restent sur `PipelineEvent` : le nom doit être indiqué explicitement sur l’attribut.
-- La procédure de déclaration et de migration est détaillée dans les guides pratiques, pas ici.
+- La procédure de déclaration et de migration est détaillée dans les guides, pas ici.
 
 ## Voir aussi
 
-- [Migrer les pipelines](../upgrade/pipelines.md)
-- [Migrer les pipelines d’un plugin](../upgrade/pipelines-plugins.md)
+- [Pipelines dans un plugin](../guides/pipelines-plugins.md)
+- [Migrer les pipelines](../guides/migration/pipelines.md)
 - [Événements de pipelines](../reference/evenements-pipelines.md)
 - [Référence `AsPipelineListener`](../reference/as-pipeline-listener.md)

@@ -1,17 +1,30 @@
 # Guard (écran de sécurité moderne)
 
-Cette page **explique** **`spip-league/guard`**, successeur de l’écran de sécurité historique.
-Pour ajouter une règle dans un plugin, voir [Étendre Guard](../upgrade/guard-extension.md).
+**`spip-league/guard`** est le successeur de l'écran de sécurité historique : il exécute des **règles de protection**
+sur `kernel.request` (bots, abus d'URL, délestage) avant le legacy.
+Ce n'est **pas** l'authentification Symfony (login, firewall).
 
-## En bref
+Ajouter une règle dans un plugin : [Étendre Guard](../guides/guard-extension.md).
 
-Guard exécute des **règles de protection** sur `kernel.request` (bots, abus d’URL, delestage).
-Ce n’est **pas** l’authentification Symfony (login, firewall).
+## Usage typique
 
-## Contexte
+Une règle implémente `GuardRuleInterface` et est découverte via l'attribut `#[AsGuard]` :
 
-L’ancien `ecran_securite.php` était inclus depuis le bootstrap legacy.
-SPIP 5.0 centralise la mitigation dans `RequestGuardListener` (priorité 2048) avant le legacy.
+```php
+use SpipLeague\Component\Guard\Attribute\AsGuard;
+use SpipLeague\Component\Guard\GuardContext;
+use SpipLeague\Component\Guard\GuardRuleInterface;
+use SpipLeague\Component\Guard\GuardVerdict;
+
+#[AsGuard(priority: 50)]
+final class ApiRateGuard implements GuardRuleInterface
+{
+    public function evaluate(GuardContext $context): GuardVerdict
+    {
+        return GuardVerdict::allow();
+    }
+}
+```
 
 ## Fonctionnement
 
@@ -39,6 +52,6 @@ SPIP 5.0 centralise la mitigation dans `RequestGuardListener` (priorité 2048) a
 
 ## Voir aussi
 
-- [Étendre Guard dans un plugin](../upgrade/guard-extension.md)
+- [Étendre Guard dans un plugin](../guides/guard-extension.md)
 - [Cycle applicatif HTTP](../architecture/cycle-applicatif-http.md)
 - [HTTP Request / Response](http-request-response.md)

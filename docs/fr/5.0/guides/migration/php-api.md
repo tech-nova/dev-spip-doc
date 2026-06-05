@@ -4,10 +4,10 @@ SPIP 5.0 modernise son API PHP en adoptant des standards PSR et en simplifiant p
 
 ## Système de Log (PSR-3)
 
-La fonction `spip_log()` est dépréciée au profit de `spip_logger()`, qui retourne une instance compatible avec `Psr\Log\LoggerInterface`.
+La fonction `spip_log()` est dépréciée au profit de `Spip::logger()`, qui retourne une instance compatible avec `Psr\Log\LoggerInterface`.
 
 Pour plus de détails sur l'utilisation, l'injection de dépendances et la configuration du logger, consultez le guide dédié :
-**[Système de Log (PSR-3)](../features/logger.md)**.
+**[Système de Log (PSR-3)](../../features/logger.md)**.
 
 ## Nouvelles dépréciations (SPIP 5.0)
 

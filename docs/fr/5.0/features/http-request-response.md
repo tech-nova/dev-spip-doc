@@ -1,15 +1,21 @@
 # Gestion HTTP (Request/Response)
 
-Cette page **explique** l’usage de **HttpFoundation** dans SPIP 5.0.
+SPIP 5.0 expose les objets **`Request`** et **`Response`** de Symfony HttpFoundation. Le code legacy est encore
+largement servi via mise en tampon, mais la migration vers des `Response` natives progresse,
+offrant une interception cohérente (Guard, pipelines, redirections).
 
-## En bref
+Mise en œuvre dans un plugin : [HTTP Request/Response dans un plugin](../guides/http-request-response.md).
 
-SPIP 5.0 expose `Request` et `Response` Symfony. Le legacy est encore largement servi via mise en tampon ; la migration vers des `Response` natives progresse.
+## Usage typique
 
-## Contexte
+```php
+use Spip\Framework\Spip;
 
-`_request()` et sorties ad hoc dispersaient la logique HTTP.
-`RequestStack` et `Response` permettent une interception cohérente (Guard, pipelines, redirections).
+$request = Spip::request();              // requête courante (ou null hors HTTP)
+$id = $request?->query->get('id_article');
+```
+
+Pour court-circuiter le flux avec une réponse immédiate (redirection, erreur), lever une `EarlyResponseException`.
 
 ## Fonctionnement
 
@@ -26,5 +32,5 @@ Le routage du cœur (`SpipController`, attributs `#[Route]`) couvre `/spip.php` 
 
 ## Voir aussi
 
-- [HTTP Request/Response dans un plugin](../upgrade/http-request-response.md)
+- [HTTP Request/Response dans un plugin](../guides/http-request-response.md)
 - [Cycle applicatif HTTP](../architecture/cycle-applicatif-http.md)

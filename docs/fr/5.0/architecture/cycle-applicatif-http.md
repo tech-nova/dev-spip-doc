@@ -54,7 +54,8 @@ return static function (array $context): SpipHttpKernel {
 ```
 
 Le helper `Spip` est dans l’espace de nom global.
-`Spip::app()` retourne sur la fonction `app()` définie dans `vendor/spip-league/kernel/boot.php` : elle construit le **Kernel SPIP** et son conteneur au premier appel.
+`Spip::app()` retourne sur la fonction `app()` définie dans `vendor/spip-league/kernel/boot.php` :
+elle construit le **Kernel SPIP** et son conteneur au premier appel.
 
 Les helpers `service()`, et `param()` sont dépréciés au profit de `Spip::service()` et `Spip::param()`.
 De même, préférer l’usage `Spip::app()` à `app()`.
@@ -63,7 +64,7 @@ De même, préférer l’usage `Spip::app()` à `app()`.
 
 Lors du premier accès au conteneur :
 
-1. **Environnement** : chargement optionnel des fichiers `.env` (voir [Environnement et Kernel](../upgrade/environnement-kernel.md)).
+1. **Environnement** : chargement optionnel des fichiers `.env` (voir [Environnement et Kernel](../guides/migration/environnement-kernel.md)).
 2. **Installation** : `InstallationDetector` reconnaît la forme (`legacy`, `standalone`, `mutualized`) et les
    répertoires projet (`config/`, cache, web).
 3. **Conteneur** : chargement d’un conteneur **compilé** (`tmp/cache/boot/container.prod.php`) s’il est à jour, sinon
@@ -113,6 +114,6 @@ appliquer immédiatement les nouveaux services (listeners, tâches cron, etc.) �
 - [Gestion HTTP](../features/http-request-response.md),
 - [Guard](../features/guard.md).
 - [Services et injection de dépendances](../features/services-symfony.md)
-- [Environnement et Kernel](../upgrade/environnement-kernel.md)
+- [Environnement et Kernel](../guides/migration/environnement-kernel.md)
 - [Event Dispatcher et pipelines](../features/event-dispatcher-et-pipelines.md)
 - Contrôleur de routes : `ecrire/src/HttpKernel/Controller/SpipController.php`

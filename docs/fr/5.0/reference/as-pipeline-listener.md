@@ -2,7 +2,7 @@
 
 Page de **référence** : comportement de `SpipLeague\Component\Kernel\Attribute\AsPipelineListener` dans SPIP 5.0-dev.
 Contexte : [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md).
-Migration : [Migrer les pipelines d'un plugin](../upgrade/pipelines-plugins.md).
+Migration : [Migrer les pipelines d'un plugin](../guides/pipelines-plugins.md).
 
 ## Signature
 
@@ -91,5 +91,5 @@ public function onSidebar(AfficheGaucheEvent|AfficheDroiteEvent $event): void
 ## Voir aussi
 
 - [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md)
-- [Migrer les pipelines d'un plugin](../upgrade/pipelines-plugins.md)
+- [Migrer les pipelines d'un plugin](../guides/pipelines-plugins.md)
 - [Événements de pipelines](evenements-pipelines.md)
