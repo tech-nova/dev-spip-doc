@@ -94,7 +94,7 @@ Une notion = un terme ; en cas de synonyme historique, le mentionner une fois pu
 
 ### Quel type pour ma page ?
 
-Avant de rédiger, posez-vous :
+Avant de rédiger, posez-vous les questions suivantes :
 
 1. Le lecteur part-il de zéro pour **apprendre** ? → **Tutoriel**
 2. Il sait déjà et veut **faire** une chose précise ? → **Guide pratique**
