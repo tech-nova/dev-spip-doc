@@ -14,9 +14,9 @@ Objectif : consolider la couche moderne et extraire du core ce qui peut devenir 
 
 - **Renommer `spip-league/kernel` en `spip-league/bootstrap`** — le nom refléterait mieux le rôle actuel
   (amorçage, conteneur, détection d’installation) distinct du futur noyau métier.
-- **Déplacer `ecrire/src/Framework` vers `spip/framework`** — nouveau dépôt hébergeant services, interfaces et
+- **Déplacer du code de `ecrire/` vers `spip/framework`** — dépôt hébergeant services, interfaces et
   classes de base partagées entre l’espace privé, le site public et les extensions.
-- **Créer de nouveaux dépôts et services** — par exemple configuration / métas, SQL / DBAL, authentification et
+- **Créer de nouveaux dépôts et services** — par exemple SQL / DBAL, authentification et
   cookies, envoi de courriels, chacun avec ses contrats et son implémentation testable hors du monolithe `ecrire/`.
 
 `Spip\Framework` serait la base commune : le code historique dans `ecrire/` et les plugins s’appuieraient sur ces
