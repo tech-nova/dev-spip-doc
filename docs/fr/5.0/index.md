@@ -8,6 +8,12 @@ hide:
 Bienvenue dans la documentation de SPIP 5.0. Cette version marque une étape importante dans la modernisation en cours de SPIP avec l'intégration de composants
 Symfony et l'adoption de pratiques de développement modernes (SOLID, typage strict, PSR).
 
+!!! warning "Version en développement"
+    SPIP 5.0 est en cours de développement (`5.0-dev`) et cette documentation évolue avec lui.
+    Le contenu, les API décrites et les URL des pages peuvent changer à tout moment, sans
+    garantie de compatibilité. Pour un site en production, reportez-vous à la
+    [documentation de SPIP 4.4](/fr/4.4/) (version stable).
+
 ## Sommaire
 
 ### [Architecture](architecture/index.md)
