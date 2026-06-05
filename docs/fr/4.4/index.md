@@ -3,7 +3,8 @@
 
 SPIP 4.4 est une version LTS (Long Term Support) bénéficiant d'un support étendu jusqu'en juillet 2028.
 
-> Nouvelles pages : cadre Diátaxis dans [CONTRIBUTING.md](https://git.spip.net/spip/docs/-/blob/main/CONTRIBUTING.md).
+!!! warning "Documentation partielle"
+    Cette documentation aborde des nouveautés SPIP 4.4 et migrations depuis SPIP 4.3. Pour une documentation plus générale, reportez vous à [spip.net](https://www.spip.net) ou [programmer.spip.net](https://programmer.spip.net)
 
 ## Compatibilité
 
