@@ -2,10 +2,13 @@
 
 Page de **référence** : services du conteneur liés à la configuration SPIP 5.0.
 
-## Configuration
+## Liste des paramètres
 
-Il n’y a plus de paramètres `spip.config.*` dans `config/spip/config.php` du projet.
-Le store `meta` et le cache `spip.cache.config` (TTL 1 mois) sont déclarés dans le kernel.
+TODO:
+
+## Modifier ou créer des paramètres
+
+TODO: parler des surcharges config/custom.php (ou via plugins config/services.php)
 
 ## Services associés
 
