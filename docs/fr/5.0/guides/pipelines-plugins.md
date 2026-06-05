@@ -1,9 +1,7 @@
 # Migration des pipelines dans les plugins
 
-Cette page montre comment remplacer progressivement les fonctions `prefixe_nom_pipeline()` par des listeners modernes dans un plugin SPIP 5.0.
-
-Pour le fonctionnement général de `pipeline()` et les changements runtime, consultez [Migrer les pipelines](pipelines.md).
-Cette page se concentre sur l'organisation d'un plugin.
+Dans un plugin, les fonctions `prefixe_nom_pipeline()` sont remplacées par des listeners modernes déclarés en services.
+Le modèle est expliqué dans [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md).
 
 ## Vue d'ensemble
 
@@ -19,7 +17,7 @@ Pour que SPIP détecte les listeners avec attributs et puisse injecter leurs dé
 
 Avec `autoconfigure()`, les méthodes annotées avec `#[AsPipelineListener]` sont enregistrées automatiquement.
 
-```php-inline
+```php
 <?php
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -39,7 +37,7 @@ Voir aussi [Services et injection de dépendances](../features/services-symfony.
 
 Avant :
 
-```php-inline
+```php
 function monplugin_affichage_final(string $html): string {
     return str_replace('</body>', '<script src="/js/monplugin.js"></script></body>', $html);
 }
@@ -47,7 +45,7 @@ function monplugin_affichage_final(string $html): string {
 
 Après :
 
-```php-inline
+```php
 namespace MonPlugin\Pipeline\Listener;
 
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
@@ -69,7 +67,7 @@ L'attribut n'a pas besoin d'argument parce que `AffichageFinalEvent` indique dé
 
 Avant :
 
-```php-inline
+```php
 function monplugin_pre_edition(array $flux): array {
     $id = (int) ($flux['args']['id_objet'] ?? 0);
     $flux['data']['maj'] = date('Y-m-d H:i:s');
@@ -80,7 +78,7 @@ function monplugin_pre_edition(array $flux): array {
 
 Après, si un event dédié existe :
 
-```php-inline
+```php
 namespace MonPlugin\Pipeline\Listener;
 
 use Spip\Framework\Pipeline\Event\PreEditionEvent;
@@ -102,7 +100,7 @@ final class PreEditionListener
 
 Si le pipeline n'a pas encore d'event dédié, utilisez `PipelineEvent` avec un nom explicite :
 
-```php-inline
+```php
 namespace MonPlugin\Pipeline\Listener;
 
 use SpipLeague\Bridge\Pipeline\PipelineEvent;
@@ -146,7 +144,7 @@ Pour un plugin installé via SVP, déclarez au minimum un autoload PSR-4 dans le
 
 Un listener est un service du conteneur. Il peut donc recevoir ses dépendances par constructeur dès lors qu'il est chargé par `config/services.php`.
 
-```php-inline
+```php
 namespace MonPlugin\Pipeline\Listener;
 
 use Psr\Log\LoggerInterface;
@@ -180,7 +178,7 @@ final class ConfigMetasListener
 
 Un listener est une classe PHP standard. Pour le tester, instanciez l'event, appelez la méthode listener, puis vérifiez l'état de l'event.
 
-```php-inline
+```php
 use MonPlugin\Pipeline\Listener\AffichageFinalListener;
 use PHPUnit\Framework\TestCase;
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
@@ -207,4 +205,9 @@ Pour tester l'intégration complète, construisez un conteneur de test, enregist
 - Conservez les déclarations `<pipeline>` uniquement pour les fonctions legacy qui doivent encore être appelées par ce mécanisme.
 - Déplacez la logique métier dans les classes listeners : cela simplifie les tests **et prépare l'injection de services**.
 
-Voir aussi la [référence des événements de pipelines](../reference/evenements-pipelines.md) et la [référence `AsPipelineListener`](../reference/as-pipeline-listener.md).
+## Voir aussi
+
+- [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md)
+- [Migrer les pipelines](migration/pipelines.md)
+- [Événements de pipelines](../reference/evenements-pipelines.md)
+- [Référence `AsPipelineListener`](../reference/as-pipeline-listener.md)

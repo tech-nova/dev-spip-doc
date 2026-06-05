@@ -1,6 +1,9 @@
+
 # SPIP 4.4 - Documentation technique
 
 SPIP 4.4 est une version LTS (Long Term Support) bénéficiant d'un support étendu jusqu'en juillet 2028.
+
+> Nouvelles pages : cadre Diátaxis dans [CONTRIBUTING.md](https://git.spip.net/spip/docs/-/blob/main/CONTRIBUTING.md).
 
 ## Compatibilité
 

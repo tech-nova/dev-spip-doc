@@ -1,6 +1,10 @@
-# Prérequis et Préliminaires
+# Prérequis et préliminaires
 
-La mise à jour vers SPIP 5.0 nécessite quelques vérifications préalables sur votre environnement serveur et votre installation actuelle.
+Ce guide pratique liste les **vérifications avant migration** vers SPIP 5.0.
+
+## Objectif
+
+S’assurer que l’environnement et la base SPIP sont prêts avant de lancer la mise à jour.
 
 ## Environnement technique
 

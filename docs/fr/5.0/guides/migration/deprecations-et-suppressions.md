@@ -25,14 +25,14 @@ Le second argument de `spip_sanitize_from_request()` ne supporte plus les tablea
 
 #### Avant
 
-```php-inline
+```php
 $env = spip_sanitize_from_request($env, ['key1', 'key2']); // Sanitization partielle
 $env = spip_sanitize_from_request($env, '*');             // Sanitization de tout l'environnement
 ```
 
 #### Après
 
-```php-inline
+```php
 $env = spip_sanitize_env_from_request($env, ['key1', 'key2']); // Sanitization partielle
 $env = spip_sanitize_env_from_request($env);                  // Sanitization complète
 ```

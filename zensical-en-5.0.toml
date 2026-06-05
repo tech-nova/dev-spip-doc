@@ -12,7 +12,7 @@ site_dir = "public/en/5.0"
 
 nav = [
   { "Home" = "index.md" },
-  { "Upgrade" = "upgrade/index.md" },
+  { "Guides" = "guides/index.md" },
   { "Features" = "features/index.md" },
   { "Reference" = "reference/index.md" },
 ]
@@ -33,6 +33,7 @@ variant = "classic"
 custom_dir = "overrides"
 language = "en"
 font = false
+favicon = "/assets/images/favicon.svg"
 features = [
   "navigation.sections",
   "navigation.indexes",
@@ -83,6 +84,6 @@ custom_fences = [
 anchor_linenums = true
 
 [[project.markdown_extensions.pymdownx.highlight.extend_pygments_lang]]
-name = "php-inline"
+name = "php"
 lang = "php"
 options = { startinline = true }

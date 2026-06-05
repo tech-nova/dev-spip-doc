@@ -4,9 +4,6 @@ Cette page décrit des **orientations envisagées** pour SPIP 5.0 ou au delà. I
 livraison, ni d’un ordre de priorité figé : les chantiers dépendront des contributions, des contraintes de
 compatibilité et de la maturité de chaque brique.
 
-Pour l’état actuel, voir [Dépôts spip-league](depots-spip-league.md) et
-[Cycle applicatif HTTP](cycle-applicatif-http.md).
-
 ## Moyen terme
 
 Objectif : consolider la couche moderne et extraire du core ce qui peut devenir des services réutilisables par
@@ -66,4 +63,4 @@ Objectif : alignement maximal avec l’écosystème Symfony, si la faisabilité 
 - [Dépôts spip-league](depots-spip-league.md)
 - [Cycle applicatif HTTP](cycle-applicatif-http.md)
 - [Services Symfony](../features/services-symfony.md)
-- [Guide de migration](../upgrade/index.md)
+- [Guides et migration](../guides/index.md)

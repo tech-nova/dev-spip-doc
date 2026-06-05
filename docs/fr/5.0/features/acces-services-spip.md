@@ -1,31 +1,42 @@
-# Façade `Spip` et entrées HTTP (`Inputs`)
+# Façade Spip et entrées HTTP (Inputs)
 
-SPIP 5.0 expose une façade de transition **`Spip`** (`spip/framework`) pour accéder aux services courants avec un meilleur typage IDE, sans multiplier les fonctions globales.
+La classe **`Spip`** (`spip/framework`) centralise l'accès typé à la configuration, aux logs, aux entrées HTTP
+et au conteneur, pour le code procédural de transition. Le service **`Inputs`** porte la lecture/écriture
+des entrées HTTP via `RequestStack`. Les anciennes fonctions `service()` et `param()` sont dépréciées en 5.0.
 
-## Accès recommandé
+Remplacer `service()` / `_request()` : [Utiliser la façade Spip](../guides/acces-services-spip.md).
+
+## Usage typique
+
+```php
+use Spip\Framework\Spip;
+
+$titre = Spip::config('nom_site');     // configuration
+Spip::logger('mon_plugin')->info('…'); // logs PSR-3
+$id = Spip::input('id_article');       // entrée HTTP
+```
+
+Le code **objet** doit préférer l'injection des services concernés (config, logger, `RequestStack`) dans ses constructeurs ; la façade reste réservée au code procédural.
+
+## API principale
 
 | Besoin | API |
 |--------|-----|
-| Configuration (lecture d’une clé) | `Spip::config('cle')` |
-| Configuration (dépôt / écriture) | `Spip::configs()` |
-| Logs PSR-3 | `Spip::logger()` ou `Spip::logger('mysql')` |
-| Entrée HTTP (une clé) | `Spip::input('cle')` |
-| Entrées HTTP (objet / injection) | `Spip::inputs()` |
-| Contexte back-office / public | `Spip::isBackOffice()` / `Spip::isFrontOffice()` |
-| Service arbitraire | `Spip::service('id')` |
-| Paramètre conteneur | `Spip::param('spip.dirs.core')` |
-| Application complète | `Spip::app()` (repli) |
+| Configuration (lecture) | `Spip::config('cle')` / `Spip::config('sous/cle')` |
+| Configuration (dépôt) | `Spip::configs()` |
+| Logs PSR-3 | `Spip::logger()` / `Spip::logger('canal')` |
+| Entrée HTTP | `Spip::input('cle')` / `Spip::inputs()` |
+| Back-office / public | `Spip::isBackOffice()` / `Spip::isFrontOffice()` |
+| Service / paramètre | `Spip::service('id')` / `Spip::param('spip.dirs.core')` |
 
-Seule la fonction globale **`app()`** reste la primitive canonique du noyau ; `service()` et `param()` sont **dépréciées** (SPIP 5.0) au profit de `Spip::`.
+## Objet Inputs
 
-## Objet `Inputs`
+`SpipLeague\Bridge\Http\Inputs` lit et écrit via **`RequestStack`** uniquement.
+Sans requête : lecture → `null`, écriture → exception.
+`_request()` / `set_request()` (dépréciés) délèguent à `Spip::`.
 
-La classe `SpipLeague\Bridge\Http\Inputs` (`spip-league/http`) est enregistrée comme service `spip.inputs` dans le conteneur (`spip-league/kernel`). Elle lit et écrit les paramètres via **`RequestStack`** uniquement (query puis request bag).
+## Voir aussi
 
-- Sans Request courante : lecture → `null`, écriture → exception.
-- Les fonctions `_request()` / `set_request()` restent disponibles mais dépréciées ; elles délèguent à `Spip::` (charset AJAX conservé dans `_request()`).
-
-## Migration
-
-- Nouveau code procédural : préférer `Spip::config('cle')`, `Spip::configs()`, `Spip::input()`, etc.
-- Nouveau code objet : injection (`ConfigRepositoryInterface`, `RequestStack`, `Inputs`, …).
+- [Utiliser la façade Spip](../guides/acces-services-spip.md)
+- [Configuration](config.md)
+- [HTTP Request/Response](http-request-response.md)

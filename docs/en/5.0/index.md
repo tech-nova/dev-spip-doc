@@ -1,18 +1,25 @@
+---
+hide:
+- navigation
+---
+
 # SPIP 5.0 - Technical Documentation
 
-Welcome to the SPIP 5.0 documentation. This version marks a major step in SPIP's modernization with the integration of Symfony components and the adoption of modern
-development practices (SOLID, strict typing, PSR).
+Welcome to the SPIP 5.0 documentation. This version marks a major step in SPIP's modernization with Symfony components and modern practices (SOLID, PSR).
+
+> **Translation status:** Most pages are in French only. See [/fr/5.0/](/fr/5.0/) for the full corpus.
+> New English pages follow [CONTRIBUTING.md](https://git.spip.net/spip/docs/-/blob/main/CONTRIBUTING.md) (Diátaxis: `features/`, `guides/`, `reference/`).
 
 ## Table of Contents
 
-### [Migration Guide](upgrade/index.md)
+### [Guides](guides/index.md)
 
-Everything you need to know to update a site or a plugin from SPIP 4.x to SPIP 5.0.
+How-to guides, including how to update a site or plugin from SPIP 4.x to SPIP 5.0.
 
 ### [New Features](features/index.md)
 
-Discover the modern building blocks of SPIP 5.0 and how to use them in your developments.
+Modern building blocks of SPIP 5.0 (explanations).
 
 ### [Technical Reference](reference/index.md)
 
-Technical details and mapping tables.
+Parameters, events, and API reference.

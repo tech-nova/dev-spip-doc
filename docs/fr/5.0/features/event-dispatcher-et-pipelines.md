@@ -1,25 +1,16 @@
 # Event Dispatcher et Pipelines
 
-SPIP 5.0 modernise son système de pipelines en s'appuyant sur le composant **EventDispatcher** de Symfony.
-Les pipelines historiques restent disponibles, mais ils peuvent maintenant être manipulés avec des events typés et des listeners enregistrés comme services.
+Les pipelines SPIP — ces points fixes où les plugins interceptent des données du cycle de publication —
+reposent en SPIP 5.0 sur l'**Event Dispatcher** de Symfony : événements typés, listeners déclarés en services,
+et un pont qui garde la fonction `pipeline()` compatible.
 
-Cette page présente le modèle général. Pour migrer du code existant, consultez [Migrer les pipelines](../upgrade/pipelines.md).
-Pour la liste des events disponibles, consultez [Événements de pipelines](../reference/evenements-pipelines.md).
+Mise en œuvre dans un plugin : [Pipelines dans un plugin](../guides/pipelines-plugins.md).
 
-## Concepts clés
+## Usage typique
 
-- **Event :** une classe PHP qui transporte les données du pipeline. Les pipelines majeurs disposent d'une classe dédiée, par exemple `AffichageFinalEvent`.
-- **Listener :** une méthode de service qui réagit à un event.
-- **Attribut `#[AsPipelineListener]` :** la déclaration d'une méthode comme listener de pipeline.
-- **Event générique :** `PipelineEvent` reste disponible pour les pipelines qui n'ont pas encore de classe dédiée.
+Un listener est une méthode de service annotée. Quand l'argument est un event dédié, le pipeline est déduit du type :
 
-## Déclaration des listeners
-
-La convention recommandée est de poser `#[AsPipelineListener]` directement sur une méthode nommée `onNomEvenement(...)`.
-
-Quand une classe d'event dédiée existe, le nom du pipeline est déduit depuis le type de l'argument :
-
-```php-inline
+```php
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
 use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
 
@@ -28,79 +19,48 @@ final class FooterListener
     #[AsPipelineListener]
     public function onAffichageFinal(AffichageFinalEvent $event): void
     {
-        $event->appendToBody('<!-- footer -->');
+        $event->appendToBody('<script src="/js/plugin.js"></script>');
     }
 }
 ```
 
-Pour un pipeline non encore typé, utilisez `PipelineEvent` et indiquez explicitement le nom du pipeline :
+## Contexte
 
-```php-inline
-use SpipLeague\Bridge\Pipeline\PipelineEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+Le modèle historique reposait sur des fonctions globales et `pipelines.php`, avec des données souvent non typées.
+SPIP 5.0 conserve ce mécanisme tout en offrant une couche typée et testable.
 
-final class LegacyPipelineListener
-{
-    #[AsPipelineListener('pipeline_non_type')]
-    public function onPipelineNonType(PipelineEvent $event): void
-    {
-        $subject = $event->getSubject();
-        // ...
-        $event->setSubject($subject);
-    }
-}
-```
+## Concepts clés
 
-La classe d'event doit être annotée avec `#[AsPipelineEvent('nom_pipeline')]` pour permettre la déduction.
-C'est le cas des events du cœur SPIP. Le type générique `PipelineEvent` ne permet pas cette déduction, puisqu'il ne correspond pas à un pipeline unique.
+- **Event :** classe PHP qui transporte les données du pipeline (ex. `AffichageFinalEvent`).
+- **Listener :** méthode de service qui réagit à un event, déclarée via `#[AsPipelineListener]`.
+- **Event générique :** `PipelineEvent` pour les pipelines sans classe dédiée encore.
 
-## Plusieurs pipelines
+La déduction du nom de pipeline depuis le type d’event (`#[AsPipelineEvent('nom')]`) évite les erreurs.
+Les unions de types permettent d’écouter plusieurs pipelines avec un seul listener.
 
-Un listener peut écouter plusieurs events typés via un type union :
+## Fonctionnement
 
-```php-inline
-use Spip\Framework\Pipeline\Event\AfficheDroiteEvent;
-use Spip\Framework\Pipeline\Event\AfficheGaucheEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+Le conteneur enregistre les listeners au boot des plugins.
+L’ordre d’exécution se règle avec `position` (`prepend`, `normal`, `append`).
+Les données passent par l’objet event plutôt que par des tableaux non typés.
 
-final class SidebarListener
-{
-    #[AsPipelineListener]
-    public function onSidebar(AfficheDroiteEvent|AfficheGaucheEvent $event): void
-    {
-        // Le listener est enregistré sur les 2 pipelines
-    }
-}
-```
+## Différences avec SPIP 4.x
 
-## Position d'exécution
+| SPIP 4.x | SPIP 5.0 |
+|----------|----------|
+| `prefixe_pipeline()` dans le plugin | Listener + `#[AsPipelineListener]` |
+| `pipeline('nom', $data)` | Event Dispatcher + classes d’event |
+| Données souvent non typées | Typage fort sur les events du cœur |
 
-`AsPipelineListener` supporte l'option `position` :
+## Limites et pièges
 
-- `prepend` (priorité haute),
-- `normal` (valeur par défaut),
-- `append` (priorité basse).
+- Ne pas confondre **pipeline historique** et **listener Symfony** dans la terminologie.
+- Les pipelines sans classe dédiée restent sur `PipelineEvent` : le nom doit être indiqué explicitement sur l’attribut.
+- La procédure de déclaration et de migration est détaillée dans les guides, pas ici.
 
-```php-inline
-#[AsPipelineListener(position: 'prepend')]
-public function onAffichageFinal(AffichageFinalEvent $event): void
-{
-    // Exécuté tôt dans la chaîne
-}
-```
+## Voir aussi
 
-## Avantages
-
-Le modèle moderne apporte :
-
-- une meilleure découvrabilité des extensions ;
-- un typage fort des données transportées ;
-- l'injection de dépendances dans les listeners ;
-- des tests unitaires plus simples.
-
-## Où aller ensuite ?
-
-- [Migrer les pipelines](../upgrade/pipelines.md) : parcours de migration depuis les appels et fonctions legacy.
-- [Migrer les pipelines d'un plugin](../upgrade/pipelines-plugins.md) : recettes pour `config/services.php`, autoload et tests.
-- [Événements de pipelines](../reference/evenements-pipelines.md) : liste des events disponibles et méthodes utiles.
-- [Référence `AsPipelineListener`](../reference/as-pipeline-listener.md) : signature, résolution, positions et erreurs.
+- [Pipelines dans un plugin](../guides/pipelines-plugins.md)
+- [Migrer les pipelines](../guides/migration/pipelines.md)
+- [Événements de pipelines](../reference/evenements-pipelines.md)
+- [Référence `AsPipelineListener`](../reference/as-pipeline-listener.md)

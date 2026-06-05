@@ -1,81 +1,48 @@
-# Services et Injection de dépendances
+# Services et injection de dépendances
 
-SPIP 5.0 intègre le **Conteneur de Services de Symfony**, permettant une gestion moderne des dépendances au sein des plugins.
+SPIP 5.0 intègre le **conteneur de services Symfony** : autowiring, autoconfiguration des attributs
+(listeners, tâches cron, règles Guard…) et paramètres `spip.*` injectables.
+Chaque plugin peut fournir un fichier `config/services.php` pour enregistrer ses classes comme services.
 
-## Pourquoi utiliser les services ?
+Configuration dans un plugin : [Configurer les services d’un plugin](../guides/services-plugin.md).
 
-L'injection de dépendances permet de créer un code plus modulaire et plus facile à tester. Au lieu d'utiliser des globales ou des fonctions `include_spip()`, vous
-recevez les objets dont vous avez besoin directement dans le constructeur de vos classes.
+## Usage typique
 
-## Configurer son plugin
-
-Pour que SPIP reconnaisse vos classes comme des services, vous devez créer un fichier `config/services.php` à la racine de votre plugin.
-
-### Exemple de `config/services.php`
-
-```php-inline
+```php
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $container): void {
-    $services = $container->services()
+    $container->services()
         ->defaults()
-        ->autowire()      // Injection automatique
-        ->autoconfigure();  // Configuration automatique (attributs)
-
-    // Chargement des classes du plugin
-    $services->load('SpipContrib\\Plugin\\MonPlugin\\', '../src/');
+            ->autowire()
+            ->autoconfigure()
+        ->load('MonPlugin\\', '../src/');
 };
 ```
 
-## Autowiring et Autoconfiguration
+## Pourquoi utiliser les services ?
 
-- **Autowiring :** Le conteneur devine automatiquement quels services injecter dans votre constructeur en se basant sur le typage des arguments.
-- **Autoconfiguration :** Les classes utilisant des attributs comme `#[AsPipelineListener]` ou `#[AsCronTask]` sont automatiquement détectées et enregistrées avec
-  les bons tags.
+- Modularité et tests unitaires (mock des dépendances).
+- Découverte automatique des listeners, tâches cron, règles Guard, etc.
+- Injection de dépendance automatisée.
+- Alignement avec l’écosystème Symfony.
 
-## Utilisation des paramètres SPIP
+## Fonctionnement
 
-Vous pouvez accéder aux paramètres de configuration de SPIP (préfixés par `spip.`) directement dans vos configurations de services.
+- Chaque plugin peut fournir `config/services.php`.
+- `autowire()` et `autoconfigure()` activent l’injection et les tags SPIP.
+- Les paramètres du projet (`spip.dirs.*`, `spip.logger.*`, …) sont disponibles via `%spip...%`.
 
-```php-inline
-$services->set(MonService::class)
-    ->arg('$cacheDir', '%spip.dirs.tmp%cache/');
-```
+## Limites et pièges
 
-## Façade `Spip` (transition SPIP 5.0)
+### Plugins Composer vs SVP
 
-Pour le code procédural (squelettes, `ecrire/`, plugins), préférez la façade **`Spip`** aux fonctions `service()` / `param()` (dépréciées) :
+1. **Plugins dans le `composer.json` racine** : dépendances Composer complètes.
+2. **Plugins activés via SVP** : autoload PSR-4 du plugin uniquement ; pas d’installation automatique des `require` du plugin.
 
-```php-inline
-$timezone = Spip::config('timezone');
-$config = Spip::configs();
-$id = Spip::input('id_article');
-$logger = Spip::logger();
+Pour des bibliothèques tierces sans Composer racine, prévoir un `vendor/` embarqué ou éviter les conflits de namespaces.
 
-$service = Spip::service('nom');
-$param = Spip::param('nom');
-```
+## Voir aussi
 
-Voir [Façade Spip et Inputs](acces-services-spip.md) pour le détail (`Inputs`, bootstrap HTTP, dépréciations).
-
-*Note : Privilégiez toujours l'injection de dépendances dans vos nouvelles classes.*
-
-## Limitations et dépendances externes
-
-Il est important de distinguer deux modes d'activation des plugins dans SPIP 5.0, car ils impactent la gestion des dépendances :
-
-1. **Plugins installés via Composer** (ex: les `plugins-dist/` ou les plugins ajoutés au `composer.json` racine) : ils bénéficient de la gestion complète de
-   Composer. Leurs dépendances sont téléchargées et disponibles globalement.
-2. **Plugins activés via l'interface (SVP)** : pour ces plugins, SPIP assure un support d'autoloading spécifique mais limité.
-
-### Cas des plugins activés via SVP
-
-Si votre plugin n'est pas déclaré dans le `composer.json` racine du projet :
-
-- SPIP analyse uniquement la section `autoload.psr-4` de votre plugin pour charger vos propres classes.
-- Il ne procède **pas** à l'installation des dépendances listées dans la section `require` de votre plugin.
-- L'ensemble des classes découvertes est agrégé dans un fichier de cache (`tmp/cache/boot/classmap.php`).
-
-**Conséquence :** si votre plugin nécessite des bibliothèques PHP tierces, SPIP ne pourra pas les récupérer automatiquement. Vous devrez alors user de stratégies
-alternatives, comme embarquer un répertoire `vendor/` pré-calculé au sein de votre plugin et charger manuellement son autoloader, en veillant à éviter les conflits
-de noms (par exemple via le préfixage de namespaces).
+- [Configurer les services d’un plugin](../guides/services-plugin.md)
+- [Façade Spip et Inputs](acces-services-spip.md)

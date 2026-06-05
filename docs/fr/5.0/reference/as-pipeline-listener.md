@@ -1,10 +1,12 @@
 # Référence `AsPipelineListener`
 
-Cette page documente le comportement exact de `SpipLeague\Component\Kernel\Attribute\AsPipelineListener` dans SPIP 5.0-dev.
+Page de **référence** : comportement de `SpipLeague\Component\Kernel\Attribute\AsPipelineListener` dans SPIP 5.0-dev.
+Contexte : [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md).
+Migration : [Migrer les pipelines d'un plugin](../guides/pipelines-plugins.md).
 
 ## Signature
 
-```php-inline
+```php
 #[AsPipelineListener(
     ?string $pipeline = null,
     string $position = 'normal',
@@ -56,7 +58,7 @@ Valeurs supportées :
 
 À réserver aux pipelines qui n'ont pas encore d'event spécifique.
 
-```php-inline
+```php
 #[AsPipelineListener('pipeline_non_type', position: 'append')]
 public function onPipelineNonType(PipelineEvent $event): void
 {
@@ -68,7 +70,7 @@ public function onPipelineNonType(PipelineEvent $event): void
 
 ### Listener déduit
 
-```php-inline
+```php
 #[AsPipelineListener]
 public function onAffichageFinal(AffichageFinalEvent $event): void
 {
@@ -78,10 +80,16 @@ public function onAffichageFinal(AffichageFinalEvent $event): void
 
 ### Listener multi-pipelines (union type)
 
-```php-inline
+```php
 #[AsPipelineListener]
 public function onSidebar(AfficheGaucheEvent|AfficheDroiteEvent $event): void
 {
     // enregistré pour les deux pipelines
 }
 ```
+
+## Voir aussi
+
+- [Event Dispatcher et Pipelines](../features/event-dispatcher-et-pipelines.md)
+- [Migrer les pipelines d'un plugin](../guides/pipelines-plugins.md)
+- [Événements de pipelines](evenements-pipelines.md)

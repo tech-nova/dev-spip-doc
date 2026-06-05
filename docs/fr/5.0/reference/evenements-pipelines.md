@@ -4,7 +4,7 @@ SPIP 5.0 propose des classes d'événements dédiées pour les pipelines les plu
 Une partie des classes du core se trouvent dans le répertoire `ecrire/src/Framework/Pipeline/Event/`.
 
 Cette page est une référence : elle liste les events disponibles et leurs méthodes utiles.
-Pour migrer du code existant, consultez [Migrer les pipelines](../upgrade/pipelines.md).
+Pour migrer du code existant, consultez [Migrer les pipelines](../guides/migration/pipelines.md).
 Pour les règles de déclaration des listeners, consultez [Référence `AsPipelineListener`](as-pipeline-listener.md).
 
 ## Table de correspondance
@@ -72,7 +72,7 @@ Pour les pipelines ne disposant pas encore d'une classe dédiée, vous pouvez ut
 
 Dans ce cas, déclarez le listener avec un pipeline explicite :
 
-```php-inline
+```php
 use SpipLeague\Bridge\Pipeline\PipelineEvent;
 use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
 
@@ -100,7 +100,7 @@ Elle propose les méthodes suivantes :
 
 ### Interface de base
 
-```php-inline
+```php
 interface PipelineEventInterface extends StoppableEventInterface
 {
     public function getPipelineName(): string;
@@ -123,7 +123,7 @@ interface PipelineEventInterface extends StoppableEventInterface
 
 Pipeline `affichage_final` - Modification du HTML final avant envoi.
 
-```php-inline
+```php
 final class MyListener
 {
     #[AsPipelineListener]
@@ -151,7 +151,7 @@ final class MyListener
 
 Pipeline `insert_head` - Injection dans le `<head>` public.
 
-```php-inline
+```php
 final class AnalyticsListener
 {
     #[AsPipelineListener]
@@ -171,7 +171,7 @@ final class AnalyticsListener
 
 Pipeline `insert_head_css` - Injection de CSS.
 
-```php-inline
+```php
 final class ThemeListener
 {
     #[AsPipelineListener]
@@ -194,7 +194,7 @@ Pipeline `header_prive` - Injection dans le `<head>` de l'espace privé.
 
 Pipeline `formulaire_charger` - Valeurs par défaut.
 
-```php-inline
+```php
 final class DefaultsListener
 {
     #[AsPipelineListener]
@@ -215,7 +215,7 @@ final class DefaultsListener
 
 Pipeline `formulaire_verifier` - Validation.
 
-```php-inline
+```php
 final class ValidationListener
 {
     #[AsPipelineListener]
@@ -241,7 +241,7 @@ final class ValidationListener
 
 Pipeline `formulaire_traiter` - Post-traitement.
 
-```php-inline
+```php
 final class NotificationListener
 {
     #[AsPipelineListener]
@@ -265,7 +265,7 @@ final class NotificationListener
 
 Pipeline `pre_insertion` - Avant insertion en base.
 
-```php-inline
+```php
 final class ArticleDefaultsListener
 {
     #[AsPipelineListener]
@@ -286,7 +286,7 @@ final class ArticleDefaultsListener
 
 Pipeline `post_insertion` - Après insertion.
 
-```php-inline
+```php
 final class ArticleCreatedListener
 {
     #[AsPipelineListener]
@@ -310,7 +310,7 @@ final class ArticleCreatedListener
 
 Pipeline `styliser` - Résolution des squelettes.
 
-```php-inline
+```php
 final class MobileTemplateListener
 {
     #[AsPipelineListener]
@@ -339,7 +339,7 @@ Ces événements sont définis dans `ecrire/src/Framework/Pipeline/Event/` :
 
 Pipeline `declarer_tables_objets_sql` - Déclaration de tables.
 
-```php-inline
+```php
 final class ProductTableListener
 {
     #[AsPipelineListener]
@@ -370,7 +370,7 @@ final class ProductTableListener
 
 #### `AfficheGaucheEvent`, `AfficheMilieuEvent`, `AfficheDroiteEvent`
 
-```php-inline
+```php
 final class StatsWidgetListener
 {
     #[AsPipelineListener]

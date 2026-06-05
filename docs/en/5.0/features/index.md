@@ -1,5 +1,7 @@
-# New Features in SPIP 5.0
+# SPIP 5.0 — New features
 
-> Documentation in English is work in progress.
+This section will contain **explanations** of SPIP 5.0 building blocks. Content is being translated from the [French features index](/fr/5.0/features/).
 
-Please refer to the [French version](/fr/5.0/features/) for the complete guide.
+For now, refer to the French documentation:
+
+- [Features overview (FR)](/fr/5.0/features/)

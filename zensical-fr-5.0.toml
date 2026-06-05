@@ -18,37 +18,58 @@ nav = [
     { "Cycle applicatif HTTP" = "architecture/cycle-applicatif-http.md" },
     { "Feuille de route" = "architecture/feuille-de-route.md" },
   ]},
-  { "Migration" = [
-    { "Sommaire migration" = "upgrade/index.md" },
-    { "Prérequis" = "upgrade/prerequis.md" },
-    { "Environnement et kernel" = "upgrade/environnement-kernel.md" },
-    { "Squelettes et syntaxe" = "upgrade/squelettes.md" },
-    { "API PHP et fonctions" = "upgrade/php-api.md" },
-    { "Configuration et métas" = "upgrade/config.md" },
-    { "Compilateur de squelettes" = "upgrade/compilateur.md" },
-    { "Migrer les pipelines" = "upgrade/pipelines.md" },
-    { "Migrer les pipelines d’un plugin" = "upgrade/pipelines-plugins.md" },
-    { "Javascript et assets" = "upgrade/javascript.md" },
-    { "Espace privé et menus" = "upgrade/espace-prive-et-menus.md" },
-    { "Dépréciations et suppressions" = "upgrade/deprecations-et-suppressions.md" },
-  ]},
   { "Fonctionnalités" = [
     { "Sommaire features" = "features/index.md" },
-    { "Event dispatcher et pipelines" = "features/event-dispatcher-et-pipelines.md" },
-    { "Cron et attributs" = "features/cron-taches-attributs.md" },
-    { "Menus" = "features/menus.md" },
-    { "Services Symfony" = "features/services-symfony.md" },
-    { "Configuration" = "features/config.md" },
-    { "HTTP request response" = "features/http-request-response.md" },
-    { "Guard (écran de sécurité)" = "features/guard.md" },
-    { "Logger" = "features/logger.md" },
+    { "Services et configuration" = [
+      { "Services Symfony" = "features/services-symfony.md" },
+      { "Façade Spip" = "features/acces-services-spip.md" },
+      { "Configuration" = "features/config.md" },
+    ]},
+    { "Pipelines & Événements" = [
+      { "Event dispatcher" = "features/event-dispatcher-et-pipelines.md" },
+    ]},
+    { "Interface et sécurité" = [
+      { "Menus" = "features/menus.md" },
+      { "HTTP" = "features/http-request-response.md" },
+      { "Guard" = "features/guard.md" },
+    ]},
+    { "Exécution" = [
+      { "Cron" = "features/cron-taches-attributs.md" },
+      { "Logger" = "features/logger.md" },
+    ]},
   ]},
   { "Référence" = [
     { "Sommaire réference" = "reference/index.md" },
     { "Paramètres SPIP" = "reference/parametres-spip.md" },
     { "SPIP version et symboles" = "reference/spipversion-et-symboles.md" },
-    { "Événements de pipelines" = "reference/evenements-pipelines.md" },
-    { "Attribut AsPipelineListener" = "reference/as-pipeline-listener.md" },
+    { "Événements pipelines" = "reference/evenements-pipelines.md" },
+    { "AsPipelineListener" = "reference/as-pipeline-listener.md" },
+  ]},
+  { "Guides" = [
+    { "Sommaire guides" = "guides/index.md" },
+    { "Guides généraux" = [
+      { "Services plugin" = "guides/services-plugin.md" },
+      { "Pipelines (plugin)" = "guides/pipelines-plugins.md" },
+      { "Tâches cron" = "guides/cron-taches-attributs.md" },
+      { "Étendre Guard" = "guides/guard-extension.md" },
+      { "HTTP Request/Response" = "guides/http-request-response.md" },
+      { "Menus et onglets" = "guides/menus-onglets.md" },
+      { "Façade Spip" = "guides/acces-services-spip.md" },
+      { "Logs PSR-3" = "guides/logger.md" },
+    ]},
+    { "Migration 4.x → 5.0" = [
+      { "Sommaire migration" = "guides/migration/index.md" },
+      { "Prérequis" = "guides/migration/prerequis.md" },
+      { "Environnement et kernel" = "guides/migration/environnement-kernel.md" },
+      { "Squelettes et syntaxe" = "guides/migration/squelettes.md" },
+      { "API PHP et fonctions" = "guides/migration/php-api.md" },
+      { "Configuration et métas" = "guides/migration/config.md" },
+      { "Compilateur de squelettes" = "guides/migration/compilateur.md" },
+      { "Pipelines" = "guides/migration/pipelines.md" },
+      { "Javascript et assets" = "guides/migration/javascript.md" },
+      { "Espace privé (ruptures)" = "guides/migration/espace-prive-et-menus.md" },
+      { "Dépréciations" = "guides/migration/deprecations-et-suppressions.md" },
+    ]},
   ]},
 ]
 
@@ -68,10 +89,18 @@ variant = "classic"
 custom_dir = "overrides"
 language = "fr"
 font = false
+favicon = "/assets/images/favicon.svg"
 features = [
+  "navigation.tabs",
+  #"navigation.tabs.sticky",
   "navigation.sections",
   "navigation.indexes",
+  "navigation.path",
+  "navigation.tracking",
+  "navigation.instant",
+  "navigation.instant.prefetch",
   "navigation.top",
+  "toc.follow",
   "content.code.copy",
   "search.suggest",
   "search.highlight",
@@ -119,6 +148,6 @@ custom_fences = [
 anchor_linenums = true
 
 [[project.markdown_extensions.pymdownx.highlight.extend_pygments_lang]]
-name = "php-inline"
+name = "php"
 lang = "php"
 options = { startinline = true }

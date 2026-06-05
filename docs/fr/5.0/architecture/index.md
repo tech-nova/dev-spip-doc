@@ -1,6 +1,6 @@
 # Architecture SPIP 5.0
 
-Cette section décrit la couche moderne introduite par SPIP 5 et son articulation avec le code historique.
+Cette section **explique** la couche moderne de SPIP 5.0 et son articulation avec le code historique.
 
 ## Sommaire
 
