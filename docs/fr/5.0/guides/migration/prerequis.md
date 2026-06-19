@@ -8,9 +8,13 @@ S’assurer que l’environnement et la base SPIP sont prêts avant de lancer la
 
 ## Environnement technique
 
-### PHP 8.2 minimum
+### PHP 8.4 minimum
 
-SPIP 5.0 nécessite **PHP 8.2** au minimum. Assurez-vous que votre serveur dispose d'une version compatible avant de lancer la mise à jour.
+SPIP 5.0 nécessite **PHP 8.4** au minimum. Assurez-vous que votre serveur dispose d'une version compatible avant de lancer la mise à jour.
+
+### Composants Symfony 8.1
+
+SPIP 5.0 s'appuie sur les composants **Symfony 8.1** (conteneur de services, HTTP, Event Dispatcher, etc.). Les dépendances sont résolues via Composer à la racine du projet ; après une mise à jour, exécutez `composer update` pour aligner `vendor/` sur ces versions.
 
 ### Migration de la base de données
 

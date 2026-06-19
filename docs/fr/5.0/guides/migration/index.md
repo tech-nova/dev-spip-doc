@@ -6,7 +6,7 @@ pour les how-to généraux (non spécifiques à la migration), voir [Guides prat
 
 ## Préparation
 
-- **[Prérequis](prerequis.md)** — PHP 8.2+, base de données, `plugins-dist/`
+- **[Prérequis](prerequis.md)** — PHP 8.4+, Symfony 8.1, base de données, `plugins-dist/`
 - **[Environnement et Kernel](environnement-kernel.md)** — `.env`, configuration du Kernel
 
 ## Cœur et squelettes

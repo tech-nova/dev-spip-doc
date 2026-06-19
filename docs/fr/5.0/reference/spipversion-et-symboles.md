@@ -12,7 +12,7 @@ Cette classe remplace les nombreuses globales et constantes historiques.
 | `SpipVersion::branch()` | Branche mineure | `5.0` |
 | `SpipVersion::BASE` | Version du schéma SQL | `20240508` |
 | `SpipVersion::CODE` | Version de compilation | `12345` |
-| `SpipVersion::PHP_MIN` | Version PHP minimale requise | `8.2.0` |
+| `SpipVersion::PHP_MIN` | Version PHP minimale requise | `8.4.0` |
 
 ## Correspondance des symboles (Migration)
 
