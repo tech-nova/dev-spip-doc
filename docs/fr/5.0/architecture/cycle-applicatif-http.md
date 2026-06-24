@@ -62,17 +62,22 @@ De même, préférer l’usage `Spip::app()` à `app()`.
 
 ## 2. Boot du Kernel (`spip-league/kernel`)
 
-Lors du premier accès au conteneur :
+Lors du premier `Kernel::boot()` (via `Spip::app()` ou `app()`) :
 
 1. **Environnement** : chargement optionnel des fichiers `.env` (voir [Environnement et Kernel](../guides/migration/environnement-kernel.md)).
 2. **Installation** : `InstallationDetector` reconnaît la forme (`legacy`, `standalone`, `mutualized`) et les
    répertoires projet (`config/`, cache, web).
-3. **Conteneur** : chargement d’un conteneur **compilé** (`tmp/cache/boot/container.prod.php`) s’il est à jour, sinon
-   construction à la volée (`SpipContainerFactory`) à partir de :
+3. **Conteneur** (`initializeContainer()`) : **avant** tout cycle HTTP, chargement d’un conteneur **compilé**
+   (`tmp/cache/boot/container.{env}.php`) s’il est à jour pour la signature plugins, sinon construction à la volée
+   (`ContainerBootstrap` / `SpipContainerFactory`) à partir de :
    - `config/spip/*.php`
    - `vendor/spip-league/kernel/config/services.php`
    - `config/custom.php`
-4. **Instance** : création de `SpipLeague\Component\Kernel\Kernel` et enregistrement du service `spip.kernel`.
+   - manifeste plugins actifs (`var/state/plugins.php`, sans lecture SQL — voir [Répertoires SPIP](../features/directories.md))
+4. **Services synthetic** : `spip.installation`, `spip.kernel`, puis résolution de `spip.directories`.
+5. **Constantes legacy** : `LegacyDirectoryBootstrapper` fige les `_DIR_*` relatifs au cwd (non surchargeables
+   par `options.php`).
+6. **Instance** : le conteneur est valide et figé pour l’ensemble du hit.
 
 ## 3. Noyau HTTP (`spip-league/http-kernel`)
 
@@ -105,8 +110,8 @@ La modernisation est **progressive** : routage et enveloppe Request/Response cô
 (squelettes, pipelines, formulaires) encore largement dans `ecrire/` via les handlers. La sortie passe souvent par
 un tampon (`ob_*`) avant conversion en `Response` — voir [Gestion HTTP](../features/http-request-response.md).
 
-Après activation de plugins, le conteneur peut être **recompilé** ; le Kernel expose `replaceContainer()` pour
-appliquer immédiatement les nouveaux services (listeners, tâches cron, etc.) à la requête en cours.
+La (re)compilation du conteneur (activation plugin, `spip:cache:warmup`) intervient **avant** `handle()` ;
+le conteneur servi pendant la requête est unique et complet (listeners plugins inclus).
 
 ## Voir aussi
 
@@ -114,6 +119,7 @@ appliquer immédiatement les nouveaux services (listeners, tâches cron, etc.) �
 - [Gestion HTTP](../features/http-request-response.md),
 - [Guard](../features/guard.md).
 - [Services et injection de dépendances](../features/services-symfony.md)
+- [Répertoires SPIP](../features/directories.md)
 - [Environnement et Kernel](../guides/migration/environnement-kernel.md)
 - [Event Dispatcher et pipelines](../features/event-dispatcher-et-pipelines.md)
 - Contrôleur de routes : `ecrire/src/HttpKernel/Controller/SpipController.php`

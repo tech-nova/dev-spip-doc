@@ -24,6 +24,7 @@ nav = [
       { "Services Symfony" = "features/services-symfony.md" },
       { "Façade Spip" = "features/acces-services-spip.md" },
       { "Configuration" = "features/config.md" },
+      { "Répertoires SPIP" = "features/directories.md" },
     ]},
     { "Pipelines & Événements" = [
       { "Event dispatcher" = "features/event-dispatcher-et-pipelines.md" },
@@ -41,6 +42,7 @@ nav = [
   { "Référence" = [
     { "Sommaire réference" = "reference/index.md" },
     { "Paramètres SPIP" = "reference/parametres-spip.md" },
+    { "SpipDirectories" = "reference/spip-directories.md" },
     { "SPIP version et symboles" = "reference/spipversion-et-symboles.md" },
     { "Événements pipelines" = "reference/evenements-pipelines.md" },
     { "AsPipelineListener" = "reference/as-pipeline-listener.md" },
