@@ -25,6 +25,7 @@ Explication : [Répertoires SPIP](../features/directories.md).
 | `getCoreDir()` | `spip.dirs.core` | `ecrire/` |
 | `getExtensionsDir()` | `spip.dirs.extensions` | `plugins-dist/` |
 | `getPluginsDir()` | `spip.dirs.plugins` | `plugins/` |
+| `getExtraPluginsDir()` | `spip.dirs.extra_plugins` | `null` ou chemin mutualisé |
 | `getTemplateDir()` | `spip.dirs.template` | `squelettes-dist/` |
 | `getPrivateTemplateDir()` | `spip.dirs.private_template` | `prive/` |
 | `getCustomDir()` | `spip.dirs.custom` | `squelettes/` |
@@ -56,6 +57,10 @@ Alias déprécié : `getRootDir()` → `getProjectDir()`.
 | `_DIR_ETC` | `relative($cwd)->getConfigDir()` |
 | `_DIR_PLUGINS` | `relative($cwd)->getPluginsDir()` |
 | `_DIR_PLUGINS_DIST` | `relative($cwd)->getExtensionsDir()` |
+| `_DIR_PLUGINS_SUPPL` | `relative($cwd)->getExtraPluginsDir()` (si `spip.dirs.extra_plugins` non vide) |
+| `_ROOT_PLUGINS` | `getPluginsDir()` (absolu) |
+| `_ROOT_PLUGINS_DIST` | `getExtensionsDir()` (absolu) |
+| `_ROOT_PLUGINS_SUPPL` | `getExtraPluginsDir()` (absolu, si configuré) |
 | `_DIR_IMG` | `relative($cwd)->getDocDir()` |
 | `_FILE_OPTIONS` | absolu : `getConfigDir() . 'mes_options.php'` |
 
