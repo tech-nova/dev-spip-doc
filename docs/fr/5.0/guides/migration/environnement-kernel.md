@@ -61,6 +61,21 @@ Nommages à retenir :
 
 Voir [Référence SpipDirectories](../../reference/spip-directories.md).
 
+## Plateforme : `Spip::platform()`
+
+Le service `spip.platform` centralise les vérifications OS/SAPI et la lecture des variables
+d'environnement applicatives.
+
+| Avant | Après |
+|-------|-------|
+| `PHP_SAPI === 'cli'` ou `_IS_CLI` | `Spip::platform()->isCli()` |
+| `_OS_SERVEUR == 'windows'` (via `SERVER_SOFTWARE`) | `Spip::platform()->isWindows()` |
+
+`putEnv()` et `clearEnv()` n'appellent pas `putenv()` (non thread-safe) : seules les
+superglobales `$_SERVER` et `$_ENV` sont modifiées.
+
+Voir [Référence Platform](../../reference/spip-platform.md).
+
 ## Nettoyage des paramètres d'URI
 
 Une configuration peu surchargée a été modifiée et renommée :
