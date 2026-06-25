@@ -53,12 +53,10 @@ final class MonService
 }
 ```
 
-## Constante legacy `_OS_SERVEUR`
+## Constante legacy `_OS_SERVEUR` supprimée
 
-La constante `_OS_SERVEUR` (historiquement détectée via `SERVER_SOFTWARE`) est désormais
-dérivée de `Spip::platform()->isWindows()`.
-
-Préférer `Spip::platform()->isWindows()` dans le nouveau code.
+La constante `_OS_SERVEUR` (historiquement détectée via `SERVER_SOFTWARE`) est supprimée.
+Utiliser de `Spip::platform()->isWindows()`.
 
 ## Voir aussi
 
