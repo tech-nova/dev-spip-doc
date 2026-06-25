@@ -10,7 +10,7 @@ Signatures : [Référence SpipDirectories](../reference/spip-directories.md).
 ## En bref
 
 - **Chemins absolus** : via `Spip::directories()->getCoreDir()`, `getPluginsDir()`, etc.
-- **Chemins relatifs au cwd du hit** : via `Spip::directories()->relative(getcwd())` — objet immuable, sans
+- **Chemins relatifs au cwd du hit** : via `Spip::directories()->relative()` — objet immuable, sans
   le fragile `app()->relative()->getX()` du Kernel historique.
 - **Constantes legacy `_DIR_*`** : figées au boot par `LegacyDirectoryBootstrapper`, non surchargeables depuis
   `options.php` ni `mes_options.php` (seule `config/custom.php` peut surcharger les paramètres `spip.dirs.*`).
@@ -20,7 +20,7 @@ Extrait canonique :
 ```php
 $dirs = Spip::directories();
 $core = $dirs->getCoreDir();              // absolu : …/ecrire/
-$rel = $dirs->relative(getcwd());
+$rel = $dirs->relative();
 $plugins = $rel->getPluginsDir();          // relatif : ../plugins/
 ```
 
@@ -33,7 +33,7 @@ $plugins = $rel->getPluginsDir();          // relatif : ../plugins/
 | Symfony (anticipés) | `getVarDir()` (var/), `getCacheDir()`, `getLogDir()` | Partiellement |
 
 !!! note "Surcharges"
-    Il faudra déterminer plus en détail quels répertoires doivent ou non être surchargeables, 
+    Il faudra déterminer plus en détail quels répertoires doivent ou non être surchargeables,
     via param, ou via ENV, et utiliser les mêmes nommages que symfony.
 
 ## Nommages importants

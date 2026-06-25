@@ -42,7 +42,10 @@ relative(string $cwd): SpipRelativeDirectories
 ```
 
 `SpipRelativeDirectories` expose les mêmes getters (`getCoreDir()`, `getPluginsDir()`, …) en chemins
-**relatifs au `$cwd`** passé (souvent `getcwd()`).
+**relatifs au `$cwd`** du hit, ou celui passé en paramètre.
+
+- `Spip::directories()->relative()->...`: relatif au cwd du hit
+- `Spip::directories()->relative(getcwd())->...` relatif à un autre chemin transmis...
 
 Alias déprécié : `getRootDir()` → `getProjectDir()`.
 
@@ -50,14 +53,14 @@ Alias déprécié : `getRootDir()` → `getProjectDir()`.
 
 | Constante | Source relative |
 |-----------|-----------------|
-| `_DIR_RACINE` | `relative($cwd)->getProjectDir()` |
-| `_DIR_RESTREINT` | `relative($cwd)->getCoreDir()` |
-| `_DIR_TMP` | `relative($cwd)->getTmpDir()` |
-| `_DIR_VAR` | `relative($cwd)->getPublicAssetsDir()` |
-| `_DIR_ETC` | `relative($cwd)->getConfigDir()` |
-| `_DIR_PLUGINS` | `relative($cwd)->getPluginsDir()` |
-| `_DIR_PLUGINS_DIST` | `relative($cwd)->getExtensionsDir()` |
-| `_DIR_PLUGINS_SUPPL` | `relative($cwd)->getExtraPluginsDir()` (si `spip.dirs.extra_plugins` non vide) |
+| `_DIR_RACINE` | `relative()->getProjectDir()` |
+| `_DIR_RESTREINT` | `relative()->getCoreDir()` |
+| `_DIR_TMP` | `relative()->getTmpDir()` |
+| `_DIR_VAR` | `relative()->getPublicAssetsDir()` |
+| `_DIR_ETC` | `relative()->getConfigDir()` |
+| `_DIR_PLUGINS` | `relative()->getPluginsDir()` |
+| `_DIR_PLUGINS_DIST` | `relative()->getExtensionsDir()` |
+| `_DIR_PLUGINS_SUPPL` | `relative()->getExtraPluginsDir()` (si `spip.dirs.extra_plugins` non vide) |
 | `_ROOT_PLUGINS` | `getPluginsDir()` (absolu) |
 | `_ROOT_PLUGINS_DIST` | `getExtensionsDir()` (absolu) |
 | `_ROOT_PLUGINS_SUPPL` | `getExtraPluginsDir()` (absolu, si configuré) |
