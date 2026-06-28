@@ -27,6 +27,9 @@ nav = [
       { "Répertoires SPIP" = "features/directories.md" },
       { "Plateforme d'exécution" = "features/platform.md" },
     ]},
+    { "Plugins" = [
+      { "Plugins et conteneur" = "features/plugins-et-conteneur.md" },
+    ]},
     { "Pipelines & Événements" = [
       { "Event dispatcher" = "features/event-dispatcher-et-pipelines.md" },
     ]},
@@ -48,6 +51,7 @@ nav = [
     { "SPIP version et symboles" = "reference/spipversion-et-symboles.md" },
     { "Événements pipelines" = "reference/evenements-pipelines.md" },
     { "AsPipelineListener" = "reference/as-pipeline-listener.md" },
+    { "Manifeste plugins" = "reference/manifeste-plugins.md" },
   ]},
   { "Guides" = [
     { "Sommaire guides" = "guides/index.md" },
@@ -70,6 +74,7 @@ nav = [
       { "Configuration et métas" = "guides/migration/config.md" },
       { "Compilateur de squelettes" = "guides/migration/compilateur.md" },
       { "Pipelines" = "guides/migration/pipelines.md" },
+      { "Namespaces plugin-manager" = "guides/migration/plugin-manager-et-namespaces.md" },
       { "Javascript et assets" = "guides/migration/javascript.md" },
       { "Espace privé (ruptures)" = "guides/migration/espace-prive-et-menus.md" },
       { "Dépréciations" = "guides/migration/deprecations-et-suppressions.md" },

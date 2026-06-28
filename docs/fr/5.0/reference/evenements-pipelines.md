@@ -74,7 +74,7 @@ Dans ce cas, déclarez le listener avec un pipeline explicite :
 
 ```php
 use SpipLeague\Bridge\Pipeline\PipelineEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+use SpipLeague\Bridge\Pipeline\Attribute\AsPipelineListener;
 
 final class LegacyPipelineListener
 {

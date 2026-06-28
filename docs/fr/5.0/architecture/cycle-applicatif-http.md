@@ -20,14 +20,14 @@ L’API moderne partagée (classes `Spip\Framework\*`, fonctions bootstrap `pipe
 sequenceDiagram
     participant FC as Front controller<br/>spip.php / public/index.php
     participant RT as Symfony Runtime<br/>autoload_runtime.php
-    participant HK as SpipHttpKernel<br/>service http_kernel
+    participant HK as SpipHttpKernel<br/>Kernel::boot()
     participant BT as LegacyBootstrapper
     participant RTG as RouterListener + SpipController
     participant LH as LegacyHandler / PriveHandler
     participant LEG as ecrire/public.php<br/>ou backoffice.php
 
-    FC->>RT: require + callable → service(http_kernel)
-    RT->>HK: handle(Request)
+    FC->>RT: require + callable → SpipHttpKernel::boot()
+    RT->>HK: boot() puis handle(Request)
     HK->>BT: boot() une fois (inc_version.php)
     HK->>RTG: matching de route
     RTG->>LH: action du contrôleur
@@ -44,14 +44,16 @@ sequenceDiagram
 - **Standalone** (expérimental — todo) : `public/index.php` — le document root pointe vers `public/`.
 - **Mutualisé** (expérimental — todo) : `sites/default/public/index.php`.
 
-Le fichier charge `vendor/autoload_runtime.php` (Symfony Runtime) et retourne une fabrique qui résout le service
-`http_kernel` :
+Le fichier charge `vendor/autoload_runtime.php` (Symfony Runtime) et retourne une fabrique qui boote le noyau HTTP :
 
 ```php
 return static function (array $context): SpipHttpKernel {
-    return Spip::service('http_kernel');
+    return SpipHttpKernel::boot();
 };
 ```
+
+`SpipHttpKernel::boot()` appelle `Kernel::boot()` (conteneur figé pour le hit), puis résout le service `http_kernel`
+du conteneur compilé.
 
 Le helper `Spip` est dans l’espace de nom global.
 `Spip::app()` retourne sur la fonction `app()` définie dans `vendor/spip-league/kernel/boot.php` :
@@ -62,22 +64,22 @@ De même, préférer l’usage `Spip::app()` à `app()`.
 
 ## 2. Boot du Kernel (`spip-league/kernel`)
 
-Lors du premier `Kernel::boot()` (via `Spip::app()` ou `app()`) :
+Lors du premier accès au conteneur (`Kernel::boot()`), **avant** toute requête HTTP :
 
 1. **Environnement** : chargement optionnel des fichiers `.env` (voir [Environnement et Kernel](../guides/migration/environnement-kernel.md)).
 2. **Installation** : `InstallationDetector` reconnaît la forme (`legacy`, `standalone`, `mutualized`) et les
    répertoires projet (`config/`, cache, web).
-3. **Conteneur** (`initializeContainer()`) : **avant** tout cycle HTTP, chargement d’un conteneur **compilé**
-   (`tmp/cache/boot/container.{env}.php`) s’il est à jour pour la signature plugins, sinon construction à la volée
-   (`ContainerBootstrap` / `SpipContainerFactory`) à partir de :
-   - `config/spip/*.php`
-   - `vendor/spip-league/kernel/config/services.php`
-   - `config/custom.php`
-   - manifeste plugins actifs (`var/state/plugins.php`, sans lecture SQL — voir [Répertoires SPIP](../features/directories.md))
-4. **Services synthetic** : `spip.installation`, `spip.kernel`, puis résolution de `spip.directories`.
-5. **Constantes legacy** : `LegacyDirectoryBootstrapper` fige les `_DIR_*` relatifs au cwd (non surchargeables
+3. **Manifeste plugins** : lecture de `var/state/plugins.php` via `plugin-manager` (`PluginManifestListProvider`).
+4. **Conteneur** : `ContainerBootstrap::loadOrFallback()` charge un conteneur **compilé**
+   (`tmp/cache/boot/container.prod.php`) s'il est encore frais pour la signature de l'ensemble actif, sinon
+   recompilation complète (cœur + plugins actifs) via `DeclarativeContainerCompiler` (`plugin-manager`).
+5. **Artefacts boot** : régénération de `tmp/cache/boot/` (chemins, options agrégées, classmap…) si nécessaire.
+6. **Instance** : création de `SpipLeague\Component\Kernel\Kernel` et enregistrement des services `spip.kernel`,
+   `spip.installation`, `spip.directories`.
+7. **Constantes legacy** : `LegacyDirectoryBootstrapper` fige les `_DIR_*` relatifs au cwd (non surchargeables
    par `options.php`).
-6. **Instance** : le conteneur est valide et figé pour l’ensemble du hit.
+
+L'activation d'un plugin met à jour le manifeste ; la recompilation intervient au **prochain** hit.
 
 ## 3. Noyau HTTP (`spip-league/http-kernel`)
 
@@ -111,10 +113,12 @@ La modernisation est **progressive** : routage et enveloppe Request/Response cô
 un tampon (`ob_*`) avant conversion en `Response` — voir [Gestion HTTP](../features/http-request-response.md).
 
 La (re)compilation du conteneur (activation plugin, `spip:cache:warmup`) intervient **avant** `handle()` ;
-le conteneur servi pendant la requête est unique et complet (listeners plugins inclus).
+les plugins contribuent à ce conteneur : listeners, tâches cron et services sont disponibles
+dès le début du hit. Voir [Plugins et conteneur](../features/plugins-et-conteneur.md).
 
 ## Voir aussi
 
+- [Plugins et conteneur](../features/plugins-et-conteneur.md)
 - [Dépôts spip-league](depots-spip-league.md)
 - [Gestion HTTP](../features/http-request-response.md),
 - [Guard](../features/guard.md).

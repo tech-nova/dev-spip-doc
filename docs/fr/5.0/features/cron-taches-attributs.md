@@ -9,7 +9,7 @@ Déclaration dans un plugin : [Déclarer des tâches cron](../guides/cron-taches
 ## Usage typique
 
 ```php
-use SpipLeague\Component\Kernel\Attribute\AsCronTask;
+use SpipLeague\Bridge\Pipeline\Attribute\AsCronTask;
 
 #[AsCronTask(name: 'monplugin_nettoyage', periode: 3600)]
 final class NettoyageTask

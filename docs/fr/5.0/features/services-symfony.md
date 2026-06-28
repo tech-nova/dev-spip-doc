@@ -33,6 +33,9 @@ return static function (ContainerConfigurator $container): void {
 - `autowire()` et `autoconfigure()` activent l’injection et les tags SPIP.
 - Les paramètres du projet (`spip.dirs.*`, `spip.logger.*`, …) sont disponibles via `%spip...%`.
 
+Le conteneur servi à un hit HTTP est **compilé avant** `SpipHttpKernel::handle()` : cœur SPIP plus tous les plugins actifs listés dans
+`var/state/plugins.php`. Voir [Plugins et conteneur](plugins-et-conteneur.md).
+
 ## Limites et pièges
 
 ### Plugins Composer vs SVP
