@@ -12,7 +12,7 @@ Un listener est une méthode de service annotée. Quand l'argument est un event 
 
 ```php
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+use SpipLeague\Bridge\Pipeline\Attribute\AsPipelineListener;
 
 final class FooterListener
 {

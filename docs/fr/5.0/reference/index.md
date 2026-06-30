@@ -24,4 +24,8 @@ Méthodes du service `spip.directories`, chemins absolus/relatifs et corresponda
 
 Détails de la résolution automatique (type-hints, union types), des positions d'exécution et des cas d'erreur.
 
+### [Manifeste des plugins](manifeste-plugins.md)
+
+Structure de `var/state/plugins.php`, signature du manifeste et rôle dans la compilation du conteneur.
+
 Pour les exemples de migration, consultez [Migrer les pipelines](../guides/migration/pipelines.md).

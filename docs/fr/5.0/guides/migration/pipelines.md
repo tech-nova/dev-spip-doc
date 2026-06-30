@@ -83,7 +83,7 @@ SPIP le déduit depuis l'attribut `#[AsPipelineEvent]` porté par la classe d'ev
 
 ```php
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+use SpipLeague\Bridge\Pipeline\Attribute\AsPipelineListener;
 
 final class FooterListener
 {
@@ -99,7 +99,7 @@ Avec `PipelineEvent`, la déduction est impossible : il faut déclarer explicite
 
 ```php
 use SpipLeague\Bridge\Pipeline\PipelineEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+use SpipLeague\Bridge\Pipeline\Attribute\AsPipelineListener;
 
 final class LegacyPipelineListener
 {

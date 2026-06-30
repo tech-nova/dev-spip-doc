@@ -10,6 +10,7 @@ Chaque ligne relie les facettes d'un même sujet : explication (ici), guide prat
 | Sujet | Explication | Guide pratique | Référence |
 |-------|-------------|----------------|-----------|
 | Services | [Services Symfony](services-symfony.md) | [Services plugin](../guides/services-plugin.md) | [Paramètres](../reference/parametres-spip.md) |
+| Plugins | [Plugins et conteneur](plugins-et-conteneur.md) | [Services](../guides/services-plugin.md) | [Manifeste](../reference/manifeste-plugins.md) |
 | Façade Spip | [Façade Spip](acces-services-spip.md) | [Utiliser](../guides/acces-services-spip.md) | — |
 | Configuration | [Configuration](config.md) | [Config et métas](../guides/migration/config.md) | [Paramètres](../reference/parametres-spip.md) |
 | Répertoires | [Répertoires SPIP](directories.md) | [Environnement et Kernel](../guides/migration/environnement-kernel.md) | [SpipDirectories](../reference/spip-directories.md) |

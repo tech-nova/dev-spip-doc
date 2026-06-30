@@ -19,7 +19,7 @@ Remplacer le pipeline `taches_generales_cron` et les déclarations XML par des s
 ```php
 namespace SpipContrib\Plugin\MonPlugin\Cron\Task;
 
-use SpipLeague\Component\Kernel\Attribute\AsCronTask;
+use SpipLeague\Bridge\Pipeline\Attribute\AsCronTask;
 
 #[AsCronTask(name: 'monplugin_nettoyage', periode: 3600)]
 final class NettoyageTask

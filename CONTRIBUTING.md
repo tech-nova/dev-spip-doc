@@ -56,7 +56,7 @@ Diátaxis proscrit les **instructions** (pas-à-pas) dans l'explication, **pas**
 
 ### Frontière interne / public
 
-`doc.spip.net` (ce dépôt) s'adresse aux **utilisateurs et développeuses** : API publique stable, points d'**extensibilité**, migration. Les **détails d'implémentation interne** d'un composant (couches privées, classes `@internal`, choix d'architecture) vivent dans le dépôt du composant : `vendor/spip-league/<paquet>/docs/*.md` (+ `README.md`), à destination des **contributeurs** de ce composant.
+`dev.spip.net` (ce dépôt) s'adresse aux **utilisateurs et développeuses** : API publique stable, points d'**extensibilité**, migration. Les **détails d'implémentation interne** d'un composant (couches privées, classes `@internal`, choix d'architecture) vivent dans le dépôt du composant : `vendor/spip-league/<paquet>/docs/*.md` (+ `README.md`), à destination des **contributeurs** de ce composant.
 
 En cas de doute : « est-ce nécessaire pour *utiliser* ou *étendre* la brique ? » → ici ; « est-ce utile seulement pour *modifier le composant* ? » → docs du dépôt.
 
@@ -166,7 +166,7 @@ Lors d'une contribution nouvelle ou d'une révision, vérifier que la page corre
 - **`features/`** : explication + un extrait canonique court ; procédures détaillées → **`guides/`**.
 - **`guides/`** : how-to généraux ; **`guides/migration/`** : how-to spécifiques à la migration 4.x → 5.0. Pas de long exposé conceptuel (lien vers `features/`).
 - **`reference/`** : faits, tables, signatures.
-- **Détails internes d'un composant** : dans `vendor/spip-league/<paquet>/docs/` (+ `README.md`), pas sur `doc.spip.net`.
+- **Détails internes d'un composant** : dans `vendor/spip-league/<paquet>/docs/` (+ `README.md`), pas sur `dev.spip.net`.
 - **Traductions** : stabiliser le français (`docs/fr/5.0/`) avant de traduire ; les index `docs/en/` et `docs/fr/4.4/` peuvent renvoyer vers le contenu FR en attendant.
 
 ### Navigation (Zensical / SPIP 5.0)

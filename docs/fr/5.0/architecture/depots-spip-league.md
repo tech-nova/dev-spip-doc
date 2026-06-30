@@ -11,7 +11,8 @@ Le tableau suivant recense les paquets **spip-league** d’une distribution SPIP
 
 | Paquet | Rôle succinct | Dépôt |
 | :--- | :--- | :--- |
-| **kernel** | Noyau applicatif : détection d’installation, conteneur, routage, attributs pipeline/cron. | [kernel](https://git.spip.net/spip-league/kernel) |
+| **kernel** | Noyau applicatif : détection d’installation, conteneur, interfaces plugins, boot. | [kernel](https://git.spip.net/spip-league/kernel) |
+| **plugin-manager** | Manifeste, `paquet.xml`, compilation conteneur et boot. | [plugin-manager](https://git.spip.net/spip-league/plugin-manager) |
 | **http-kernel** | Orchestration HTTP : bootstrap legacy, handlers, Request → Response. | [http-kernel](https://git.spip.net/spip-league/http-kernel) |
 | **guard** | Écran de sécurité : règles sur `kernel.request` (bots, abus d’URL, délestage). | [guard](https://git.spip.net/spip-league/guard) |
 | **http** | Pont HTTP (exceptions de flux, intégration HttpFoundation). | [http](https://git.spip.net/spip-league/http) |
@@ -30,10 +31,11 @@ Le tableau suivant recense les paquets **spip-league** d’une distribution SPIP
 
 ## Regroupement fonctionnel
 
-- **Noyau et HTTP** : `kernel`, `http`, `http-kernel`, `guard` — voir [Services Symfony](../features/services-symfony.md),
+- **Noyau et HTTP** : `kernel`, `plugin-manager`, `http`, `http-kernel`, `guard` — voir [Services Symfony](../features/services-symfony.md),
+  [Plugins et conteneur](../features/plugins-et-conteneur.md),
   [HTTP Request/Response](../features/http-request-response.md) et [Guard](../features/guard.md).
 - **Intégration Composer & CLI** : `composer-installer`, `console`.
-- **Événements** : `pipeline-bridge` (+ attributs dans `kernel`) — voir
+- **Événements** : `pipeline-bridge` (attributs `AsPipelineListener`, `AsCronTask`, passes DI) — voir
   [Event Dispatcher et pipelines](../features/event-dispatcher-et-pipelines.md).
 - **Infrastructure** : `filesystem`, `cache`, `path`, `hasher`, `logger`, `serializer`, et paquets `*-contracts`.
 
@@ -66,6 +68,7 @@ etc.).
 
 ## Voir aussi
 
+- [Plugins et conteneur](../features/plugins-et-conteneur.md)
 - [Cycle applicatif HTTP](cycle-applicatif-http.md)
 - [Environnement et Kernel](../guides/migration/environnement-kernel.md)
 - [Services et injection de dépendances](../features/services-symfony.md)

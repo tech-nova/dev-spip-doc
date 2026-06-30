@@ -3,7 +3,7 @@
 [project]
 site_name = "SPIP 5.0 - Documentation technique"
 site_description = "Documentation technique de SPIP 5.0"
-site_url = "https://doc.spip.net/fr/5.0/"
+site_url = "https://dev.spip.net/fr/5.0/"
 repo_url = "https://git.spip.net/spip/docs"
 repo_name = "spip/docs"
 edit_uri = "-/edit/main/docs/fr/5.0/"
@@ -27,6 +27,9 @@ nav = [
       { "Répertoires SPIP" = "features/directories.md" },
       { "Plateforme d'exécution" = "features/platform.md" },
     ]},
+    { "Plugins" = [
+      { "Plugins et conteneur" = "features/plugins-et-conteneur.md" },
+    ]},
     { "Pipelines & Événements" = [
       { "Event dispatcher" = "features/event-dispatcher-et-pipelines.md" },
     ]},
@@ -48,6 +51,7 @@ nav = [
     { "SPIP version et symboles" = "reference/spipversion-et-symboles.md" },
     { "Événements pipelines" = "reference/evenements-pipelines.md" },
     { "AsPipelineListener" = "reference/as-pipeline-listener.md" },
+    { "Manifeste plugins" = "reference/manifeste-plugins.md" },
   ]},
   { "Guides" = [
     { "Sommaire guides" = "guides/index.md" },

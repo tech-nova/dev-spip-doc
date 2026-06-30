@@ -50,10 +50,12 @@ Les attributs `#[AsPipelineListener]`, `#[AsCronTask]`, `#[AsGuard]`, etc. sont 
 
 ## Vérification
 
-- Vider le cache (`tmp/cache/`) après modification de `services.php`.
+- Après modification de `config/services.php`, invalider le cache boot (`bin/spip cache:warmup --clear`) ou activer/désactiver un plugin pour
+  recalculer la signature du manifeste. Voir [Plugins et conteneur](../features/plugins-et-conteneur.md).
 - Injecter un service du plugin dans un listener et confirmer qu’il est résolu au runtime.
 
 ## Voir aussi
 
 - [Services et injection de dépendances](../features/services-symfony.md)
 - [Façade Spip — usage procédural](acces-services-spip.md)
+- [Plugins et conteneur](../features/plugins-et-conteneur.md)

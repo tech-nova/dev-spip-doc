@@ -49,7 +49,7 @@ Après :
 namespace MonPlugin\Pipeline\Listener;
 
 use Spip\Framework\Pipeline\Event\AffichageFinalEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+use SpipLeague\Bridge\Pipeline\Attribute\AsPipelineListener;
 
 final class AffichageFinalListener
 {
@@ -82,7 +82,7 @@ Après, si un event dédié existe :
 namespace MonPlugin\Pipeline\Listener;
 
 use Spip\Framework\Pipeline\Event\PreEditionEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+use SpipLeague\Bridge\Pipeline\Attribute\AsPipelineListener;
 
 final class PreEditionListener
 {
@@ -104,7 +104,7 @@ Si le pipeline n'a pas encore d'event dédié, utilisez `PipelineEvent` avec un 
 namespace MonPlugin\Pipeline\Listener;
 
 use SpipLeague\Bridge\Pipeline\PipelineEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+use SpipLeague\Bridge\Pipeline\Attribute\AsPipelineListener;
 
 final class PipelineNonTypeListener
 {
@@ -149,7 +149,7 @@ namespace MonPlugin\Pipeline\Listener;
 
 use Psr\Log\LoggerInterface;
 use SpipLeague\Bridge\Pipeline\PipelineEvent;
-use SpipLeague\Component\Kernel\Attribute\AsPipelineListener;
+use SpipLeague\Bridge\Pipeline\Attribute\AsPipelineListener;
 
 final class ConfigMetasListener
 {

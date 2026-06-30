@@ -14,7 +14,8 @@ SPIP 5.0 nécessite **PHP 8.4** au minimum. Assurez-vous que votre serveur dispo
 
 ### Composants Symfony 8.1
 
-SPIP 5.0 s'appuie sur les composants **Symfony 8.1** (conteneur de services, HTTP, Event Dispatcher, etc.). Les dépendances sont résolues via Composer à la racine du projet ; après une mise à jour, exécutez `composer update` pour aligner `vendor/` sur ces versions.
+SPIP 5.0 s'appuie sur les composants **Symfony 8.1** (conteneur de services, HTTP, Event Dispatcher, etc.). Les dépendances sont résolues via
+Composer à la racine du projet ; après une mise à jour, exécutez `composer update` pour aligner `vendor/` sur ces versions.
 
 ### Migration de la base de données
 
