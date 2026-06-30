@@ -12,6 +12,7 @@ Chaque ligne relie les facettes d'un même sujet : explication (ici), guide prat
 | Services | [Services Symfony](services-symfony.md) | [Services plugin](../guides/services-plugin.md) | [Paramètres](../reference/parametres-spip.md) |
 | Façade Spip | [Façade Spip](acces-services-spip.md) | [Utiliser](../guides/acces-services-spip.md) | — |
 | Configuration | [Configuration](config.md) | [Config et métas](../guides/migration/config.md) | [Paramètres](../reference/parametres-spip.md) |
+| Répertoires | [Répertoires SPIP](directories.md) | [Environnement et Kernel](../guides/migration/environnement-kernel.md) | [SpipDirectories](../reference/spip-directories.md) |
 | Pipelines | [Events](event-dispatcher-et-pipelines.md) | [Plugin](../guides/pipelines-plugins.md) | [Événements](../reference/evenements-pipelines.md) |
 | Menus privé | [Menus et onglets](menus.md) | [Migrer](../guides/menus-onglets.md) | — |
 | HTTP | [Request/Response](http-request-response.md) | [Plugin](../guides/http-request-response.md) | — |

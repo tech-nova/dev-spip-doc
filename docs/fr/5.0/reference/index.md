@@ -16,6 +16,10 @@ Détails sur la classe `SpipVersion` et les changements dans les globales de ver
 
 Table de correspondance entre les pipelines historiques et les nouvelles classes d'événements, avec les méthodes utiles par event.
 
+### [Référence SpipDirectories](spip-directories.md)
+
+Méthodes du service `spip.directories`, chemins absolus/relatifs et correspondance avec les constantes legacy `_DIR_*`.
+
 ### [Référence `AsPipelineListener`](as-pipeline-listener.md)
 
 Détails de la résolution automatique (type-hints, union types), des positions d'exécution et des cas d'erreur.

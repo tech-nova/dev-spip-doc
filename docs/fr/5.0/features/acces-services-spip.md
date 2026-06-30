@@ -28,6 +28,8 @@ Le code **objet** doit préférer l'injection des services concernés (config, l
 | Entrée HTTP | `Spip::input('cle')` / `Spip::inputs()` |
 | Back-office / public | `Spip::isBackOffice()` / `Spip::isFrontOffice()` |
 | Service / paramètre | `Spip::service('id')` / `Spip::param('spip.dirs.core')` |
+| Répertoires | `Spip::directories()` |
+| Plateforme (OS, CLI, env) | `Spip::platform()` |
 
 ## Objet Inputs
 
