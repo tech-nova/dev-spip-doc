@@ -36,6 +36,7 @@ Pour les règles de déclaration des listeners, consultez [Référence `AsPipeli
 | `post_insertion` | `PostInsertionEvent` | Après insertion en base |
 | `pre_edition` | `PreEditionEvent` | Avant modification d'un objet |
 | `post_edition` | `PostEditionEvent` | Après modification d'un objet |
+| `modeles_publics_autorises` | `ModelesPublicsAutorisesEvent` | Modèles autorisés dans les textes publiés depuis l'espace public |
 
 ### Pipelines sans classe d’événements
 
