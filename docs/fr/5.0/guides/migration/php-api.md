@@ -335,7 +335,7 @@ Les fichiers de langue ne doivent plus peupler la globale `$GLOBALS[$GLOBALS['id
 Ils doivent désormais simplement retourner le tableau PHP.
 
 ```php
-// config/lang/paquet-monplugin_fr.php
+// lang/paquet-monplugin_fr.php
 return [
     'monplugin_titre' => 'Mon Plugin',
 ];
