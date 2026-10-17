@@ -89,14 +89,19 @@ final class PreEditionListener
     #[AsPipelineListener]
     public function onPreEdition(PreEditionEvent $event): void
     {
-        if ($event->getTable() !== 'spip_articles') {
+        if ($event->getSqlTable() !== 'spip_articles') {
             return;
         }
 
-        $event->setField('maj', date('Y-m-d H:i:s'));
+        $champs = $event->getSubject();
+        $champs['maj'] = date('Y-m-d H:i:s');
+        $event->setSubject($champs);
     }
 }
 ```
+
+`PreEditionEvent` et `PostEditionEvent` exposent le contexte de l'édition (`getSqlTable()`, `getObjet()`, `getIdObjet()`,
+`getAction()`, `getChampsAnciens()`…) ; les champs à enregistrer sont le `subject` de l'event.
 
 Si le pipeline n'a pas encore d'event dédié, utilisez `PipelineEvent` avec un nom explicite :
 
