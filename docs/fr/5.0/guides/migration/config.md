@@ -13,10 +13,10 @@ Sans période de dépréciation, supprimées du tronc :
 | `lire_config_metapack_dist`   | `Spip::configs('<store>')->get(...)`                               |
 | `ecrire_config_metapack_dist` | idem `->set(...)`                                                                                |
 | **`expliquer_config()`**      | `SpipLeague\Component\Config\ConfigPath::parseLegacyStoreReference()` (interne au pont)          |
-| **`touch_meta()`**            | `Spip::config()->refresh()` ou régénération implicite du cache après écriture          |
+| **`touch_meta()`**            | `Spip::configs()->refresh()` ou régénération implicite du cache après écriture         |
 | **`cache_meta()`**            | géré automatiquement par `ConfigRepository` (PSR-16 `spip.cache.config`)                         |
 | **`_META_CACHE_TIME`**        | TTL par défaut de `spip.cache.config` (`FlatFilesystem`, 1 mois)                                 |
-| **`_FILE_META`**              | cache PSR-16 sous `tmp/cache/config/` ; appeler `service('spip.config')->reset()` pour le purger |
+| **`_FILE_META`**              | cache PSR-16 sous `tmp/cache/config/` ; appeler `Spip::configs()->reset()` pour le purger         |
 
 ## Dépréciations (5.0)
 
@@ -80,7 +80,7 @@ Toute valeur de configuration est persistée en **chaîne** :
 | Cache PSR-16 `tmp/cache/config/` | Snapshot de ces chaînes |
 | Miroir **`$GLOBALS['meta']`** (et `$GLOBALS[$store]`) | **Même chaîne brute** que en SQL — pas de désérialisation auto |
 
-Lors d’une écriture via `ecrire_config()` (deprécié), `Spip::configs()->set()` ou `Spip::service('spip.config')->set()`,
+Lors d’une écriture via `ecrire_config()`, `Spip::configs()->set()` ou `Spip::service('spip.config')->set()`,
 le paquet `spip-league/config` applique `ConfigPathAccessor::packValue()` :
 
 - **Valeur déjà `string`** → stockée telle quelle (`oui`, `utf-8`, chemins, etc.).
@@ -94,7 +94,7 @@ une clé n’adopte le JSON qu’à la **prochaine écriture** (`config->set`, `
 
 ### Différence `ecrire_meta()` vs `config->set()`
 
-`ecrire_meta()` (déprécié) (`ecrire/inc/meta.php`) délègue à `entries()->set()` en castant **toujours** la valeur en string :
+`ecrire_meta()` (`ecrire/inc/meta.php`) délègue à `entries()->set()` en castant **toujours** la valeur en string :
 
 ```php
 ->set($nom, (string) $valeur, ...);
@@ -128,8 +128,8 @@ $GLOBALS['meta']['taille_preview'] === '150';
 **Lecture recommandée** (désérialisation via `ConfigPathAccessor` / `spip.serializer`, legacy `serialize()` si applicable) :
 
 ```php
-lire_config('taille_preview'); // deprécié
-Spip::config('taille_preview');
+lire_config('taille_preview'); // pont legacy, toujours supporté
+Spip::config('taille_preview'); // forme recommandée pour le code neuf
 // ou injection de ConfigRepositoryInterface dans un constructeur d’objet
 ```
 
@@ -173,7 +173,7 @@ le miroir contient la chaîne JSON brute, pas un blob `serialize()`.
 Le fichier `tmp/meta_cache.php` (`_FILE_META`) n’est plus utilisé.
 Le cache est sous **`tmp/cache/config/`** via `spip-league/cache` (fichiers PHP `return …`, opcache).
 
-Lors d’une réinitialisation complète, appeler `service('spip.config')->reset()` (purge PSR-16 **et** miroir)
+Lors d’une réinitialisation complète, appeler `Spip::configs()->reset()` (purge PSR-16 **et** miroir)
 plutôt que `spip_unlink(_FILE_META)`.
 
 ## Schéma SQL des tables de configuration
@@ -185,25 +185,24 @@ L’enregistrement dans **`tables_config`** est automatique via `ConfigManager` 
 ## Signatures stables
 
 Les signatures globales (`lire_config`, `ecrire_config`, `effacer_config`, `ecrire_meta`, etc.) restent inchangées pour les plugins existants.
+Ces fonctions ne sont **pas** dépréciées : seuls le préfixe `/<store>/...` et `lire_config(,, false)` émettent une dépréciation.
 
 ## Plugins tiers
 
 - Vérifier l’absence d’appels **`methode::`** (traités désormais comme des clés littérales).
-- Remplacer `touch_meta($antidate, $table)` par `service('spip.config.manager')->repository($table)->refresh()` si besoin.
-- Remplacer les `spip_unlink(_FILE_META)` par `service('spip.config')->reset()`.
-- Remplacer `lire_config()` par injection de **`ConfigRepositoryInterface`** ou **`ConfigManagerInterface`**.
+- Remplacer `touch_meta($antidate, $table)` par `Spip::configs($table)->refresh()` si besoin.
+- Remplacer les `spip_unlink(_FILE_META)` par `Spip::configs()->reset()`.
+- Dans le code objet, remplacer `lire_config()` par l’injection de **`ConfigRepositoryInterface`** ou **`ConfigManagerInterface`**.
 - Tenir compte de la section [Sérialisation des valeurs et miroir meta](#serialisation-des-valeurs-et-miroir-meta) pour `$GLOBALS['meta']` et `unserialize()`.
 
 ## Utilisation depuis un plugin (PHP moderne)
 
 ```php
-use function SpipLeague\Component\Kernel\service;
-
-$config = service('spip.config');
+$config = Spip::configs();
 $site = $config->get('nom_site', 'Mon site');
 $config->set('mon_plugin/reglage', ['actif' => true]);
 
-$perso = service('spip.config.manager')->repository('meta_perso');
+$perso = Spip::configs('meta_perso');
 $perso->refresh();
 ```
 
@@ -216,7 +215,7 @@ $services
     ->tag('spip.config.store', ['name' => 'mon_table']);
 ```
 
-Puis : `service('spip.config.manager')->repository('mon_table')`. Le nom est enregistré automatiquement dans la méta `tables_config`.
+Puis : `Spip::configs('mon_table')`. Le nom est enregistré automatiquement dans la méta `tables_config`.
 
 ## Voir aussi
 
