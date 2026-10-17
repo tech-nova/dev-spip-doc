@@ -61,7 +61,7 @@ Les identifiants de menus commençant par `bando_` sont dépréciés et doivent 
 
 Dans les squelettes de l'espace privé, la balise `#LARGEUR_ECRAN` est remplacée par **`#LAYOUT_PRIVE`**.
 
-- Exemple : `[(#LAYOUT_PRIVE{pleine_largeur})]`
+- Exemple : `#LAYOUT_PRIVE{pleine-largeur}`
 
 ### Boîtes et Cadres (PHP)
 

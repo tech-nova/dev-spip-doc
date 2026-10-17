@@ -226,7 +226,7 @@ final class ValidationListener
             return;
         }
         
-        $email = _request('email');
+        $email = Spip::input('email');
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $event->addError('email', _T('erreur_email_invalide'));
         }
@@ -252,7 +252,7 @@ final class NotificationListener
             return;
         }
         
-        $this->sendNotification(_request('email'));
+        $this->sendNotification(Spip::input('email'));
         
         $event->setSuccessMessage('Message envoyé !');
         $event->setRedirect(generer_url_ecrire('confirmation'));
@@ -277,7 +277,7 @@ final class ArticleDefaultsListener
         }
         
         if (!$event->hasField('lang')) {
-            $event->setField('lang', $GLOBALS['meta']['langue_site']);
+            $event->setField('lang', Spip::config('langue_site'));
         }
     }
 }

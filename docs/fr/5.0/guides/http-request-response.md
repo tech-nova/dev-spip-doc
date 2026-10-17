@@ -16,8 +16,6 @@ Remplacer `_request()` et les sorties directes par l’API HttpFoundation là o�
 ### 1. Obtenir la requête courante
 
 ```php
-use function SpipLeague\Component\Kernel\service;
-
 $request = Spip::request();
 // est équivalent à 
 $request = Spip::service('request_stack')->getCurrentRequest();
