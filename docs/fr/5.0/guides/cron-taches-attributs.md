@@ -47,8 +47,20 @@ public function remiseAZero(): int
 | Paramètre | Description |
 | :--- | :--- |
 | `name` | Nom unique (requis) |
-| `periode` | Période en secondes (requis, min 60) |
-| `priorite` | Priorité d’exécution (optionnel, défaut 0) |
+| `periode` | Période minimale en secondes entre deux exécutions (défaut `0`) |
+| `priorite` | Priorité d’exécution (optionnel, défaut `0`) |
+| `method` | Méthode appelée quand l’attribut est posé sur la classe (défaut `__invoke`) |
+
+Une tâche de `periode` nulle est enregistrée mais n’est **pas** planifiée périodiquement : seules les tâches
+de période strictement positive sont ajoutées aux tâches générales. Éviter une période inférieure à 30 secondes
+(durée d’exécution généralement accordée par les serveurs HTTP).
+
+Deux paramètres du conteneur permettent d’ajuster une tâche sans modifier son code :
+
+| Paramètre | Effet |
+| :--- | :--- |
+| `spip.cron.<name>.enabled` | `false` désactive la tâche |
+| `spip.cron.<name>.period` | Remplace la `periode` déclarée par l’attribut |
 
 ### 4. Codes de retour
 

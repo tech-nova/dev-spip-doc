@@ -24,7 +24,7 @@ final class NettoyageTask
 
 ## Fonctionnement
 
-- L’attribut porte un **nom** unique et une **période** minimale (60 s).
+- L’attribut porte un **nom** unique et une **période** en secondes ; une période nulle n’est pas planifiée.
 - La classe peut implémenter `__invoke()` ou exposer plusieurs méthodes annotées.
 - Le conteneur découvre les tâches via autoconfigure, comme pour les listeners de pipelines.
 
