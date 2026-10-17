@@ -215,20 +215,22 @@ _L('texte', [], ['class' => 'classe_css']);
 
 ## Migration des constantes vers le Kernel
 
-De nombreuses constantes de chemin et d'état sont supprimées au profit d'appels au Kernel ou au conteneur de services.
+De nombreuses constantes de chemin et d'état sont supprimées au profit de la façade `Spip` (services du conteneur).
 
 | Ancienne constante | Remplacement PHP recommandé |
 | :--- | :--- |
-| `_DIR_RESTREINT_ABS` | `param('spip.routes.back_office')` ou `param('spip.dirs.core')` |
-| `_ROOT_RACINE` | `app()->getRootDir()` |
-| `_ROOT_RESTREINT` | `app()->getCoreDir()` |
-| `_ROOT_CWD` | `app()->getCwd()` |
-| `_DIR_LOG` | `app()->getLogDir()` |
-| `_ESPACE_PRIVE` | `app()->isBackOffice()` |
+| `_DIR_RESTREINT_ABS` | `Spip::param('spip.routes.back_office')` ou `Spip::param('spip.dirs.core')` |
+| `_ROOT_RACINE` | `Spip::directories()->getProjectDir()` |
+| `_ROOT_RESTREINT` | `Spip::directories()->getCoreDir()` |
+| `_ROOT_CWD` | `Spip::platform()->getCwd()` |
+| `_DIR_LOG` | `Spip::directories()->getLogDir()` |
+| `_ESPACE_PRIVE` | `Spip::isBackOffice()` |
 | `_ROOT_IMG_PACK` / `_DIR_IMG_PACK` | voir ci-dessous |
-| `_IS_CLI` | `PHP_SAPI === 'cli'` |
+| `_IS_CLI` | `Spip::platform()->isCli()` |
 
-*Note : `app()` et `param()` sont dans l'espace de nom `SpipLeague\Component\Kernel`.*
+*Note : la façade est la classe `Spip\Framework\Spip`, également disponible sous l'alias global `Spip`.
+Les fonctions `param()` et `service()` de l'espace de nom `SpipLeague\Component\Kernel` sont dépréciées,
+ainsi que les méthodes de chemins du Kernel (`app()->getRootDir()`, `app()->getCoreDir()`, `app()->relative()`…).*
 
 ### Accès aux paramètres du Kernel en squelette (`#PARAM`)
 
@@ -238,7 +240,7 @@ Dans un squelette, la balise `#PARAM` permet de récupérer un paramètre de ser
 [(#PARAM{spip.routes.back_office})]
 ```
 
-Est équivalent à `param('spip.routes.back_office')` en PHP.
+Est équivalent à `Spip::param('spip.routes.back_office')` en PHP.
 
 ### `_DIR_RESTREINT_ABS`
 
@@ -261,9 +263,9 @@ Dans un squelette :
 ```php
 function lambda() {
     // suivant le contexte (URL vers l'espace privé / répertoire physique "ecrire/")
-    $chaine = \SpipLeague\Component\Kernel\param('spip.routes.back_office') . 'suite';
+    $chaine = Spip::param('spip.routes.back_office') . 'suite';
     // ou
-    $chaine = \SpipLeague\Component\Kernel\param('spip.dirs.core') . 'suite';
+    $chaine = Spip::param('spip.dirs.core') . 'suite';
 }
 ```
 
@@ -294,9 +296,7 @@ En squelette :
 **Après :**
 
 ```php
-use function \SpipLeague\Component\Kernel\app;
-
-if (app()->isBackOffice()) {
+if (Spip::isBackOffice()) {
     // ...
 } else {
     // ...
@@ -321,10 +321,8 @@ $relative = _DIR_IMG_PACK;
 **Après :**
 
 ```php
-use function \SpipLeague\Component\Kernel\app;
-
-$absolute = app()->getPrivateTemplateDir() . _NOM_IMG_PACK;
-$relative = app()->relative()->getPrivateTemplateDir() . _NOM_IMG_PACK;
+$absolute = Spip::directories()->getPrivateTemplateDir() . _NOM_IMG_PACK;
+$relative = Spip::directories()->relative()->getPrivateTemplateDir() . _NOM_IMG_PACK;
 ```
 
 Préférez cependant `find_in_theme()` ou `chemin_image()` (qui recherchent dans des dossiers différents).
