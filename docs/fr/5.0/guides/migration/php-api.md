@@ -93,17 +93,21 @@ Plusieurs fonctions dépréciées ont été supprimées. Voici les principales c
 ### Fonctions `generer_{x}_entite` et `generer_{x}_{objet}`
 
 De même que `generer_url_ecrire_objet`, les fonctions `generer_*_entite` dépréciées sont supprimées.
-Les fonctions remplaçantes ont les mêmes arguments.
+Ce n'est pas un simple renommage : les anciennes fonctions réordonnaient certains arguments avant d'appeler
+les nouvelles.
 
-| Supprimé | Remplacé par |
-| :--- | :--- |
-| `generer_url_entite` | `generer_objet_url` |
-| `generer_url_entite_absolue` | `generer_objet_url_absolue` |
-| `generer_url_ecrire_objet` | `generer_objet_url_ecrire` |
-| `generer_url_ecrire_entite_edit` | `generer_objet_url_ecrire_edit` |
-| `generer_introduction_entite` | `generer_objet_introduction` |
-| `generer_info_entite` | `generer_objet_info` |
-| `generer_lien_entite` | `generer_objet_lien` |
+| Supprimé | Remplacé par | Arguments |
+| :--- | :--- | :--- |
+| `generer_url_entite` | `generer_objet_url` | une connexion passée en 5ᵉ argument (`$public` sous forme de chaîne) devient le 7ᵉ, et le 5ᵉ vaut `true` |
+| `generer_url_entite_absolue` | `generer_objet_url_absolue` | `$connect` passe du 5ᵉ au 7ᵉ argument, le 5ᵉ vaut `true` |
+| `generer_url_ecrire_objet` | `generer_objet_url_ecrire` | les deux premiers sont inversés : `($objet, $id)` devient `($id, $objet)` |
+| `generer_url_ecrire_entite_edit` | `generer_objet_url_ecrire_edit` | identiques |
+| `generer_introduction_entite` | `generer_objet_introduction` | identiques |
+| `generer_info_entite` | `generer_objet_info` | identiques |
+| `generer_lien_entite` | `generer_objet_lien` | identiques |
+
+Les fonctions remplaçantes typent leurs arguments : `$args`, `$ancre`, `$type` et `$connect` sont des chaînes.
+Remplacez un `null` par `''`.
 
 Les fonctions personnalisées plus spécifiques `generer_{x}_{objet}`, telles que `generer_introduction_article`, sont supprimées.
 Utilisez `generer_{objet}_{x}`, par exemple `generer_article_introduction`.
@@ -179,9 +183,9 @@ $texte = liens_absolus($texte);
 
 ```php
 // Avant
-$url = generer_url_ecrire_objet(3, 'article');
+$url = generer_url_ecrire_objet('article', 3);
 
-// Après
+// Après : l'identifiant passe en premier
 $url = generer_objet_url_ecrire(3, 'article');
 ```
 
