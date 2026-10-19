@@ -93,15 +93,14 @@ final class PreEditionListener
             return;
         }
 
-        $champs = $event->getSubject();
-        $champs['maj'] = date('Y-m-d H:i:s');
-        $event->setSubject($champs);
+        $event->setField('maj', date('Y-m-d H:i:s'));
     }
 }
 ```
 
 `PreEditionEvent` et `PostEditionEvent` exposent le contexte de l'édition (`getSqlTable()`, `getObjet()`, `getIdObjet()`,
-`getAction()`, `getChampsAnciens()`…) ; les champs à enregistrer sont le `subject` de l'event.
+`getAction()`, `getChampsAnciens()`…) et les méthodes `getField()`, `setField()`, `getFields()` et `setFields()`.
+Le `subject` contient les champs à enregistrer pour `PreEditionEvent`, et les champs déjà traités pour `PostEditionEvent`.
 
 Si le pipeline n'a pas encore d'event dédié, utilisez `PipelineEvent` avec un nom explicite :
 
